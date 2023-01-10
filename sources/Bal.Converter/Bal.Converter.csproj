@@ -35,10 +35,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bal.Converter.Core\Bal.Converter.Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Page Update="Modules\Settings\Views\SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

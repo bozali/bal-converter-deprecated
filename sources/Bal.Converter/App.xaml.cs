@@ -1,7 +1,5 @@
 ﻿using Bal.Converter.Activation;
 using Bal.Converter.Contracts.Services;
-using Bal.Converter.Core.Contracts.Services;
-using Bal.Converter.Core.Services;
 using Bal.Converter.Modules.Settings.ViewModels;
 using Bal.Converter.Modules.Settings.Views;
 using Bal.Converter.Services;
@@ -36,9 +34,6 @@ public partial class App : Application
                                  services.AddSingleton<IActivationService, ActivationService>();
                                  services.AddSingleton<INavigationService, NavigationService>();
                                  services.AddSingleton<IPageService, PageService>();
-
-                                 // Core Services
-                                 services.AddSingleton<IFileService, FileService>();
 
                                  // Views and ViewModels
                                  services.AddTransient<MainViewModel>()
