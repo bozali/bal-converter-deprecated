@@ -1,4 +1,6 @@
 ﻿using Bal.Converter.Contracts.Services;
+using Bal.Converter.Modules.Settings.ViewModels;
+using Bal.Converter.Modules.Settings.Views;
 using Bal.Converter.ViewModels;
 using Bal.Converter.Views;
 
@@ -10,19 +12,20 @@ namespace Bal.Converter.Services;
 
 public class PageService : IPageService
 {
-    private readonly Dictionary<string, Type> _pages = new();
+    private readonly Dictionary<string, Type> pages = new();
 
     public PageService()
     {
-        Configure<MainViewModel, MainPage>();
+        this.Configure<MainViewModel, MainPage>();
+        this.Configure<SettingsViewModel, SettingsPage>();
     }
 
     public Type GetPageType(string key)
     {
         Type? pageType;
-        lock (_pages)
+        lock (pages)
         {
-            if (!_pages.TryGetValue(key, out pageType))
+            if (!pages.TryGetValue(key, out pageType))
             {
                 throw new ArgumentException($"Page not found: {key}. Did you forget to call PageService.Configure?");
             }
@@ -31,25 +34,23 @@ public class PageService : IPageService
         return pageType;
     }
 
-    private void Configure<VM, V>()
-        where VM : ObservableObject
-        where V : Page
+    private void Configure<TVm, TV>() where TVm : ObservableObject where TV : Page
     {
-        lock (_pages)
+        lock (pages)
         {
-            var key = typeof(VM).FullName!;
-            if (_pages.ContainsKey(key))
+            var key = typeof(TVm).FullName!;
+            if (pages.ContainsKey(key))
             {
                 throw new ArgumentException($"The key {key} is already configured in PageService");
             }
 
-            var type = typeof(V);
-            if (_pages.Any(p => p.Value == type))
+            var type = typeof(TV);
+            if (pages.Any(p => p.Value == type))
             {
-                throw new ArgumentException($"This type is already configured with key {_pages.First(p => p.Value == type).Key}");
+                throw new ArgumentException($"This type is already configured with key {pages.First(p => p.Value == type).Key}");
             }
 
-            _pages.Add(key, type);
+            pages.Add(key, type);
         }
     }
 }

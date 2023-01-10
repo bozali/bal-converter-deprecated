@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-
 using Bal.Converter.Contracts.Services;
 using Bal.Converter.Helpers;
+using Bal.Converter.Modules.Settings.ViewModels;
 using Bal.Converter.ViewModels;
 
 using Microsoft.UI.Xaml.Controls;
@@ -10,56 +10,64 @@ namespace Bal.Converter.Services;
 
 public class NavigationViewService : INavigationViewService
 {
-    private readonly INavigationService _navigationService;
+    private readonly INavigationService navigationService;
 
-    private readonly IPageService _pageService;
+    private readonly IPageService pageService;
 
-    private NavigationView? _navigationView;
+    private NavigationView? navigationView;
 
-    public IList<object>? MenuItems => _navigationView?.MenuItems;
+    public IList<object>? MenuItems
+    {
+        get => navigationView?.MenuItems;
+    }
 
-    public object? SettingsItem => _navigationView?.SettingsItem;
+    public object? SettingsItem
+    {
+        get => navigationView?.SettingsItem;
+    }
 
     public NavigationViewService(INavigationService navigationService, IPageService pageService)
     {
-        _navigationService = navigationService;
-        _pageService = pageService;
+        this.navigationService = navigationService;
+        this.pageService = pageService;
     }
 
-    [MemberNotNull(nameof(_navigationView))]
     public void Initialize(NavigationView navigationView)
     {
-        _navigationView = navigationView;
-        _navigationView.BackRequested += OnBackRequested;
-        _navigationView.ItemInvoked += OnItemInvoked;
+        this.navigationView = navigationView;
+        this.navigationView.BackRequested += OnBackRequested;
+        this.navigationView.ItemInvoked += OnItemInvoked;
     }
 
     public void UnregisterEvents()
     {
-        if (_navigationView != null)
+        if (navigationView != null)
         {
-            _navigationView.BackRequested -= OnBackRequested;
-            _navigationView.ItemInvoked -= OnItemInvoked;
+            navigationView.BackRequested -= OnBackRequested;
+            navigationView.ItemInvoked -= OnItemInvoked;
         }
     }
 
     public NavigationViewItem? GetSelectedItem(Type pageType)
     {
-        if (_navigationView != null)
+        if (navigationView != null)
         {
-            return GetSelectedItem(_navigationView.MenuItems, pageType) ?? GetSelectedItem(_navigationView.FooterMenuItems, pageType);
+            return GetSelectedItem(navigationView.MenuItems, pageType) ?? GetSelectedItem(navigationView.FooterMenuItems, pageType);
         }
 
         return null;
     }
 
-    private void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args) => _navigationService.GoBack();
+    private void OnBackRequested(NavigationView sender, NavigationViewBackRequestedEventArgs args)
+    {
+        this.navigationService.GoBack();
+    }
 
     private void OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
     {
         if (args.IsSettingsInvoked)
         {
-            // Navigate to the settings page.
+            this.navigationService.NavigateTo(typeof(SettingsViewModel).FullName!);
         }
         else
         {
@@ -67,7 +75,7 @@ public class NavigationViewService : INavigationViewService
 
             if (selectedItem?.GetValue(NavigationHelper.NavigateToProperty) is string pageKey)
             {
-                _navigationService.NavigateTo(pageKey);
+                navigationService.NavigateTo(pageKey);
             }
         }
     }
@@ -95,7 +103,7 @@ public class NavigationViewService : INavigationViewService
     {
         if (menuItem.GetValue(NavigationHelper.NavigateToProperty) is string pageKey)
         {
-            return _pageService.GetPageType(pageKey) == sourcePageType;
+            return pageService.GetPageType(pageKey) == sourcePageType;
         }
 
         return false;

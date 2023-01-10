@@ -9,9 +9,9 @@ namespace Bal.Converter.Behaviors;
 
 public class NavigationViewHeaderBehavior : Behavior<NavigationView>
 {
-    private static NavigationViewHeaderBehavior? _current;
+    private static NavigationViewHeaderBehavior? Current;
 
-    private Page? _currentPage;
+    private Page? currentPage;
 
     public DataTemplate? DefaultHeaderTemplate
     {
@@ -25,28 +25,28 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
     }
 
     public static readonly DependencyProperty DefaultHeaderProperty =
-        DependencyProperty.Register("DefaultHeader", typeof(object), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(null, (d, e) => _current!.UpdateHeader()));
+        DependencyProperty.Register("DefaultHeader", typeof(object), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(null, (d, e) => Current!.UpdateHeader()));
 
     public static NavigationViewHeaderMode GetHeaderMode(Page item) => (NavigationViewHeaderMode)item.GetValue(HeaderModeProperty);
 
     public static void SetHeaderMode(Page item, NavigationViewHeaderMode value) => item.SetValue(HeaderModeProperty, value);
 
     public static readonly DependencyProperty HeaderModeProperty =
-        DependencyProperty.RegisterAttached("HeaderMode", typeof(bool), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(NavigationViewHeaderMode.Always, (d, e) => _current!.UpdateHeader()));
+        DependencyProperty.RegisterAttached("HeaderMode", typeof(bool), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(NavigationViewHeaderMode.Always, (d, e) => Current!.UpdateHeader()));
 
     public static object GetHeaderContext(Page item) => item.GetValue(HeaderContextProperty);
 
     public static void SetHeaderContext(Page item, object value) => item.SetValue(HeaderContextProperty, value);
 
     public static readonly DependencyProperty HeaderContextProperty =
-        DependencyProperty.RegisterAttached("HeaderContext", typeof(object), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(null, (d, e) => _current!.UpdateHeader()));
+        DependencyProperty.RegisterAttached("HeaderContext", typeof(object), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(null, (d, e) => Current!.UpdateHeader()));
 
     public static DataTemplate GetHeaderTemplate(Page item) => (DataTemplate)item.GetValue(HeaderTemplateProperty);
 
     public static void SetHeaderTemplate(Page item, DataTemplate value) => item.SetValue(HeaderTemplateProperty, value);
 
     public static readonly DependencyProperty HeaderTemplateProperty =
-        DependencyProperty.RegisterAttached("HeaderTemplate", typeof(DataTemplate), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(null, (d, e) => _current!.UpdateHeaderTemplate()));
+        DependencyProperty.RegisterAttached("HeaderTemplate", typeof(DataTemplate), typeof(NavigationViewHeaderBehavior), new PropertyMetadata(null, (d, e) => Current!.UpdateHeaderTemplate()));
 
     protected override void OnAttached()
     {
@@ -55,7 +55,7 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
         var navigationService = App.GetService<INavigationService>();
         navigationService.Navigated += OnNavigated;
 
-        _current = this;
+        Current = this;
     }
 
     protected override void OnDetaching()
@@ -70,7 +70,7 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
     {
         if (sender is Frame frame && frame.Content is Page page)
         {
-            _currentPage = page;
+            currentPage = page;
 
             UpdateHeader();
             UpdateHeaderTemplate();
@@ -79,9 +79,9 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
 
     private void UpdateHeader()
     {
-        if (_currentPage != null)
+        if (currentPage != null)
         {
-            var headerMode = GetHeaderMode(_currentPage);
+            var headerMode = GetHeaderMode(currentPage);
             if (headerMode == NavigationViewHeaderMode.Never)
             {
                 AssociatedObject.Header = null;
@@ -89,7 +89,7 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
             }
             else
             {
-                var headerFromPage = GetHeaderContext(_currentPage);
+                var headerFromPage = GetHeaderContext(currentPage);
                 if (headerFromPage != null)
                 {
                     AssociatedObject.Header = headerFromPage;
@@ -113,9 +113,9 @@ public class NavigationViewHeaderBehavior : Behavior<NavigationView>
 
     private void UpdateHeaderTemplate()
     {
-        if (_currentPage != null)
+        if (currentPage != null)
         {
-            var headerTemplate = GetHeaderTemplate(_currentPage);
+            var headerTemplate = GetHeaderTemplate(currentPage);
             AssociatedObject.HeaderTemplate = headerTemplate ?? DefaultHeaderTemplate;
         }
     }

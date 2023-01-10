@@ -1,5 +1,5 @@
 ﻿using Bal.Converter.Contracts.Services;
-using Bal.Converter.Views;
+using Bal.Converter.Modules.Settings.Views;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -9,45 +9,48 @@ namespace Bal.Converter.ViewModels;
 
 public class ShellViewModel : ObservableRecipient
 {
-    private bool _isBackEnabled;
-    private object? _selected;
+    private bool isBackEnabled;
+    private object? selected;
 
-    public INavigationService NavigationService
+    public ShellViewModel(INavigationService navigationService, INavigationViewService navigationViewService)
     {
-        get;
+        this.NavigationService = navigationService;
+        this.NavigationViewService = navigationViewService;
+
+        this.NavigationService.Navigated += this.OnNavigated;
     }
 
-    public INavigationViewService NavigationViewService
-    {
-        get;
-    }
+    public INavigationService NavigationService { get; }
+
+    public INavigationViewService NavigationViewService { get; }
 
     public bool IsBackEnabled
     {
-        get => _isBackEnabled;
-        set => SetProperty(ref _isBackEnabled, value);
+        get => isBackEnabled;
+        set => this.SetProperty(ref isBackEnabled, value);
     }
 
     public object? Selected
     {
-        get => _selected;
-        set => SetProperty(ref _selected, value);
-    }
-
-    public ShellViewModel(INavigationService navigationService, INavigationViewService navigationViewService)
-    {
-        NavigationService = navigationService;
-        NavigationService.Navigated += OnNavigated;
-        NavigationViewService = navigationViewService;
+        get => selected;
+        set => this.SetProperty(ref selected, value);
     }
 
     private void OnNavigated(object sender, NavigationEventArgs e)
     {
-        IsBackEnabled = NavigationService.CanGoBack;
-        var selectedItem = NavigationViewService.GetSelectedItem(e.SourcePageType);
+        this.IsBackEnabled = this.NavigationService.CanGoBack;
+
+        if (e.SourcePageType == typeof(SettingsPage))
+        {
+            this.Selected = this.NavigationViewService.SettingsItem;
+            return;
+        }
+
+        var selectedItem = this.NavigationViewService.GetSelectedItem(e.SourcePageType);
+
         if (selectedItem != null)
         {
-            Selected = selectedItem;
+            this.Selected = selectedItem;
         }
     }
 }

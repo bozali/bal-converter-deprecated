@@ -11,14 +11,8 @@ using Windows.System;
 
 namespace Bal.Converter.Views;
 
-// TODO: Update NavigationViewItem titles and icons in ShellPage.xaml.
 public sealed partial class ShellPage : Page
 {
-    public ShellViewModel ViewModel
-    {
-        get;
-    }
-
     public ShellPage(ShellViewModel viewModel)
     {
         ViewModel = viewModel;
@@ -32,11 +26,14 @@ public sealed partial class ShellPage : Page
         // https://docs.microsoft.com/windows/apps/develop/title-bar?tabs=winui3#full-customization
         App.MainWindow.ExtendsContentIntoTitleBar = true;
         App.MainWindow.SetTitleBar(AppTitleBar);
-        App.MainWindow.Activated += MainWindow_Activated;
-        AppTitleBarText.Text = "AppDisplayName".GetLocalized();
+        App.MainWindow.Activated += this.OnMainWindowActivated;
+
+        this.AppTitleBarText.Text = "AppDisplayName".GetLocalized();
     }
 
-    private void OnLoaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    public ShellViewModel ViewModel { get; }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
     {
         TitleBarHelper.UpdateTitleBar(RequestedTheme);
 
@@ -44,16 +41,15 @@ public sealed partial class ShellPage : Page
         KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.GoBack));
     }
 
-    private void MainWindow_Activated(object sender, WindowActivatedEventArgs args)
+    private void OnMainWindowActivated(object sender, WindowActivatedEventArgs args)
     {
         var resource = args.WindowActivationState == WindowActivationState.Deactivated ? "WindowCaptionForegroundDisabled" : "WindowCaptionForeground";
-
-        AppTitleBarText.Foreground = (SolidColorBrush)App.Current.Resources[resource];
+        this.AppTitleBarText.Foreground = (SolidColorBrush)Application.Current.Resources[resource];
     }
 
-    private void NavigationViewControl_DisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
+    private void OnDisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
     {
-        AppTitleBar.Margin = new Thickness()
+        AppTitleBar.Margin = new Thickness
         {
             Left = sender.CompactPaneLength * (sender.DisplayMode == NavigationViewDisplayMode.Minimal ? 2 : 1),
             Top = AppTitleBar.Margin.Top,
@@ -79,7 +75,6 @@ public sealed partial class ShellPage : Page
     private static void OnKeyboardAcceleratorInvoked(KeyboardAccelerator sender, KeyboardAcceleratorInvokedEventArgs args)
     {
         var navigationService = App.GetService<INavigationService>();
-
         var result = navigationService.GoBack();
 
         args.Handled = result;

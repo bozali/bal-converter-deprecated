@@ -13,9 +13,9 @@ namespace Bal.Converter.Helpers;
 // https://github.com/microsoft/TemplateStudio/issues/4516
 internal class TitleBarHelper
 {
-    private const int WAINACTIVE = 0x00;
-    private const int WAACTIVE = 0x01;
-    private const int WMACTIVATE = 0x0006;
+    private const int Wainactive = 0x00;
+    private const int Waactive = 0x01;
+    private const int Wmactivate = 0x0006;
 
     [DllImport("user32.dll")]
     private static extern IntPtr GetActiveWindow();
@@ -78,13 +78,13 @@ internal class TitleBarHelper
             var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
             if (hwnd == GetActiveWindow())
             {
-                SendMessage(hwnd, WMACTIVATE, WAINACTIVE, IntPtr.Zero);
-                SendMessage(hwnd, WMACTIVATE, WAACTIVE, IntPtr.Zero);
+                SendMessage(hwnd, Wmactivate, Wainactive, IntPtr.Zero);
+                SendMessage(hwnd, Wmactivate, Waactive, IntPtr.Zero);
             }
             else
             {
-                SendMessage(hwnd, WMACTIVATE, WAACTIVE, IntPtr.Zero);
-                SendMessage(hwnd, WMACTIVATE, WAINACTIVE, IntPtr.Zero);
+                SendMessage(hwnd, Wmactivate, Waactive, IntPtr.Zero);
+                SendMessage(hwnd, Wmactivate, Wainactive, IntPtr.Zero);
             }
         }
     }

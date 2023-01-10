@@ -15,10 +15,12 @@
               Height="{Binding ElementName=NavigationViewControl, Path=CompactPaneLength}"
               IsHitTestVisible="True"
               VerticalAlignment="Top">
+
             <Image Source="/Assets/WindowIcon.ico"
                    HorizontalAlignment="Left"
                    Width="16"
                    Height="16" />
+
             <TextBlock x:Name="AppTitleBarText"
                        VerticalAlignment="Center"
                        TextWrapping="NoWrap"
@@ -31,9 +33,9 @@
             IsBackButtonVisible="Visible"
             IsBackEnabled="{x:Bind ViewModel.IsBackEnabled, Mode=OneWay}"
             SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
-            IsSettingsVisible="False"
+            IsSettingsVisible="True"
             ExpandedModeThresholdWidth="1280"
-            DisplayModeChanged="NavigationViewControl_DisplayModeChanged"
+            DisplayModeChanged="OnDisplayModeChanged"
             Header="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}">
             <NavigationView.MenuItems>
                 <!--
@@ -43,12 +45,13 @@
                 TODO: Update item icons by updating FontIcon.Glyph properties.
                 https://docs.microsoft.com/windows/apps/design/style/segoe-fluent-icons-font#icon-list
                 -->
-                <NavigationViewItem x:Uid="Shell_Main" helpers:NavigationHelper.NavigateTo="Bal.Converter.ViewModels.MainViewModel">
+                <NavigationViewItem x:Uid="ShellMediaDownloader" helpers:NavigationHelper.NavigateTo="Bal.Converter.ViewModels.MainViewModel">
                     <NavigationViewItem.Icon>
-                        <FontIcon FontFamily="{StaticResource SymbolThemeFontFamily}" Glyph="&#xe7c3;"/>
+                        <ImageIcon Source="/Assets/Icons/VideoGallery.png" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
+
             <NavigationView.HeaderTemplate>
                 <DataTemplate>
                     <Grid>
@@ -58,6 +61,7 @@
                     </Grid>
                 </DataTemplate>
             </NavigationView.HeaderTemplate>
+
             <i:Interaction.Behaviors>
                 <behaviors:NavigationViewHeaderBehavior
                     DefaultHeader="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}">
@@ -72,6 +76,7 @@
                     </behaviors:NavigationViewHeaderBehavior.DefaultHeaderTemplate>
                 </behaviors:NavigationViewHeaderBehavior>
             </i:Interaction.Behaviors>
+
             <Grid Margin="{StaticResource NavigationViewPageContentMargin}">
                 <Frame x:Name="NavigationFrame" />
             </Grid>
