@@ -1,0 +1,10 @@
+﻿{
+    "profiles": {
+      "Bal.Converter (Package)": {
+        "commandName": "MsixPackage"
+      },
+      "Bal.Converter (Unpackaged)": {
+        "commandName": "Project"
+      }
+    }
+}
