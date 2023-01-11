@@ -38,7 +38,7 @@
             DisplayModeChanged="OnDisplayModeChanged"
             Header="{x:Bind ((ContentControl)ViewModel.Selected).Content, Mode=OneWay}">
             <NavigationView.MenuItems>
-                <NavigationViewItem x:Uid="ShellMediaDownloader" helpers:NavigationHelper.NavigateTo="Bal.Converter.ViewModels.MainViewModel">
+                <NavigationViewItem x:Uid="ShellMediaDownloader" helpers:NavigationHelper.NavigateTo="Bal.Converter.Modules.MediaDownloader.ViewModels.MediaDownloaderViewModel">
                     <NavigationViewItem.Icon>
                         <ImageIcon Source="/Assets/Icons/VideoGallery.png" />
                     </NavigationViewItem.Icon>

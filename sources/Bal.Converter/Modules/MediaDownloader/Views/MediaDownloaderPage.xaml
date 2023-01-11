@@ -1,0 +1,76 @@
+﻿<Page
+    x:Class="Bal.Converter.Modules.MediaDownloader.Views.MediaDownloaderPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Bal.Converter.Modules.MediaDownloader.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:labs="using:CommunityToolkit.Labs.WinUI"
+    xmlns:ui="using:CommunityToolkit.WinUI.UI"
+    mc:Ignorable="d" x:Name="Root">
+
+    <StackPanel Orientation="Vertical" Spacing="10">
+        <TextBox Header="Download Url" PlaceholderText="https://www.youtube.com" />
+
+        <ComboBox Header="Target Format" SelectedValue="MP4">
+            <x:String>MP3</x:String>
+            <x:String>MP4</x:String>
+            <x:String>Wav</x:String>
+            <x:String>M4a</x:String>
+            <x:String>Opus</x:String>
+            <x:String>Vorbis</x:String>
+            <x:String>Aac</x:String>
+            <x:String>Flac</x:String>
+            <x:String>Flv</x:String>
+            <x:String>Ogg</x:String>
+            <x:String>Webm</x:String>
+            <x:String>Mkv</x:String>
+            <x:String>Avi</x:String>
+        </ComboBox>
+
+        <labs:SettingsExpander x:Uid="MediaDownloaderQualityInfo" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe7f3;}"
+                               Description=""
+                               IsExpanded="True">
+
+            <labs:SettingsExpander.Items>
+                <labs:SettingsCard Header="Video quality" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe767;}">
+                    <ComboBox SelectedValue="Best">
+                        <x:String>Best</x:String>
+                        <x:String>Worst</x:String>
+                    </ComboBox>
+                </labs:SettingsCard>
+
+                <labs:SettingsCard Header="Audio quality" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe7f4;}">
+                    <ComboBox SelectedValue="Best">
+                        <x:String>Best</x:String>
+                        <x:String>Worst</x:String>
+                    </ComboBox>
+                </labs:SettingsCard>
+            </labs:SettingsExpander.Items>
+        </labs:SettingsExpander>
+
+        <StackPanel Orientation="Horizontal" Spacing="10">
+            <Button MinWidth="100" Content="Convert" />
+            <Button MinWidth="100" Content="Edit" />
+        </StackPanel>
+
+        <!--
+        <Expander IsExpanded="True" Header="Quality" Width="{Binding ElementName=Root, Path=ActualWidth}">
+            <Expander.HeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Spacing="20">
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe7f3;" />
+                        <TextBlock Text="{Binding}" />
+                    </StackPanel>
+                </DataTemplate>
+            </Expander.HeaderTemplate>
+
+            <Expander.Content>
+                <StackPanel HorizontalAlignment="Left">
+                    <InfoBar x:Uid="MediaDownloaderQualityInfo" IsOpen="True" IsClosable="False" />
+                </StackPanel>
+            </Expander.Content>
+        </Expander>
+        -->
+    </StackPanel>
+</Page>

@@ -1,5 +1,7 @@
 ﻿using Bal.Converter.Activation;
 using Bal.Converter.Contracts.Services;
+using Bal.Converter.Modules.MediaDownloader.ViewModels;
+using Bal.Converter.Modules.MediaDownloader.Views;
 using Bal.Converter.Modules.Settings.ViewModels;
 using Bal.Converter.Modules.Settings.Views;
 using Bal.Converter.Services;
@@ -37,9 +39,11 @@ public partial class App : Application
 
                                  // Views and ViewModels
                                  services.AddTransient<MainViewModel>()
+                                         .AddTransient<MediaDownloaderViewModel>()
                                          .AddTransient<SettingsViewModel>()
                                          .AddTransient<ShellViewModel>()
 
+                                         .AddTransient<MediaDownloaderPage>()
                                          .AddTransient<SettingsPage>()
                                          .AddTransient<MainPage>()
                                          .AddTransient<ShellPage>();
@@ -69,7 +73,7 @@ public partial class App : Application
         // https://docs.microsoft.com/windows/windows-app-sdk/api/winrt/microsoft.ui.xaml.application.unhandledexception.
     }
 
-    protected async override void OnLaunched(LaunchActivatedEventArgs args)
+    protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
         base.OnLaunched(args);
 

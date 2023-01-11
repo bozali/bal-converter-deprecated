@@ -126,4 +126,10 @@
   <data name="ShellMediaDownloader.Content" xml:space="preserve">
     <value>Media Downloader</value>
   </data>
+  <data name="MediaDownloaderQualityInfo.Description" xml:space="preserve">
+    <value>The quality that the download will automatically select. Can be specified if you edit.</value>
+  </data>
+  <data name="MediaDownloaderQualityInfo.Header" xml:space="preserve">
+    <value>Quality</value>
+  </data>
 </root>
