@@ -7,12 +7,19 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:labs="using:CommunityToolkit.Labs.WinUI"
     xmlns:ui="using:CommunityToolkit.WinUI.UI"
+    xmlns:quality="using:Bal.Converter.YouTubeDl.Quality"
+    xmlns:vm="using:Bal.Converter.Modules.MediaDownloader.ViewModels"
+    xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters"
     mc:Ignorable="d" x:Name="Root">
 
-    <StackPanel Orientation="Vertical" Spacing="10">
-        <TextBox Header="Download Url" PlaceholderText="https://www.youtube.com" />
+    <Page.Resources>
+        <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+    </Page.Resources>
 
-        <ComboBox Header="Target Format" SelectedValue="MP4">
+    <StackPanel Orientation="Vertical" Spacing="10">
+        <TextBox Header="Download Url" PlaceholderText="https://www.youtube.com" Text="{x:Bind ViewModel.Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+        <ComboBox Header="Target Format" SelectedValue="{x:Bind ViewModel.Format}">
             <x:String>MP3</x:String>
             <x:String>MP4</x:String>
             <x:String>Wav</x:String>
@@ -28,30 +35,34 @@
             <x:String>Avi</x:String>
         </ComboBox>
 
+        <labs:SettingsCard Header="Proceed as playlist" Description="The provided URL is a playlist. Do you want to proceed to download the playlist?"
+                           IsEnabled="{x:Bind ViewModel.IsPlaylist, Mode=TwoWay}">
+            <ToggleSwitch IsOn="{x:Bind ViewModel.ProceedAsPlaylist, Mode=TwoWay}" />
+        </labs:SettingsCard>
+
         <labs:SettingsExpander x:Uid="MediaDownloaderQualityInfo" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe7f3;}"
-                               Description=""
                                IsExpanded="True">
 
             <labs:SettingsExpander.Items>
-                <labs:SettingsCard Header="Video quality" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe767;}">
-                    <ComboBox SelectedValue="Best">
-                        <x:String>Best</x:String>
-                        <x:String>Worst</x:String>
+                <labs:SettingsCard Header="Video quality" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe7f4;}">
+                    <ComboBox SelectedValue="{x:Bind ViewModel.VideoQualityOption, Mode=TwoWay}" SelectedValuePath="Tag">
+                        <ComboBoxItem Content="Best" Tag="Best" />
+                        <ComboBoxItem Content="Worst" Tag="Worst" />
                     </ComboBox>
                 </labs:SettingsCard>
 
-                <labs:SettingsCard Header="Audio quality" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe7f4;}">
-                    <ComboBox SelectedValue="Best">
-                        <x:String>Best</x:String>
-                        <x:String>Worst</x:String>
+                <labs:SettingsCard Header="Audio quality" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe767;}">
+                    <ComboBox SelectedValue="{x:Bind ViewModel.AudioQualityOption, Mode=TwoWay}" SelectedValuePath="Tag">
+                        <ComboBoxItem Content="Best" Tag="Best" />
+                        <ComboBoxItem Content="Worst" Tag="Worst" />
                     </ComboBox>
                 </labs:SettingsCard>
             </labs:SettingsExpander.Items>
         </labs:SettingsExpander>
 
         <StackPanel Orientation="Horizontal" Spacing="10">
-            <Button MinWidth="100" Content="Convert" />
-            <Button MinWidth="100" Content="Edit" />
+            <Button MinWidth="100" Content="Convert" Command="{x:Bind ViewModel.ConvertCommand}" />
+            <Button MinWidth="100" Content="Edit" Command="{x:Bind ViewModel.EditCommand}" />
         </StackPanel>
 
         <!--
