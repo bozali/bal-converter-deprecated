@@ -22,6 +22,8 @@ public partial class App : Application
     {
         InitializeComponent();
 
+        var youtube = new YouTubeDl.YouTubeDl("", "", "");
+
         this.Host = Microsoft.Extensions.Hosting.Host
                              .CreateDefaultBuilder()
                              .UseContentRoot(AppContext.BaseDirectory)

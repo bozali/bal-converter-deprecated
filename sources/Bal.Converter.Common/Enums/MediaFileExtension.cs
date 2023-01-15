@@ -16,3 +16,17 @@ public enum MediaFileExtension
     Mkv,
     Avi
 }
+
+public static class FileTypeExtensions
+{
+    public static bool IsAudioOnly(this MediaFileExtension type)
+    {
+        return type == MediaFileExtension.Aac ||
+               type == MediaFileExtension.Flac ||
+               type == MediaFileExtension.MP3 ||
+               type == MediaFileExtension.M4a ||
+               type == MediaFileExtension.Opus ||
+               type == MediaFileExtension.Vorbis ||
+               type == MediaFileExtension.Wav;
+    }
+}
