@@ -15,6 +15,7 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Modules\Downloads\Views\DownloadsPage.xaml" />
     <None Remove="Modules\MediaDownloader\Views\MediaDownloaderPage.xaml" />
     <None Remove="Modules\Settings\Views\SettingsPage.xaml" />
   </ItemGroup>
@@ -43,12 +44,19 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Modules\Downloads\ViewModels\" />
     <Folder Include="Modules\MediaDownloader\ViewModels\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Bal.Converter.Common\Bal.Converter.Common.csproj" />
     <ProjectReference Include="..\Bal.Converter.YouTubeDl\Bal.Converter.YouTubeDl.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Modules\Downloads\Views\DownloadsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 
   <ItemGroup>

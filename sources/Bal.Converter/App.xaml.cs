@@ -1,5 +1,7 @@
 ﻿using Bal.Converter.Activation;
 using Bal.Converter.Contracts.Services;
+using Bal.Converter.Modules.Downloads.ViewModels;
+using Bal.Converter.Modules.Downloads.Views;
 using Bal.Converter.Modules.MediaDownloader.ViewModels;
 using Bal.Converter.Modules.MediaDownloader.Views;
 using Bal.Converter.Modules.Settings.ViewModels;
@@ -40,10 +42,12 @@ public partial class App : Application
                                  // Views and ViewModels
                                  services.AddTransient<MainViewModel>()
                                          .AddTransient<MediaDownloaderViewModel>()
+                                         .AddTransient<DownloadsViewModel>()
                                          .AddTransient<SettingsViewModel>()
                                          .AddTransient<ShellViewModel>()
 
                                          .AddTransient<MediaDownloaderPage>()
+                                         .AddTransient<DownloadsPage>()
                                          .AddTransient<SettingsPage>()
                                          .AddTransient<MainPage>()
                                          .AddTransient<ShellPage>();

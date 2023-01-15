@@ -7,7 +7,8 @@
     xmlns:helpers="using:Bal.Converter.Helpers"
     xmlns:behaviors="using:Bal.Converter.Behaviors"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
-    Loaded="OnLoaded">
+    Loaded="OnLoaded"
+    x:Name="Root">
 
     <Grid>
         <Grid x:Name="AppTitleBar"
@@ -41,6 +42,12 @@
                 <NavigationViewItem x:Uid="ShellMediaDownloader" helpers:NavigationHelper.NavigateTo="Bal.Converter.Modules.MediaDownloader.ViewModels.MediaDownloaderViewModel">
                     <NavigationViewItem.Icon>
                         <ImageIcon Source="/Assets/Icons/VideoGallery.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+
+                <NavigationViewItem x:Uid="ShellDownloads" helpers:NavigationHelper.NavigateTo="Bal.Converter.Modules.Downloads.ViewModels.DownloadsViewModel">
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Source="/Assets/Icons/Download.png" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
             </NavigationView.MenuItems>

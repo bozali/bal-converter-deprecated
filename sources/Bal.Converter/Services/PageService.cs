@@ -1,4 +1,6 @@
 ﻿using Bal.Converter.Contracts.Services;
+using Bal.Converter.Modules.Downloads.ViewModels;
+using Bal.Converter.Modules.Downloads.Views;
 using Bal.Converter.Modules.MediaDownloader.ViewModels;
 using Bal.Converter.Modules.MediaDownloader.Views;
 using Bal.Converter.Modules.Settings.ViewModels;
@@ -19,6 +21,7 @@ public class PageService : IPageService
     public PageService()
     {
         this.Configure<MediaDownloaderViewModel, MediaDownloaderPage>();
+        this.Configure<DownloadsViewModel, DownloadsPage>();
         this.Configure<MainViewModel, MainPage>();
         this.Configure<SettingsViewModel, SettingsPage>();
     }

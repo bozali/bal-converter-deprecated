@@ -4,6 +4,7 @@ using System.Web;
 using System.Windows.Input;
 using ABI.Windows.System;
 using Bal.Converter.Common.Enums;
+using Bal.Converter.Contracts.Services;
 using Bal.Converter.YouTubeDl.Quality;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -13,6 +14,8 @@ namespace Bal.Converter.Modules.MediaDownloader.ViewModels;
 
 public partial class MediaDownloaderViewModel : ObservableObject
 {
+    private readonly INavigationService navigationService;
+
     [ObservableProperty] private string audioQualityOption;
     [ObservableProperty] private string videoQualityOption;
     [ObservableProperty] private bool proceedAsPlaylist;
@@ -26,8 +29,9 @@ public partial class MediaDownloaderViewModel : ObservableObject
 
     private string format;
 
-    public MediaDownloaderViewModel()
+    public MediaDownloaderViewModel(INavigationService navigationService)
     {
+        this.navigationService = navigationService;
         this.Url = string.Empty;
 
         this.AudioQualityOption = AutomaticQualityOption.Best.ToString();

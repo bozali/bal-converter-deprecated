@@ -1,4 +1,5 @@
 ﻿using Bal.Converter.Contracts.Services;
+using Bal.Converter.Modules.MediaDownloader.ViewModels;
 using Bal.Converter.ViewModels;
 
 using Microsoft.UI.Xaml;
@@ -22,7 +23,7 @@ public class DefaultActivationHandler : ActivationHandler<LaunchActivatedEventAr
 
     protected async override Task HandleInternalAsync(LaunchActivatedEventArgs args)
     {
-        navigationService.NavigateTo(typeof(MainViewModel).FullName!, args.Arguments);
+        navigationService.NavigateTo(typeof(MediaDownloaderViewModel).FullName!, args.Arguments);
 
         await Task.CompletedTask;
     }

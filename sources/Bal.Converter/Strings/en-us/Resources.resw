@@ -132,4 +132,7 @@
   <data name="MediaDownloaderQualityInfo.Header" xml:space="preserve">
     <value>Quality</value>
   </data>
+  <data name="ShellDownloads.Content" xml:space="preserve">
+    <value>Downloads</value>
+  </data>
 </root>
