@@ -9,7 +9,8 @@ using Bal.Converter.Modules.Settings.Views;
 using Bal.Converter.Services;
 using Bal.Converter.ViewModels;
 using Bal.Converter.Views;
-
+using Bal.Converter.YouTubeDl;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
@@ -21,8 +22,6 @@ public partial class App : Application
     public App()
     {
         InitializeComponent();
-
-        var youtube = new YouTubeDl.YouTubeDl("", "", "");
 
         this.Host = Microsoft.Extensions.Hosting.Host
                              .CreateDefaultBuilder()
@@ -40,6 +39,7 @@ public partial class App : Application
                                  services.AddSingleton<IActivationService, ActivationService>();
                                  services.AddSingleton<INavigationService, NavigationService>();
                                  services.AddSingleton<IPageService, PageService>();
+                                 services.AddSingleton<IYouTubeDl, YouTubeDl.YouTubeDl>(provider => new YouTubeDl.YouTubeDl(@"Tools\yt-dlp.exe", @"Tools\ffmpeg.exe", IConfigurationService.TempPath));
 
                                  // Views and ViewModels
                                  services.AddTransient<MainViewModel>()

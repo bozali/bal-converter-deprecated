@@ -47,11 +47,24 @@
   <ItemGroup>
     <Folder Include="Modules\Downloads\ViewModels\" />
     <Folder Include="Modules\MediaDownloader\ViewModels\" />
+    <Folder Include="Tools\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Bal.Converter.Common\Bal.Converter.Common.csproj" />
     <ProjectReference Include="..\Bal.Converter.YouTubeDl\Bal.Converter.YouTubeDl.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Tools\ffmpeg.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Tools\ffprobe.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Tools\yt-dlp.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

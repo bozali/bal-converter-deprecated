@@ -9,7 +9,7 @@ using System.Globalization;
 
 namespace Bal.Converter.YouTubeDl ;
 
-public class YouTubeDl
+public class YouTubeDl : IYouTubeDl
 {
     private readonly string youtubeDlPath;
     private readonly string ffmpegPath;
