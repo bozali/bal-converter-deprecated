@@ -11,50 +11,50 @@
 
     <ScrollViewer>
         <StackPanel Spacing="5">
-            <winui:SettingsExpander Header="Tags" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe8ec;}"
-                                    IsExpanded="True">
+            <winui:SettingsExpander x:Uid="Tags" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe8ec;}"
+                                    IsExpanded="False">
 
                 <winui:SettingsExpander.Items>
-                    <winui:SettingsCard Header="Title" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
+                    <winui:SettingsCard x:Uid="MediaTagEditorTitle" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                         <TextBox />
                     </winui:SettingsCard>
 
-                    <winui:SettingsCard Header="Album" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
+                    <winui:SettingsCard x:Uid="MediaTagEditorAlbum" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                         <TextBox />
                     </winui:SettingsCard>
 
-                    <winui:SettingsCard Header="Comment" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
+                    <winui:SettingsCard x:Uid="MediaTagEditorComment" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                         <TextBox />
                     </winui:SettingsCard>
 
-                    <winui:SettingsCard Header="Copyright" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
+                    <winui:SettingsCard x:Uid="MediaTagEditorCopyright" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                         <TextBox />
                     </winui:SettingsCard>
 
-                    <winui:SettingsCard Header="Album Artist" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
+                    <winui:SettingsCard x:Uid="MediaTagEditorAlbumArtist" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                         <TextBox />
                     </winui:SettingsCard>
 
-                    <winui:SettingsCard Header="Genres" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
+                    <winui:SettingsCard x:Uid="MediaTagEditorGenres" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                         <TextBox />
                     </winui:SettingsCard>
 
-                    <winui:SettingsCard Header="Performers" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
+                    <winui:SettingsCard x:Uid="MediaTagEditorPerformers" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                         <TextBox />
                     </winui:SettingsCard>
 
-                    <winui:SettingsCard Header="Composers" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
+                    <winui:SettingsCard x:Uid="MediaTagEditorComposers" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
                         <TextBox />
                     </winui:SettingsCard>
 
-                    <winui:SettingsCard Header="Year">
-                        <NumberBox SpinButtonPlacementMode="Compact" MinWidth="240" Value="2023" />
+                    <winui:SettingsCard x:Uid="MediaTagEditorYear">
+                        <NumberBox MinWidth="{StaticResource SettingActionControlMinWidth}" SpinButtonPlacementMode="Compact" Value="2023" />
                     </winui:SettingsCard>
                 </winui:SettingsExpander.Items>
             </winui:SettingsExpander>
 
-            <winui:SettingsCard Header="Target format" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe8ab;}">
-                <ComboBox MinWidth="240" SelectedValue="MP4">
+            <winui:SettingsCard x:Uid="TargetFormat" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe8ab;}">
+                <ComboBox MinWidth="{StaticResource SettingActionControlMinWidth}" SelectedValue="MP4">
                     <x:String>MP3</x:String>
                     <x:String>MP4</x:String>
                     <x:String>Wav</x:String>
@@ -71,21 +71,21 @@
                 </ComboBox>
             </winui:SettingsCard>
 
-            <winui:SettingsExpander x:Uid="MediaDownloaderQualityInfo" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe7f3;}"
+            <winui:SettingsExpander x:Uid="Quality" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe7f3;}"
                                     IsExpanded="True">
 
                 <winui:SettingsExpander.Items>
-                    <winui:SettingsCard Header="Video quality" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe7f4;}">
-                        <ComboBox MinWidth="240" SelectedValue="Best" SelectedValuePath="Tag">
-                            <ComboBoxItem Content="Best" Tag="Best" />
-                            <ComboBoxItem Content="Worst" Tag="Worst" />
+                    <winui:SettingsCard x:Uid="VideoQuality" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe7f4;}">
+                        <ComboBox MinWidth="{StaticResource SettingActionControlMinWidth}" SelectedValue="Best" SelectedValuePath="Tag">
+                            <ComboBoxItem x:Uid="QualityBest" Tag="Best" />
+                            <ComboBoxItem x:Uid="QualityWorst" Tag="Worst" />
                         </ComboBox>
                     </winui:SettingsCard>
 
-                    <winui:SettingsCard Header="Audio quality" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe767;}">
-                        <ComboBox MinWidth="240" SelectedValue="Best" SelectedValuePath="Tag">
-                            <ComboBoxItem Content="Best" Tag="Best" />
-                            <ComboBoxItem Content="Worst" Tag="Worst" />
+                    <winui:SettingsCard x:Uid="AudioQuality" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe767;}">
+                        <ComboBox MinWidth="{StaticResource SettingActionControlMinWidth}" SelectedValue="Best" SelectedValuePath="Tag">
+                            <ComboBoxItem x:Uid="QualityBest" Tag="Best" />
+                            <ComboBoxItem x:Uid="QualityWorst" Tag="Worst" />
                         </ComboBox>
                     </winui:SettingsCard>
                 </winui:SettingsExpander.Items>

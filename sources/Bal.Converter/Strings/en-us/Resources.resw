@@ -135,4 +135,70 @@
   <data name="ShellDownloads.Content" xml:space="preserve">
     <value>Downloads</value>
   </data>
+  <data name="AudioQuality.Header" xml:space="preserve">
+    <value>Audio quality</value>
+  </data>
+  <data name="Convert.Content" xml:space="preserve">
+    <value>Convert</value>
+  </data>
+  <data name="Edit.Content" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="MediaDownloaderProceedPlaylist.Description" xml:space="preserve">
+    <value>The provided URL is a playlist. Do you want to proceed to download the playlist?</value>
+  </data>
+  <data name="MediaDownloaderProceedPlaylist.Header" xml:space="preserve">
+    <value>Proceed as playlist</value>
+  </data>
+  <data name="MediaTagEditorAlbum.Header" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="MediaTagEditorAlbumArtist.Header" xml:space="preserve">
+    <value>Album Artist</value>
+  </data>
+  <data name="MediaTagEditorComment.Header" xml:space="preserve">
+    <value>Comment</value>
+  </data>
+  <data name="MediaTagEditorComposers.Header" xml:space="preserve">
+    <value>Composers</value>
+  </data>
+  <data name="MediaTagEditorCopyright.Header" xml:space="preserve">
+    <value>Copyright</value>
+  </data>
+  <data name="MediaTagEditorGenres.Header" xml:space="preserve">
+    <value>Genres</value>
+  </data>
+  <data name="MediaTagEditorPerformers.Header" xml:space="preserve">
+    <value>Performers</value>
+  </data>
+  <data name="MediaTagEditorTitle.Header" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="MediaTagEditorYear.Header" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="Quality.Description" xml:space="preserve">
+    <value>The quality that the download will automatically select.</value>
+  </data>
+  <data name="Quality.Header" xml:space="preserve">
+    <value>Quality</value>
+  </data>
+  <data name="QualityBest.Content" xml:space="preserve">
+    <value>Best</value>
+  </data>
+  <data name="QualityWorst.Content" xml:space="preserve">
+    <value>Worst</value>
+  </data>
+  <data name="Tags.Description" xml:space="preserve">
+    <value>Metadata information that describes the media file.</value>
+  </data>
+  <data name="Tags.Header" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="TargetFormat.Header" xml:space="preserve">
+    <value>Target format</value>
+  </data>
+  <data name="VideoQuality.Header" xml:space="preserve">
+    <value>Video quality</value>
+  </data>
 </root>

@@ -24,6 +24,7 @@
                     <SolidColorBrush x:Key="WindowCaptionBackground">Transparent</SolidColorBrush>
                     <SolidColorBrush x:Key="WindowCaptionBackgroundDisabled">Transparent</SolidColorBrush>
 
+                    <x:Double x:Key="SettingActionControlMinWidth">240</x:Double>
 
                     <Style x:Key="SubtleButtonStyle" TargetType="Button">
                         <Setter Property="Background" Value="{ThemeResource SubtleButtonBackground}" />
