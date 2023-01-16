@@ -21,6 +21,7 @@ public class PageService : IPageService
     public PageService()
     {
         this.Configure<MediaDownloaderViewModel, MediaDownloaderPage>();
+        this.Configure<MediaTagEditorViewModel, MediaTagEditorPage>();
         this.Configure<DownloadsViewModel, DownloadsPage>();
         this.Configure<MainViewModel, MainPage>();
         this.Configure<SettingsViewModel, SettingsPage>();

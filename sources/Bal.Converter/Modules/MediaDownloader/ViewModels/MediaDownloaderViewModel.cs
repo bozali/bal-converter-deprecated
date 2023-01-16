@@ -52,6 +52,7 @@ public partial class MediaDownloaderViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanContinue))]
     private void Edit()
     {
+        this.navigationService.NavigateTo(typeof(MediaTagEditorViewModel).FullName!);
     }
 
     private bool CanContinue()

@@ -17,6 +17,7 @@
   <ItemGroup>
     <None Remove="Modules\Downloads\Views\DownloadsPage.xaml" />
     <None Remove="Modules\MediaDownloader\Views\MediaDownloaderPage.xaml" />
+    <None Remove="Modules\MediaDownloader\Views\MediaTagEditorPage.xaml" />
     <None Remove="Modules\Settings\Views\SettingsPage.xaml" />
   </ItemGroup>
 
@@ -46,7 +47,6 @@
 
   <ItemGroup>
     <Folder Include="Modules\Downloads\ViewModels\" />
-    <Folder Include="Modules\MediaDownloader\ViewModels\" />
     <Folder Include="Tools\" />
   </ItemGroup>
 
@@ -59,6 +59,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Modules\MediaDownloader\Views\MediaTagEditorPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <None Update="Tools\ffmpeg.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

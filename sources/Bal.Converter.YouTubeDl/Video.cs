@@ -22,7 +22,7 @@ public class Video
     public string ThumbnailUrl { get; set; }
 
     [JsonProperty("average_rating")]
-    public float AverageRating { get; set; }
+    public float? AverageRating { get; set; }
 
     [JsonProperty("tags")]
     public string[] Tags { get; set; }

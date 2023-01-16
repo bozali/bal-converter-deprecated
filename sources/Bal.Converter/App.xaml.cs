@@ -48,11 +48,13 @@ public partial class App : Application
                                  // Views and ViewModels
                                  services.AddTransient<MainViewModel>()
                                          .AddTransient<MediaDownloaderViewModel>()
+                                         .AddTransient<MediaTagEditorViewModel>()
                                          .AddTransient<DownloadsViewModel>()
                                          .AddTransient<SettingsViewModel>()
                                          .AddTransient<ShellViewModel>()
 
                                          .AddTransient<MediaDownloaderPage>()
+                                         .AddTransient<MediaTagEditorPage>()
                                          .AddTransient<DownloadsPage>()
                                          .AddTransient<SettingsPage>()
                                          .AddTransient<MainPage>()

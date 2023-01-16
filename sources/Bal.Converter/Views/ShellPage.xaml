@@ -75,9 +75,11 @@
                 </behaviors:NavigationViewHeaderBehavior>
             </i:Interaction.Behaviors>
 
-            <Grid Margin="{StaticResource NavigationViewPageContentMargin}">
-                <Frame x:Name="NavigationFrame" />
-            </Grid>
+            <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden">
+                <Grid Margin="{StaticResource NavigationViewPageContentMargin}">
+                    <Frame x:Name="NavigationFrame" />
+                </Grid>
+            </ScrollViewer>
         </NavigationView>
     </Grid>
 </Page>
