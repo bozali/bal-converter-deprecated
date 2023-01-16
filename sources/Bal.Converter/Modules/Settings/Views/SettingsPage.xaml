@@ -5,9 +5,61 @@
     xmlns:local="using:Bal.Converter.Modules.Settings.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:winui="using:CommunityToolkit.Labs.WinUI"
     mc:Ignorable="d">
 
-    <Grid>
-        <TextBlock Text="SomeText Settings" />
-    </Grid>
+    <StackPanel Spacing="5">
+        <winui:SettingsCard Header="Download Directory" Description="{x:Bind ViewModel.DownloadDirectory, Mode=TwoWay}">
+            <Button Style="{StaticResource SubtleButtonStyle}" FontFamily="{ThemeResource SymbolThemeFontFamily}" Content="&#xe712;" />
+        </winui:SettingsCard>
+
+        <winui:SettingsCard Header="Minimize the window to run in the background">
+            <winui:SettingsCard.HeaderIcon>
+                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xef1f;" />
+            </winui:SettingsCard.HeaderIcon>
+
+            <ToggleSwitch IsOn="{x:Bind ViewModel.Minimize, Mode=TwoWay}" />
+        </winui:SettingsCard>
+
+        <winui:SettingsCard Header="Maximum download bandwidth when not minimized">
+            <winui:SettingsCard.HeaderIcon>
+                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xec49;" />
+            </winui:SettingsCard.HeaderIcon>
+
+            <ComboBox HorizontalAlignment="Left" Width="150" SelectedValue="{x:Bind ViewModel.Bandwidth, Mode=TwoWay}" SelectedValuePath="Tag">
+                <ComboBoxItem Content="No limit" Tag="0" />
+                <ComboBoxItem Content="10 MB/s" Tag="10485760" />
+                <ComboBoxItem Content="5 MB/s" Tag="5242880" />
+                <ComboBoxItem Content="1 MB/s" Tag="1048576" />
+                <ComboBoxItem Content="512 KB/s" Tag="524288" />
+                <ComboBoxItem Content="256 KB/s" Tag="262144" />
+                <ComboBoxItem Content="128 KB/s" Tag="131072" />
+                <ComboBoxItem Content="64 KB/s" Tag="65536" />
+                <ComboBoxItem Content="32 KB/s" Tag="32768" />
+                <ComboBoxItem Content="16 KB/s" Tag="16384" />
+            </ComboBox>
+        </winui:SettingsCard>
+
+        <winui:SettingsCard Header="Maximum download bandwidth when minimized">
+            <winui:SettingsCard.HeaderIcon>
+                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xec4a;" />
+            </winui:SettingsCard.HeaderIcon>
+
+            <ComboBox HorizontalAlignment="Left" Width="150" SelectedValue="{x:Bind ViewModel.BandwidthMinimized, Mode=TwoWay}" SelectedValuePath="Tag">
+                <ComboBoxItem Content="No limit" Tag="0" />
+                <ComboBoxItem Content="10 MB/s" Tag="10485760" />
+                <ComboBoxItem Content="5 MB/s" Tag="5242880" />
+                <ComboBoxItem Content="1 MB/s" Tag="1048576" />
+                <ComboBoxItem Content="512 KB/s" Tag="524288" />
+                <ComboBoxItem Content="256 KB/s" Tag="262144" />
+                <ComboBoxItem Content="128 KB/s" Tag="131072" />
+                <ComboBoxItem Content="64 KB/s" Tag="65536" />
+                <ComboBoxItem Content="32 KB/s" Tag="32768" />
+                <ComboBoxItem Content="16 KB/s" Tag="16384" />
+            </ComboBox>
+        </winui:SettingsCard>
+
+        <Button MinWidth="100" Content="Save" Command="{x:Bind ViewModel.SaveCommand}" />
+
+    </StackPanel>
 </Page>

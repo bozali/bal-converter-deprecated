@@ -4,6 +4,7 @@ using Bal.Converter.Modules.Downloads.ViewModels;
 using Bal.Converter.Modules.Downloads.Views;
 using Bal.Converter.Modules.MediaDownloader.ViewModels;
 using Bal.Converter.Modules.MediaDownloader.Views;
+using Bal.Converter.Modules.Settings;
 using Bal.Converter.Modules.Settings.ViewModels;
 using Bal.Converter.Modules.Settings.Views;
 using Bal.Converter.Services;
@@ -38,8 +39,11 @@ public partial class App : Application
 
                                  services.AddSingleton<IActivationService, ActivationService>();
                                  services.AddSingleton<INavigationService, NavigationService>();
+                                 services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
                                  services.AddSingleton<IPageService, PageService>();
-                                 services.AddSingleton<IYouTubeDl, YouTubeDl.YouTubeDl>(provider => new YouTubeDl.YouTubeDl(@"Tools\yt-dlp.exe", @"Tools\ffmpeg.exe", IConfigurationService.TempPath));
+                                 services.AddSingleton<IYouTubeDl, YouTubeDl.YouTubeDl>(provider => new YouTubeDl.YouTubeDl(@"Tools\yt-dlp.exe", @"Tools\ffmpeg.exe", ILocalSettingsService.TempPath));
+
+                                 services.AddSingleton<IFileSystemService, FileSystemService>();
 
                                  // Views and ViewModels
                                  services.AddTransient<MainViewModel>()
@@ -53,6 +57,9 @@ public partial class App : Application
                                          .AddTransient<SettingsPage>()
                                          .AddTransient<MainPage>()
                                          .AddTransient<ShellPage>();
+
+                                 // Configuration
+                                 services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
                              }).
                              Build();
 
@@ -83,6 +90,48 @@ public partial class App : Application
     {
         base.OnLaunched(args);
 
+        await SetupSettings();
         await App.GetService<IActivationService>().ActivateAsync(args);
+    }
+
+    private static async Task SetupSettings()
+    {
+        var localSettingsService = App.GetService<ILocalSettingsService>();
+
+        string? downloadDirectory = await localSettingsService.ReadSettingsAsync<string>(ILocalSettingsService.DownloadDirectoryKey);
+
+        if (string.IsNullOrEmpty(downloadDirectory))
+        {
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyVideos));
+            await localSettingsService.SaveSettingsAsync(ILocalSettingsService.DownloadDirectoryKey, path);
+        }
+
+        string? firstTime = await localSettingsService.ReadSettingsAsync<string>(ILocalSettingsService.FirstTimeKey);
+
+        if (string.IsNullOrEmpty(firstTime) || !bool.TryParse(firstTime, out bool firstTimeValue))
+        {
+            await localSettingsService.SaveSettingsAsync(ILocalSettingsService.FirstTimeKey, true);
+        }
+
+        string? minimized = await localSettingsService.ReadSettingsAsync<string>(ILocalSettingsService.MinimizeAppKey);
+
+        if (string.IsNullOrEmpty(minimized) || !bool.TryParse(minimized, out bool minimizedValue))
+        {
+            await localSettingsService.SaveSettingsAsync(ILocalSettingsService.MinimizeAppKey, true);
+        }
+
+        string? bandwidth = await localSettingsService.ReadSettingsAsync<string>(ILocalSettingsService.BandwidthKey);
+
+        if (string.IsNullOrEmpty(bandwidth) || !int.TryParse(bandwidth, out int bandwidthValue))
+        {
+            await localSettingsService.SaveSettingsAsync(ILocalSettingsService.BandwidthKey, 0);
+        }
+
+        string? bandwidthMinimized = await localSettingsService.ReadSettingsAsync<string>(ILocalSettingsService.BandwidthMinimizedKey);
+
+        if (string.IsNullOrEmpty(bandwidthMinimized) || !int.TryParse(bandwidthMinimized, out int bandwidthMinimizedValue))
+        {
+            await localSettingsService.SaveSettingsAsync(ILocalSettingsService.BandwidthMinimizedKey, 0);
+        }
     }
 }
