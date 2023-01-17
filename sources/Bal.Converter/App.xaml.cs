@@ -44,6 +44,7 @@ public partial class App : Application
                                  services.AddSingleton<IYouTubeDl, YouTubeDl.YouTubeDl>(provider => new YouTubeDl.YouTubeDl(@"Tools\yt-dlp.exe", @"Tools\ffmpeg.exe", ILocalSettingsService.TempPath));
 
                                  services.AddSingleton<IFileSystemService, FileSystemService>();
+                                 services.AddSingleton<IFileDownloaderService, FileDownloaderService>();
 
                                  // Views and ViewModels
                                  services.AddTransient<MainViewModel>()

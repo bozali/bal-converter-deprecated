@@ -11,8 +11,8 @@
 
     <ScrollViewer>
         <StackPanel Spacing="5">
-            <Border HorizontalAlignment="Left" MinWidth="310" MinHeight="150" CornerRadius="3">
-                <Image MinWidth="310" MinHeight="150" Source="../../../Assets/Wide310x150Logo.png" />
+            <Border HorizontalAlignment="Left" CornerRadius="3">
+                <Image HorizontalAlignment="Left" MinWidth="310" MinHeight="150" MaxWidth="310" MaxHeight="150" Source="{x:Bind ViewModel.Video.ThumbnailPath}" />
             </Border>
 
             <winui:SettingsExpander x:Uid="Tags" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe8ec;}"
@@ -20,45 +20,45 @@
 
                 <winui:SettingsExpander.Items>
                     <winui:SettingsCard x:Uid="MediaTagEditorTitle" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
-                        <TextBox />
+                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Title}" />
                     </winui:SettingsCard>
 
                     <winui:SettingsCard x:Uid="MediaTagEditorAlbum" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
-                        <TextBox />
+                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Album}" />
                     </winui:SettingsCard>
 
                     <winui:SettingsCard x:Uid="MediaTagEditorComment" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
-                        <TextBox />
+                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Comment}" />
                     </winui:SettingsCard>
 
                     <winui:SettingsCard x:Uid="MediaTagEditorCopyright" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
-                        <TextBox />
+                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Copyright}" />
                     </winui:SettingsCard>
 
                     <winui:SettingsCard x:Uid="MediaTagEditorAlbumArtist" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
-                        <TextBox />
+                        <TextBox Text="{x:Bind ViewModel.Video.Tags.AlbumArtists}" />
                     </winui:SettingsCard>
 
                     <winui:SettingsCard x:Uid="MediaTagEditorGenres" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
-                        <TextBox />
+                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Genres}" />
                     </winui:SettingsCard>
 
                     <winui:SettingsCard x:Uid="MediaTagEditorPerformers" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
-                        <TextBox />
+                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Performers}" />
                     </winui:SettingsCard>
 
                     <winui:SettingsCard x:Uid="MediaTagEditorComposers" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
-                        <TextBox />
+                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Composers}" />
                     </winui:SettingsCard>
 
                     <winui:SettingsCard x:Uid="MediaTagEditorYear">
-                        <NumberBox MinWidth="{StaticResource SettingActionControlMinWidth}" SpinButtonPlacementMode="Compact" Value="2023" />
+                        <NumberBox MinWidth="{StaticResource SettingActionControlMinWidth}" SpinButtonPlacementMode="Compact" Value="{x:Bind ViewModel.Video.Tags.Year}" />
                     </winui:SettingsCard>
                 </winui:SettingsExpander.Items>
             </winui:SettingsExpander>
 
             <winui:SettingsCard x:Uid="TargetFormat" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe8ab;}">
-                <ComboBox MinWidth="{StaticResource SettingActionControlMinWidth}" SelectedValue="MP4">
+                <ComboBox MinWidth="{StaticResource SettingActionControlMinWidth}" SelectedValue="{x:Bind ViewModel.Video.Format}">
                     <x:String>MP3</x:String>
                     <x:String>MP4</x:String>
                     <x:String>Wav</x:String>

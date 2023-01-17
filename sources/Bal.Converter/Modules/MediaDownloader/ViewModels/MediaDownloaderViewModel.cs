@@ -2,6 +2,8 @@
 
 using Bal.Converter.Common.Enums;
 using Bal.Converter.Contracts.Services;
+using Bal.Converter.Services;
+using Bal.Converter.YouTubeDl;
 using Bal.Converter.YouTubeDl.Quality;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -12,6 +14,8 @@ namespace Bal.Converter.Modules.MediaDownloader.ViewModels;
 public partial class MediaDownloaderViewModel : ObservableObject
 {
     private readonly INavigationService navigationService;
+    private readonly IFileDownloaderService fileDownloader;
+    private readonly IYouTubeDl youtubeDl;
 
     [ObservableProperty] private string audioQualityOption;
     [ObservableProperty] private string videoQualityOption;
@@ -26,9 +30,11 @@ public partial class MediaDownloaderViewModel : ObservableObject
 
     private string format;
 
-    public MediaDownloaderViewModel(INavigationService navigationService)
+    public MediaDownloaderViewModel(INavigationService navigationService, IFileDownloaderService fileDownloader, IYouTubeDl youtubeDl)
     {
         this.navigationService = navigationService;
+        this.fileDownloader = fileDownloader;
+        this.youtubeDl = youtubeDl;
         this.Url = string.Empty;
 
         this.AudioQualityOption = AutomaticQualityOption.Best.ToString();
@@ -50,9 +56,26 @@ public partial class MediaDownloaderViewModel : ObservableObject
     }
 
     [RelayCommand(CanExecute = nameof(CanContinue))]
-    private void Edit()
+    private async Task Edit()
     {
-        this.navigationService.NavigateTo(typeof(MediaTagEditorViewModel).FullName!);
+        var video = await this.youtubeDl.GetVideo(this.Url);
+        var thumbnail = await this.fileDownloader.DownloadFileAsync(video.ThumbnailUrl);
+
+        var vmVideo = new VideoViewModel
+        {
+            Format = this.Format,
+            Url = video.Url,
+            ThumbnailData = thumbnail.Data,
+            ThumbnailPath = thumbnail.DownloadPath,
+            Tags = new MediaTagsViewModel
+            {
+                Title = video.Title,
+                Artist = video.Channel,
+                Year = video.UploadDate.Year
+            }
+        };
+
+        this.navigationService.NavigateTo(typeof(MediaTagEditorViewModel).FullName!, vmVideo);
     }
 
     private bool CanContinue()

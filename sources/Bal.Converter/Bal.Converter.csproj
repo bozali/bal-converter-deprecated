@@ -32,10 +32,12 @@
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.Labs.WinUI.SettingsControls" Version="0.0.12" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.0.0" />
+    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="12.2.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221209.1" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.WinUI.Managed" Version="2.0.8" />
     <PackageReference Include="Newtonsoft.Json.Bson" Version="1.0.2" />
+    <PackageReference Include="taglib-sharp-netstandard2.0" Version="2.1.0" />
     <PackageReference Include="WinUIEx" Version="1.8.0" />
   </ItemGroup>
 
@@ -47,6 +49,7 @@
 
   <ItemGroup>
     <Folder Include="Modules\Downloads\ViewModels\" />
+    <Folder Include="Domain\" />
     <Folder Include="Tools\" />
   </ItemGroup>
 
