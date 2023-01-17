@@ -5,6 +5,8 @@ using Bal.Converter.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
+using Windows.Storage.Pickers;
+
 namespace Bal.Converter.Modules.Settings.ViewModels;
 
 public partial class SettingsViewModel : ObservableRecipient, INavigationAware
@@ -41,5 +43,26 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
 
     public void OnNavigatedFrom()
     {
+    }
+
+    [RelayCommand]
+    private async Task ChangeDownloadDirectory()
+    {
+        string? newPath = await PickSingleFolderDialog();
+
+        if (!string.IsNullOrEmpty(newPath))
+        {
+            this.DownloadDirectory = newPath;
+        }
+    }
+
+    private static async Task<string?> PickSingleFolderDialog()
+    {
+        var openPicker = new FolderPicker();
+        var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
+        WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hwnd);
+        openPicker.FileTypeFilter.Add("*");
+        var folder = await openPicker.PickSingleFolderAsync();
+        return folder?.Path;
     }
 }

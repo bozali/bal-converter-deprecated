@@ -9,11 +9,17 @@
     mc:Ignorable="d">
 
     <StackPanel Spacing="5">
-        <winui:SettingsCard Header="Download Directory" Description="{x:Bind ViewModel.DownloadDirectory, Mode=TwoWay}">
-            <Button Style="{StaticResource SubtleButtonStyle}" FontFamily="{ThemeResource SymbolThemeFontFamily}" Content="&#xe712;" />
+        <winui:SettingsCard x:Uid="DownloadDirectory">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                <TextBlock Text="{x:Bind ViewModel.DownloadDirectory, Mode=TwoWay}" FontSize="12" Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                           VerticalAlignment="Center"
+                           IsTextSelectionEnabled="True" TextAlignment="Right" />
+
+                <Button Command="{x:Bind ViewModel.ChangeDownloadDirectoryCommand}" Style="{StaticResource SubtleButtonStyle}" FontFamily="{ThemeResource SymbolThemeFontFamily}" Content="&#xe8da;" />
+            </StackPanel>
         </winui:SettingsCard>
 
-        <winui:SettingsCard Header="Minimize the window to run in the background">
+        <winui:SettingsCard x:Uid="MinimizeRunInBackground">
             <winui:SettingsCard.HeaderIcon>
                 <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xef1f;" />
             </winui:SettingsCard.HeaderIcon>
@@ -21,12 +27,12 @@
             <ToggleSwitch IsOn="{x:Bind ViewModel.Minimize, Mode=TwoWay}" />
         </winui:SettingsCard>
 
-        <winui:SettingsCard Header="Maximum download bandwidth when not minimized">
+        <winui:SettingsCard x:Uid="MaxDownloadBandwidth">
             <winui:SettingsCard.HeaderIcon>
                 <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xec49;" />
             </winui:SettingsCard.HeaderIcon>
 
-            <ComboBox HorizontalAlignment="Left" Width="150" SelectedValue="{x:Bind ViewModel.Bandwidth, Mode=TwoWay}" SelectedValuePath="Tag">
+            <ComboBox HorizontalAlignment="Left" MinWidth="{StaticResource SettingActionControlMinWidth}" SelectedValue="{x:Bind ViewModel.Bandwidth, Mode=TwoWay}" SelectedValuePath="Tag">
                 <ComboBoxItem Content="No limit" Tag="0" />
                 <ComboBoxItem Content="10 MB/s" Tag="10485760" />
                 <ComboBoxItem Content="5 MB/s" Tag="5242880" />
@@ -40,12 +46,12 @@
             </ComboBox>
         </winui:SettingsCard>
 
-        <winui:SettingsCard Header="Maximum download bandwidth when minimized">
+        <winui:SettingsCard x:Uid="MaxDownloadBandwidthMinimized">
             <winui:SettingsCard.HeaderIcon>
                 <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xec4a;" />
             </winui:SettingsCard.HeaderIcon>
 
-            <ComboBox HorizontalAlignment="Left" Width="150" SelectedValue="{x:Bind ViewModel.BandwidthMinimized, Mode=TwoWay}" SelectedValuePath="Tag">
+            <ComboBox HorizontalAlignment="Left" MinWidth="{StaticResource SettingActionControlMinWidth}" SelectedValue="{x:Bind ViewModel.BandwidthMinimized, Mode=TwoWay}" SelectedValuePath="Tag">
                 <ComboBoxItem Content="No limit" Tag="0" />
                 <ComboBoxItem Content="10 MB/s" Tag="10485760" />
                 <ComboBoxItem Content="5 MB/s" Tag="5242880" />
@@ -59,7 +65,7 @@
             </ComboBox>
         </winui:SettingsCard>
 
-        <Button MinWidth="100" Content="Save" Command="{x:Bind ViewModel.SaveCommand}" />
+        <Button MinWidth="100" x:Uid="Save" Command="{x:Bind ViewModel.SaveCommand}" />
 
     </StackPanel>
 </Page>

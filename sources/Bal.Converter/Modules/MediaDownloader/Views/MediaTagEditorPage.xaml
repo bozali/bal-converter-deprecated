@@ -11,6 +11,10 @@
 
     <ScrollViewer>
         <StackPanel Spacing="5">
+            <Border HorizontalAlignment="Left" MinWidth="310" MinHeight="150" CornerRadius="3">
+                <Image MinWidth="310" MinHeight="150" Source="../../../Assets/Wide310x150Logo.png" />
+            </Border>
+
             <winui:SettingsExpander x:Uid="Tags" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe8ec;}"
                                     IsExpanded="False">
 

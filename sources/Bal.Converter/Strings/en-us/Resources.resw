@@ -201,4 +201,19 @@
   <data name="VideoQuality.Header" xml:space="preserve">
     <value>Video quality</value>
   </data>
+  <data name="DownloadDirectory.Header" xml:space="preserve">
+    <value>Download directory</value>
+  </data>
+  <data name="MaxDownloadBandwidth.Header" xml:space="preserve">
+    <value>Maximum download bandwidth when not minimized</value>
+  </data>
+  <data name="MaxDownloadBandwidthMinimized.Header" xml:space="preserve">
+    <value>Maximum download bandwidth when minimized</value>
+  </data>
+  <data name="MinimizeRunInBackground.Header" xml:space="preserve">
+    <value>Minimize the window to run in the background</value>
+  </data>
+  <data name="Save.Content" xml:space="preserve">
+    <value>Save</value>
+  </data>
 </root>
