@@ -50,6 +50,7 @@
   <ItemGroup>
     <Folder Include="Modules\Downloads\ViewModels\" />
     <Folder Include="Domain\" />
+    <Folder Include="Workers\" />
     <Folder Include="Tools\" />
   </ItemGroup>
 
