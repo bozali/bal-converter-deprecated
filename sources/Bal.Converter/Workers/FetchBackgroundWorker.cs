@@ -15,7 +15,7 @@ public class FetchBackgroundWorker
     {
         while (!ct.IsCancellationRequested)
         {
-            await this.downloadsRegistry.GetDownloadJob();
+            var job = await this.downloadsRegistry.GetFetch();
         }
     }
 }

@@ -95,6 +95,7 @@
                 </winui:SettingsExpander.Items>
             </winui:SettingsExpander>
 
+            <Button x:Uid="Download" MinWidth="100" Command="{x:Bind ViewModel.DownloadCommand}" />
         </StackPanel>
     </ScrollViewer>
 </Page>

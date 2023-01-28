@@ -1,14 +1,17 @@
 ﻿using Bal.Converter.Contracts.Services;
+using Bal.Converter.Messages;
 using Bal.Converter.Modules.Settings.Views;
 
 using CommunityToolkit.Mvvm.ComponentModel;
-
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml.Navigation;
 
 namespace Bal.Converter.ViewModels;
 
-public class ShellViewModel : ObservableRecipient
+public partial class ShellViewModel : ObservableRecipient
 {
+    [ObservableProperty] private bool isInteractionEnabled;
+
     private bool isBackEnabled;
     private object? selected;
 
@@ -18,6 +21,10 @@ public class ShellViewModel : ObservableRecipient
         this.NavigationViewService = navigationViewService;
 
         this.NavigationService.Navigated += this.OnNavigated;
+
+        this.IsInteractionEnabled = true;
+
+        WeakReferenceMessenger.Default.Register<DisableInteractionChangeMessage>(this, (recipient, message) => this.IsInteractionEnabled = !message.Value);
     }
 
     public INavigationService NavigationService { get; }

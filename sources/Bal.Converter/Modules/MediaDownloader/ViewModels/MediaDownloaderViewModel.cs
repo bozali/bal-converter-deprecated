@@ -1,13 +1,16 @@
 ﻿using System.Web;
 
 using Bal.Converter.Common.Enums;
+using Bal.Converter.Common.Extensions;
 using Bal.Converter.Contracts.Services;
+using Bal.Converter.Messages;
 using Bal.Converter.Services;
 using Bal.Converter.YouTubeDl;
 using Bal.Converter.YouTubeDl.Quality;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace Bal.Converter.Modules.MediaDownloader.ViewModels;
 
@@ -21,6 +24,7 @@ public partial class MediaDownloaderViewModel : ObservableObject
     [ObservableProperty] private string videoQualityOption;
     [ObservableProperty] private bool proceedAsPlaylist;
     [ObservableProperty] private bool isPlaylist;
+    [ObservableProperty] private bool isProcessing;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsPlaylist))]
@@ -41,6 +45,7 @@ public partial class MediaDownloaderViewModel : ObservableObject
         this.VideoQualityOption = AutomaticQualityOption.Best.ToString();
         this.Format = MediaFileExtension.MP4.ToString();
         this.ProceedAsPlaylist = true;
+        this.IsProcessing = false;
         this.IsPlaylist = true;
     }
 
@@ -58,24 +63,32 @@ public partial class MediaDownloaderViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanContinue))]
     private async Task Edit()
     {
-        var video = await this.youtubeDl.GetVideo(this.Url);
-        var thumbnail = await this.fileDownloader.DownloadFileAsync(video.ThumbnailUrl);
-
-        var vmVideo = new VideoViewModel
+        try
         {
-            Format = this.Format,
-            Url = video.Url,
-            ThumbnailData = thumbnail.Data,
-            ThumbnailPath = thumbnail.DownloadPath,
-            Tags = new MediaTagsViewModel
-            {
-                Title = video.Title,
-                Artist = video.Channel,
-                Year = video.UploadDate.Year
-            }
-        };
+            this.IsProcessing = true;
 
-        this.navigationService.NavigateTo(typeof(MediaTagEditorViewModel).FullName!, vmVideo);
+            var video = await this.youtubeDl.GetVideo(this.Url);
+            var thumbnail = await this.fileDownloader.DownloadFileAsync(video.ThumbnailUrl);
+
+            var vmVideo = new VideoViewModel { Format = this.Format, Url = video.Url, ThumbnailData = thumbnail.Data, ThumbnailPath = thumbnail.DownloadPath, Tags = new MediaTagsViewModel { Title = video.Title.RemoveIllegalChars(), Artist = video.Channel, Year = video.UploadDate.Year } };
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "Video", vmVideo },
+                { "VideoQuality", this.VideoQualityOption },
+                { "AudioQuality", this.AudioQualityOption }
+            };
+
+            this.navigationService.NavigateTo(typeof(MediaTagEditorViewModel).FullName!, parameters);
+        }
+        catch (Exception e)
+        {
+            // ignored
+        }
+        finally
+        {
+            this.IsProcessing = false;
+        }
     }
 
     private bool CanContinue()
@@ -94,5 +107,10 @@ public partial class MediaDownloaderViewModel : ObservableObject
         this.IsPlaylist = HttpUtility.ParseQueryString(uri.Query)
                                      .AllKeys
                                      .Any(key => string.Equals(key, "list", StringComparison.OrdinalIgnoreCase));
+    }
+
+    partial void OnIsProcessingChanged(bool value)
+    {
+        WeakReferenceMessenger.Default.Send(new DisableInteractionChangeMessage(value));
     }
 }

@@ -216,4 +216,7 @@
   <data name="Save.Content" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="Download.Content" xml:space="preserve">
+    <value>Download</value>
+  </data>
 </root>

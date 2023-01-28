@@ -62,8 +62,8 @@
         </winui:SettingsExpander>
 
         <StackPanel Orientation="Horizontal" Spacing="10">
-            <Button MinWidth="100" x:Uid="Convert" Command="{x:Bind ViewModel.ConvertCommand}" />
-            <Button MinWidth="100" x:Uid="Edit" Command="{x:Bind ViewModel.EditCommand}" />
+            <Button IsEnabled="{x:Bind ViewModel.IsProcessing, Converter={StaticResource InverseBooleanConverter}}" MinWidth="100" x:Uid="Convert" Command="{x:Bind ViewModel.ConvertCommand}" />
+            <Button IsEnabled="{x:Bind ViewModel.IsProcessing, Converter={StaticResource InverseBooleanConverter}}" MinWidth="100" x:Uid="Edit" Command="{x:Bind ViewModel.EditCommand}" />
         </StackPanel>
     </StackPanel>
 </Page>

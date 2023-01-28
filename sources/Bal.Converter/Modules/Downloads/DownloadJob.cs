@@ -3,6 +3,6 @@
 namespace Bal.Converter.Modules.Downloads ;
 
 [Serializable]
-public partial class DownloadJob : ObservableObject
+public partial class DownloadJob
 {
 }
