@@ -7,6 +7,7 @@ using Bal.Converter.Modules.MediaDownloader.Views;
 using Bal.Converter.Modules.Settings;
 using Bal.Converter.Modules.Settings.ViewModels;
 using Bal.Converter.Modules.Settings.Views;
+using Bal.Converter.Profiles;
 using Bal.Converter.Services;
 using Bal.Converter.ViewModels;
 using Bal.Converter.Views;
@@ -45,6 +46,9 @@ public partial class App : Application
 
                                  services.AddSingleton<IFileSystemService, FileSystemService>();
                                  services.AddSingleton<IFileDownloaderService, FileDownloaderService>();
+                                 services.AddSingleton<IDownloadsRegistryService, DownloadsRegistryService>();
+
+                                 services.AddAutoMapper(x => x.AddProfile<BalMapperProfile>());
 
                                  // Views and ViewModels
                                  services.AddTransient<MainViewModel>()

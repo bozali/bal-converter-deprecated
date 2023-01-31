@@ -1,5 +1,4 @@
-﻿using Bal.Converter.Common.Enums;
-using Bal.Converter.Modules.Downloads;
+﻿using Bal.Converter.Modules.Downloads;
 
 namespace Bal.Converter.Services ;
 
@@ -26,8 +25,9 @@ public class DownloadsRegistryService : IDownloadsRegistryService
         return new DownloadJob();
     }
 
-    public void EnqueueFetch(string url, MediaFileExtension extension)
+    public void EnqueueFetch(DownloadJob job)
     {
+        this.semaphore.Release();
     }
 
     public void EnqueueDownload()
