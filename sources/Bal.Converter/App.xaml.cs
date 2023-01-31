@@ -11,6 +11,7 @@ using Bal.Converter.Profiles;
 using Bal.Converter.Services;
 using Bal.Converter.ViewModels;
 using Bal.Converter.Views;
+using Bal.Converter.Workers;
 using Bal.Converter.YouTubeDl;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -65,6 +66,9 @@ public partial class App : Application
                                          .AddTransient<MainPage>()
                                          .AddTransient<ShellPage>();
 
+                                 // Background services
+                                 services.AddSingleton<FetchBackgroundWorker>();
+
                                  // Configuration
                                  services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
                              }).
@@ -99,6 +103,11 @@ public partial class App : Application
 
         await SetupSettings();
         await App.GetService<IActivationService>().ActivateAsync(args);
+
+        // ReSharper disable once ArrangeStaticMemberQualifier
+#pragma warning disable CS4014
+        App.GetService<FetchBackgroundWorker>().Process().ConfigureAwait(false);
+#pragma warning restore CS4014
     }
 
     private static async Task SetupSettings()

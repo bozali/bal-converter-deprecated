@@ -1,6 +1,7 @@
 ﻿using Bal.Converter.Common.Enums;
 using Bal.Converter.Common.Media;
 using Bal.Converter.Events;
+using Bal.Converter.YouTubeDl.Quality;
 
 namespace Bal.Converter.Modules.Downloads ;
 
@@ -19,6 +20,8 @@ public class DownloadJob
     public MediaFileExtension TargetFormat { get; set; }
 
     public DownloadState State { get; set; }
+
+    public QualityOption AutomaticQualityOption { get; set; }
 
     public MediaTags Tags { get; set; }
 }

@@ -54,6 +54,6 @@ public partial class MediaTagEditorViewModel : ObservableObject, INavigationAwar
             TargetFormat = Enum.Parse<MediaFileExtension>(this.Video.Format)
         };
 
-        this.downloadsRegistry.EnqueueFetch(job);
+        // this.downloadsRegistry.EnqueueFetch(job);
     }
 }

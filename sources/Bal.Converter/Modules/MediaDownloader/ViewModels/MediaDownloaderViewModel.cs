@@ -11,13 +11,16 @@ using Bal.Converter.YouTubeDl.Quality;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.Logging;
 
 namespace Bal.Converter.Modules.MediaDownloader.ViewModels;
 
 public partial class MediaDownloaderViewModel : ObservableObject
 {
+    private readonly ILogger<MediaDownloaderViewModel> logger;
     private readonly INavigationService navigationService;
     private readonly IFileDownloaderService fileDownloader;
+    private readonly IDownloadsRegistryService downloadsRegistry;
     private readonly IYouTubeDl youtubeDl;
 
     [ObservableProperty] private string audioQualityOption;
@@ -34,10 +37,16 @@ public partial class MediaDownloaderViewModel : ObservableObject
 
     private string format;
 
-    public MediaDownloaderViewModel(INavigationService navigationService, IFileDownloaderService fileDownloader, IYouTubeDl youtubeDl)
+    public MediaDownloaderViewModel(ILogger<MediaDownloaderViewModel> logger,
+                                    INavigationService navigationService,
+                                    IFileDownloaderService fileDownloader,
+                                    IDownloadsRegistryService downloadsRegistry,
+                                    IYouTubeDl youtubeDl)
     {
+        this.logger = logger;
         this.navigationService = navigationService;
         this.fileDownloader = fileDownloader;
+        this.downloadsRegistry = downloadsRegistry;
         this.youtubeDl = youtubeDl;
         this.Url = string.Empty;
 
@@ -58,6 +67,18 @@ public partial class MediaDownloaderViewModel : ObservableObject
     [RelayCommand(CanExecute = nameof(CanContinue))]
     private void Convert()
     {
+        try
+        {
+            this.downloadsRegistry.EnqueueFetch(this.Url, Enum.Parse<MediaFileExtension>(this.Format), new QualityOption
+            {
+                AudioQuality = Enum.Parse<AutomaticQualityOption>(this.AudioQualityOption),
+                VideoQuality = Enum.Parse<AutomaticQualityOption>(this.VideoQualityOption)
+            });
+        }
+        catch (Exception e)
+        {
+            this.logger.LogError(e, $"Failed to convert {this.Url}");
+        }
     }
 
     [RelayCommand(CanExecute = nameof(CanContinue))]
