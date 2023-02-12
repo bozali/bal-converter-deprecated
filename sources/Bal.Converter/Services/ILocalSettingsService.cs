@@ -14,7 +14,10 @@ public interface ILocalSettingsService
 
     static string TempPath
     {
-        get => RuntimeHelper.IsMsix ? ApplicationData.Current.TemporaryFolder.Path : Path.Combine(Path.GetTempPath(), "BalConverter"); }
+        // TODO Investigate why ApplicatinData is not working
+        // get => RuntimeHelper.IsMsix ? ApplicationData.Current.TemporaryFolder.Path : Path.Combine(Path.GetTempPath(), "BalConverter");
+        get => Path.Combine(Path.GetTempPath(), "BalConverter");
+    }
 
     Task<T?> ReadSettingsAsync<T>(string key);
 

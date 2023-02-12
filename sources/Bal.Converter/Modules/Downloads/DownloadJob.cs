@@ -8,20 +8,40 @@ namespace Bal.Converter.Modules.Downloads ;
 [Serializable]
 public class DownloadJob
 {
-    public event DownloadStateChangedEventHandler StateChanged;
+    private DownloadState state;
 
-    public DownloadJob()
+    public event DownloadStateChangedEventHandler? StateChanged;
+
+    public DownloadJob(string url)
     {
+        this.AutomaticQualityOption = QualityOption.BestQuality;
         this.State = DownloadState.Pending;
+        this.Id = Guid.NewGuid();
+        this.Url = url;
     }
+
+    public Guid Id { get; set; }
 
     public string Url { get; set; }
 
     public MediaFileExtension TargetFormat { get; set; }
 
-    public DownloadState State { get; set; }
+    public DownloadState State
+    {
+        get => this.state;
+        set
+        {
+            this.state = value;
+            this.OnStateChanged(this.state);
+        }
+    }
 
     public QualityOption AutomaticQualityOption { get; set; }
 
-    public MediaTags Tags { get; set; }
+    public MediaTags? Tags { get; set; }
+
+    protected virtual void OnStateChanged(DownloadState state)
+    {
+        this.StateChanged?.Invoke(this, new DownloadStateChangedEventArgs(state));
+    }
 }

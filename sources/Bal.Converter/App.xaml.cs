@@ -68,6 +68,7 @@ public partial class App : Application
 
                                  // Background services
                                  services.AddSingleton<FetchBackgroundWorker>();
+                                 services.AddSingleton<DownloadBackgroundWorker>();
 
                                  // Configuration
                                  services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
@@ -107,6 +108,7 @@ public partial class App : Application
         // ReSharper disable once ArrangeStaticMemberQualifier
 #pragma warning disable CS4014
         App.GetService<FetchBackgroundWorker>().Process().ConfigureAwait(false);
+        App.GetService<DownloadBackgroundWorker>().Process().ConfigureAwait(false);
 #pragma warning restore CS4014
     }
 

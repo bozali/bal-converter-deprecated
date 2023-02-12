@@ -20,7 +20,7 @@ public class FetchBackgroundWorker
     {
         while (!ct.IsCancellationRequested)
         {
-            var job = await this.downloadsRegistry.GetFetch();
+            var job = await this.downloadsRegistry.GetFetchJob();
             
             job.State = DownloadState.Fetching;
 
@@ -34,9 +34,8 @@ public class FetchBackgroundWorker
             };
 
             job.Tags = tags;
-            job.State = DownloadState.Pending;
-            
-            // TODO Register for the download
+
+            this.downloadsRegistry.EnqueueDownload(job);
         }
     }
 }

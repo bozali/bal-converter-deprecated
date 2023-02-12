@@ -10,9 +10,9 @@ public interface IDownloadsRegistryService
 
     Task<DownloadJob> GetDownloadJob();
 
-    Task<DownloadJob> GetFetch();
+    Task<DownloadJob> GetFetchJob();
 
     void EnqueueFetch(string url, MediaFileExtension format, QualityOption option);
 
-    void EnqueueDownload();
+    void EnqueueDownload(DownloadJob job);
 }

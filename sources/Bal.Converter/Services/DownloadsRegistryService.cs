@@ -6,7 +6,7 @@ namespace Bal.Converter.Services ;
 
 public class DownloadsRegistryService : IDownloadsRegistryService
 {
-    private readonly SemaphoreSlim semaphore;
+    private readonly SemaphoreSlim downloadSemaphore;
     private readonly SemaphoreSlim fetchSemaphore;
     private readonly List<DownloadJob> fetchJobs;
     private readonly List<DownloadJob> downloadJobs;
@@ -14,7 +14,7 @@ public class DownloadsRegistryService : IDownloadsRegistryService
     public DownloadsRegistryService()
     {
         this.fetchSemaphore = new SemaphoreSlim(0);
-        this.semaphore = new SemaphoreSlim(0);
+        this.downloadSemaphore = new SemaphoreSlim(0);
 
         this.downloadJobs = new List<DownloadJob>();
         this.fetchJobs = new List<DownloadJob>();
@@ -27,11 +27,11 @@ public class DownloadsRegistryService : IDownloadsRegistryService
 
     public async Task<DownloadJob> GetDownloadJob()
     {
-        await this.semaphore.WaitAsync();
+        await this.downloadSemaphore.WaitAsync();
         return this.downloadJobs.First();
     }
 
-    public async Task<DownloadJob> GetFetch()
+    public async Task<DownloadJob> GetFetchJob()
     {
         await this.fetchSemaphore.WaitAsync();
         return this.fetchJobs.First();
@@ -39,9 +39,8 @@ public class DownloadsRegistryService : IDownloadsRegistryService
 
     public void EnqueueFetch(string url, MediaFileExtension format, QualityOption quality)
     {
-        var job = new DownloadJob
+        var job = new DownloadJob(url)
         {
-            Url = url,
             TargetFormat = format,
             AutomaticQualityOption = quality
         };
@@ -50,7 +49,9 @@ public class DownloadsRegistryService : IDownloadsRegistryService
         this.fetchSemaphore.Release();
     }
 
-    public void EnqueueDownload()
+    public void EnqueueDownload(DownloadJob job)
     {
+        this.downloadJobs.Add(job);
+        this.downloadSemaphore.Release();
     }
 }

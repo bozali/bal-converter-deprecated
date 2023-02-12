@@ -2,7 +2,6 @@
 using Bal.Converter.Helpers;
 using Bal.Converter.Modules.Settings;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 
 namespace Bal.Converter.Services ;
 

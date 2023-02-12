@@ -20,7 +20,6 @@ public partial class MediaTagEditorViewModel : ObservableObject, INavigationAwar
     [ObservableProperty] private string audioQualityOption;
     [ObservableProperty] private string videoQualityOption;
 
-
     public MediaTagEditorViewModel(IDownloadsRegistryService downloadsRegistry, IMapper mapper)
     {
         this.downloadsRegistry = downloadsRegistry;
@@ -43,17 +42,18 @@ public partial class MediaTagEditorViewModel : ObservableObject, INavigationAwar
     [RelayCommand]
     private void Download()
     {
-        var audioQuality = Enum.Parse<AutomaticQualityOption>(this.AudioQualityOption);
-        var videoQuality = Enum.Parse<AutomaticQualityOption>(this.VideoQualityOption);
-
-        var job = new DownloadJob
+        var job = new DownloadJob(this.Video.Url)
         {
-            Url = this.Video.Url,
             State = DownloadState.Pending,
             Tags = this.mapper.Map<MediaTags>(this.Video.Tags),
-            TargetFormat = Enum.Parse<MediaFileExtension>(this.Video.Format)
+            TargetFormat = Enum.Parse<MediaFileExtension>(this.Video.Format),
+            AutomaticQualityOption = new QualityOption
+            {
+                AudioQuality = Enum.Parse<AutomaticQualityOption>(this.AudioQualityOption),
+                VideoQuality = Enum.Parse<AutomaticQualityOption>(this.VideoQualityOption)
+            }
         };
 
-        // this.downloadsRegistry.EnqueueFetch(job);
+        this.downloadsRegistry.EnqueueDownload(job);
     }
 }
