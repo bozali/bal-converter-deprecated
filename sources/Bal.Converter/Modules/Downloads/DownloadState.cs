@@ -8,7 +8,9 @@ public enum DownloadState
 
     Downloading,
 
+    Done,
+
     Paused,
 
-    Cancelled
+    Cancelled,
 }

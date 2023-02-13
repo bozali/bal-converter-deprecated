@@ -1,5 +1,6 @@
 ﻿using Bal.Converter.Activation;
 using Bal.Converter.Contracts.Services;
+using Bal.Converter.Extensions;
 using Bal.Converter.Modules.Downloads.ViewModels;
 using Bal.Converter.Modules.Downloads.Views;
 using Bal.Converter.Modules.MediaDownloader.ViewModels;
@@ -29,51 +30,8 @@ public partial class App : Application
         this.Host = Microsoft.Extensions.Hosting.Host
                              .CreateDefaultBuilder()
                              .UseContentRoot(AppContext.BaseDirectory)
-                             .ConfigureServices((context, services) =>
-                             {
-                                 // Default Activation Handler
-                                 services.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
-
-                                 // Other Activation Handlers
-
-                                 // Services
-                                 services.AddTransient<INavigationViewService, NavigationViewService>();
-
-                                 services.AddSingleton<IActivationService, ActivationService>();
-                                 services.AddSingleton<INavigationService, NavigationService>();
-                                 services.AddSingleton<ILocalSettingsService, LocalSettingsService>();
-                                 services.AddSingleton<IPageService, PageService>();
-                                 services.AddSingleton<IYouTubeDl, YouTubeDl.YouTubeDl>(provider => new YouTubeDl.YouTubeDl(@"Tools\yt-dlp.exe", @"Tools\ffmpeg.exe", ILocalSettingsService.TempPath));
-
-                                 services.AddSingleton<IFileSystemService, FileSystemService>();
-                                 services.AddSingleton<IFileDownloaderService, FileDownloaderService>();
-                                 services.AddSingleton<IDownloadsRegistryService, DownloadsRegistryService>();
-
-                                 services.AddAutoMapper(x => x.AddProfile<BalMapperProfile>());
-
-                                 // Views and ViewModels
-                                 services.AddTransient<MainViewModel>()
-                                         .AddTransient<MediaDownloaderViewModel>()
-                                         .AddTransient<MediaTagEditorViewModel>()
-                                         .AddTransient<DownloadsViewModel>()
-                                         .AddTransient<SettingsViewModel>()
-                                         .AddTransient<ShellViewModel>()
-
-                                         .AddTransient<MediaDownloaderPage>()
-                                         .AddTransient<MediaTagEditorPage>()
-                                         .AddTransient<DownloadsPage>()
-                                         .AddTransient<SettingsPage>()
-                                         .AddTransient<MainPage>()
-                                         .AddTransient<ShellPage>();
-
-                                 // Background services
-                                 services.AddSingleton<FetchBackgroundWorker>();
-                                 services.AddSingleton<DownloadBackgroundWorker>();
-
-                                 // Configuration
-                                 services.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
-                             }).
-                             Build();
+                             .ConfigureServices(this.ConfigureServices)
+                             .Build();
 
         this.UnhandledException += this.OnUnhandledException;
     }
@@ -110,6 +68,54 @@ public partial class App : Application
         App.GetService<FetchBackgroundWorker>().Process().ConfigureAwait(false);
         App.GetService<DownloadBackgroundWorker>().Process().ConfigureAwait(false);
 #pragma warning restore CS4014
+    }
+
+    private void ConfigureServices(HostBuilderContext context, IServiceCollection collection)
+    {
+        // Default Activation Handler
+        collection.AddTransient<ActivationHandler<LaunchActivatedEventArgs>, DefaultActivationHandler>();
+
+        // Other Activation Handlers
+
+        // Services
+        collection.AddTransient<INavigationViewService, NavigationViewService>();
+
+        collection.AddSingleton<IActivationService, ActivationService>();
+        collection.AddSingleton<INavigationService, NavigationService>();
+        collection.AddSingleton<ILocalSettingsService, LocalSettingsService>();
+        collection.AddSingleton<IPageService, PageService>();
+        collection.AddSingleton<IYouTubeDl, YouTubeDl.YouTubeDl>(provider => new YouTubeDl.YouTubeDl(@"Tools\yt-dlp.exe", @"Tools\ffmpeg.exe", ILocalSettingsService.TempPath));
+
+        collection.AddSingleton<IFileSystemService, FileSystemService>();
+        collection.AddSingleton<IFileDownloaderService, FileDownloaderService>();
+        collection.AddSingleton<IDownloadsRegistryService, DownloadsRegistryService>();
+
+        collection.ConfigureLiteDatabase();
+
+        collection.AddAutoMapper(x => x.AddProfile<BalMapperProfile>());
+
+        // Views and ViewModels
+        collection
+            .AddTransient<MainViewModel>()
+            .AddTransient<MediaDownloaderViewModel>()
+            .AddTransient<MediaTagEditorViewModel>()
+            .AddTransient<DownloadsViewModel>()
+            .AddTransient<SettingsViewModel>()
+            .AddTransient<ShellViewModel>()
+
+            .AddTransient<MediaDownloaderPage>()
+            .AddTransient<MediaTagEditorPage>()
+            .AddTransient<DownloadsPage>()
+            .AddTransient<SettingsPage>()
+            .AddTransient<MainPage>()
+            .AddTransient<ShellPage>();
+
+        // Background services
+        collection.AddSingleton<FetchBackgroundWorker>();
+        collection.AddSingleton<DownloadBackgroundWorker>();
+
+        // Configuration
+        collection.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));
     }
 
     private static async Task SetupSettings()

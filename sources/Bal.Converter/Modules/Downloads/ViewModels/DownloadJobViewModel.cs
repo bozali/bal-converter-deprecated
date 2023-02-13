@@ -13,6 +13,7 @@ public partial class DownloadJobViewModel : ObservableObject
     [ObservableProperty] private string title;
     [ObservableProperty] private string progress;
     [ObservableProperty] private DownloadState state;
+    [ObservableProperty] private string stateIcon;
 
     public DownloadJobViewModel(DownloadJob job)
     {
@@ -27,9 +28,38 @@ public partial class DownloadJobViewModel : ObservableObject
 
     private void OnDownloadStateChanged(object sender, DownloadStateChangedEventArgs e)
     {
-        if (e.State == DownloadState.Pending || e.State == DownloadState.Pending)
+        this.State = e.State;
+        this.Title = this.job.Tags == null ? this.job.Url : this.job.Tags.Title;
+    }
+
+    partial void OnStateChanged(DownloadState value)
+    {
+        switch (value)
         {
-            this.Title = this.job.Tags == null ? this.job.Url : this.job.Tags.Title;
+            case DownloadState.Fetching:
+                this.StateIcon = "\xe895";
+                break;
+
+            case DownloadState.Downloading:
+                this.StateIcon = "\xe896";
+                break;
+
+            case DownloadState.Done:
+                this.StateIcon = "\xe73e";
+                break;
+
+            case DownloadState.Paused:
+                this.StateIcon = "\xe769";
+                break;
+
+            case DownloadState.Cancelled:
+                this.StateIcon = "\xe71a";
+                break;
+
+            case DownloadState.Pending:
+            default:
+                this.StateIcon = "\xe81c";
+                break;
         }
     }
 }

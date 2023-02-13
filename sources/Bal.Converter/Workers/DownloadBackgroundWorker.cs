@@ -1,8 +1,9 @@
-﻿using Bal.Converter.Modules.Downloads;
+﻿using Bal.Converter.Common.Extensions;
+using Bal.Converter.Modules.Downloads;
 using Bal.Converter.Services;
 using Bal.Converter.YouTubeDl;
 
-namespace Bal.Converter.Workers ;
+namespace Bal.Converter.Workers;
 
 public class DownloadBackgroundWorker
 {
@@ -23,9 +24,7 @@ public class DownloadBackgroundWorker
         {
             try
             {
-                var job = await this.downloadsRegistry.GetDownloadJob();
-
-                job.State = DownloadState.Downloading;
+                var job = await this.downloadsRegistry.NextDownloadJob();
 
                 using var cts = new CancellationTokenSource();
 
@@ -36,9 +35,9 @@ public class DownloadBackgroundWorker
 
                 string format = job.TargetFormat.ToString().ToLowerInvariant();
 
-                string downloadPathPattern = Path.Combine(ILocalSettingsService.TempPath, $"{job.Id:N}.%(ext)s");
+                string downloadPathPattern = Path.Combine(ILocalSettingsService.TempPath, $"{job.Id}.%(ext)s");
                 string downloadPath = downloadPathPattern.Replace("%(ext)s", format);
-                string destinationPath = Path.Combine(configDownloadPath, job.Tags.Title + "." + format);
+                string destinationPath = Path.Combine(configDownloadPath, job.Tags?.Title.RemoveIllegalChars() + "." + format);
 
 
                 var options = new DownloadOptions
@@ -53,6 +52,8 @@ public class DownloadBackgroundWorker
                 cts.Token.ThrowIfCancellationRequested();
 
                 File.Move(downloadPath, destinationPath);
+
+                job.State = DownloadState.Done;
             }
             catch (Exception e)
             {

@@ -14,7 +14,7 @@ public class DownloadsViewModel : ObservableObject
     {
         this.downloadsRegistry = downloadsRegistry;
 
-        this.DownloadJobs = new ObservableCollection<DownloadJobViewModel>(this.downloadsRegistry.GetDownloadJobs().Select(x => new DownloadJobViewModel(x)));
+        this.DownloadJobs = new ObservableCollection<DownloadJobViewModel>(this.downloadsRegistry.AllJobs.Select(x => new DownloadJobViewModel(x)));
     }
 
     public ObservableCollection<DownloadJobViewModel> DownloadJobs { get; set; }

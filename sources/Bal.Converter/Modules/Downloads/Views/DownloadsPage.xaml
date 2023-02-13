@@ -24,7 +24,7 @@
                 <DataTemplate d:DataContext="{d:DesignInstance vm:DownloadJobViewModel}">
                     <winui:SettingsCard>
                         <winui:SettingsCard.HeaderIcon>
-                            <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xe896;" />
+                            <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="{Binding StateIcon, Mode=TwoWay}" />
                         </winui:SettingsCard.HeaderIcon>
 
                         <winui:SettingsCard.Header>

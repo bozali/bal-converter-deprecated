@@ -6,13 +6,15 @@ namespace Bal.Converter.Services ;
 
 public interface IDownloadsRegistryService
 {
-    IEnumerable<DownloadJob> GetDownloadJobs();
+    IReadOnlyCollection<DownloadJob> AllJobs { get; }
 
-    Task<DownloadJob> GetDownloadJob();
+    Task<DownloadJob> NextDownloadJob();
 
-    Task<DownloadJob> GetFetchJob();
+    Task<DownloadJob> NextFetchJob();
 
     void EnqueueFetch(string url, MediaFileExtension format, QualityOption option);
 
     void EnqueueDownload(DownloadJob job);
+
+    void UpdateState(int jobId, DownloadState state);
 }

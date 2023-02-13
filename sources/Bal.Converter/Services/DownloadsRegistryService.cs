@@ -1,40 +1,50 @@
-﻿using Bal.Converter.Common.Enums;
+﻿using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+
+using Bal.Converter.Common.Enums;
 using Bal.Converter.Modules.Downloads;
 using Bal.Converter.YouTubeDl.Quality;
 
+using LiteDB;
+
 namespace Bal.Converter.Services ;
 
-public class DownloadsRegistryService : IDownloadsRegistryService
+public class DownloadsRegistryService : IDownloadsRegistryService, IDisposable
 {
+    private readonly ILiteDatabase database;
     private readonly SemaphoreSlim downloadSemaphore;
     private readonly SemaphoreSlim fetchSemaphore;
-    private readonly List<DownloadJob> fetchJobs;
-    private readonly List<DownloadJob> downloadJobs;
 
-    public DownloadsRegistryService()
+    private readonly ILiteCollection<DownloadJob> collection;
+    private readonly ObservableCollection<DownloadJob> jobs;
+
+    public DownloadsRegistryService(ILiteDatabase database)
     {
-        this.fetchSemaphore = new SemaphoreSlim(0);
-        this.downloadSemaphore = new SemaphoreSlim(0);
+        this.database = database;
+        this.collection = this.database.GetCollection<DownloadJob>();
 
-        this.downloadJobs = new List<DownloadJob>();
-        this.fetchJobs = new List<DownloadJob>();
+        this.jobs = new ObservableCollection<DownloadJob>(this.collection.Query().ToList());
+        this.jobs.CollectionChanged += this.OnCollectionChanged;
+
+        this.fetchSemaphore = new SemaphoreSlim(this.collection.Query().Where(x => x.State == DownloadState.Pending || x.State == DownloadState.Fetching).Count());
+        this.downloadSemaphore = new SemaphoreSlim(this.collection.Query().Where(x => x.State == DownloadState.Downloading).Count());
     }
 
-    public IEnumerable<DownloadJob> GetDownloadJobs()
+    public IReadOnlyCollection<DownloadJob> AllJobs
     {
-        return this.downloadJobs.Concat(this.fetchJobs);
+        get => this.jobs;
     }
 
-    public async Task<DownloadJob> GetDownloadJob()
+    public async Task<DownloadJob> NextDownloadJob()
     {
         await this.downloadSemaphore.WaitAsync();
-        return this.downloadJobs.First();
+        return this.AllJobs.First(x => x.State == DownloadState.Pending || x.State == DownloadState.Downloading);
     }
 
-    public async Task<DownloadJob> GetFetchJob()
+    public async Task<DownloadJob> NextFetchJob()
     {
         await this.fetchSemaphore.WaitAsync();
-        return this.fetchJobs.First();
+        return this.AllJobs.First(x => x.State == DownloadState.Fetching);
     }
 
     public void EnqueueFetch(string url, MediaFileExtension format, QualityOption quality)
@@ -42,16 +52,67 @@ public class DownloadsRegistryService : IDownloadsRegistryService
         var job = new DownloadJob(url)
         {
             TargetFormat = format,
-            AutomaticQualityOption = quality
+            AutomaticQualityOption = quality,
+            State = DownloadState.Fetching
         };
 
-        this.fetchJobs.Add(job);
+        this.jobs.Add(job);
+
         this.fetchSemaphore.Release();
     }
 
     public void EnqueueDownload(DownloadJob job)
     {
-        this.downloadJobs.Add(job);
+        job.State = DownloadState.Downloading;
+
+        this.collection.Insert(job);
+
+        this.jobs.Add(job);
         this.downloadSemaphore.Release();
+    }
+    
+    public void UpdateState(int jobId, DownloadState state)
+    {
+        var job = this.collection.FindById(jobId);
+
+        if (job == null)
+        {
+            return;
+        }
+
+        job.State = state;
+        this.collection.Update(job);
+    }
+
+
+    public void Dispose()
+    {
+        this.jobs.CollectionChanged -= this.OnCollectionChanged;
+
+        this.database.Dispose();
+        this.downloadSemaphore.Dispose();
+        this.fetchSemaphore.Dispose();
+    }
+
+    private void OnCollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        try
+        {
+            if (e.NewItems is not IEnumerable<DownloadJob> items)
+            {
+                return;
+            }
+
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    this.collection.Insert(items.First());
+                    break;
+            }
+        }
+        catch (Exception)
+        {
+            // ignored
+        }
     }
 }

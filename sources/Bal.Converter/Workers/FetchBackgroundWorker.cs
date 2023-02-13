@@ -8,11 +8,13 @@ namespace Bal.Converter.Workers;
 public class FetchBackgroundWorker
 {
     private readonly IDownloadsRegistryService downloadsRegistry;
+    private readonly IFileDownloaderService fileDownloaderService;
     private readonly IYouTubeDl youtubeDl;
 
-    public FetchBackgroundWorker(IDownloadsRegistryService downloadsRegistry, IYouTubeDl youtubeDl)
+    public FetchBackgroundWorker(IDownloadsRegistryService downloadsRegistry, IFileDownloaderService fileDownloaderService, IYouTubeDl youtubeDl)
     {
         this.downloadsRegistry = downloadsRegistry;
+        this.fileDownloaderService = fileDownloaderService;
         this.youtubeDl = youtubeDl;
     }
 
@@ -20,12 +22,15 @@ public class FetchBackgroundWorker
     {
         while (!ct.IsCancellationRequested)
         {
-            var job = await this.downloadsRegistry.GetFetchJob();
+            var job = await this.downloadsRegistry.NextFetchJob();
             
             job.State = DownloadState.Fetching;
 
             var video = await this.youtubeDl.GetVideo(job.Url);
 
+            var downloadResponse = await this.fileDownloaderService.DownloadFileAsync(video.ThumbnailUrl);
+            job.ThumbnailPath = downloadResponse.DownloadPath;
+            
             var tags = new MediaTags
             {
                 Title = video.Title,
@@ -35,7 +40,7 @@ public class FetchBackgroundWorker
 
             job.Tags = tags;
 
-            this.downloadsRegistry.EnqueueDownload(job);
+            this.downloadsRegistry.UpdateState(job.Id, DownloadState.Downloading);
         }
     }
 }

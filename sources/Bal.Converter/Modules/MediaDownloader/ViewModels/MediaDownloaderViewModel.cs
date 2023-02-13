@@ -91,7 +91,19 @@ public partial class MediaDownloaderViewModel : ObservableObject
             var video = await this.youtubeDl.GetVideo(this.Url);
             var thumbnail = await this.fileDownloader.DownloadFileAsync(video.ThumbnailUrl);
 
-            var vmVideo = new VideoViewModel { Format = this.Format, Url = video.Url, ThumbnailData = thumbnail.Data, ThumbnailPath = thumbnail.DownloadPath, Tags = new MediaTagsViewModel { Title = video.Title.RemoveIllegalChars(), Artist = video.Channel, Year = video.UploadDate.Year } };
+            var vmVideo = new VideoViewModel
+            {
+                Format = this.Format,
+                Url = video.Url,
+                ThumbnailData = thumbnail.Data,
+                ThumbnailPath = thumbnail.DownloadPath,
+                Tags = new MediaTagsViewModel
+                {
+                    Title = video.Title.RemoveIllegalChars(),
+                    Artist = video.Channel,
+                    Year = video.UploadDate.Year
+                }
+            };
 
             var parameters = new Dictionary<string, object>
             {
