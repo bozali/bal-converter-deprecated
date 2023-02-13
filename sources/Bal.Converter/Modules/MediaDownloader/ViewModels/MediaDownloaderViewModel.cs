@@ -69,15 +69,15 @@ public partial class MediaDownloaderViewModel : ObservableObject
     {
         try
         {
-            this.downloadsRegistry.EnqueueFetch(this.Url, Enum.Parse<MediaFileExtension>(this.Format), new QualityOption
-            {
-                AudioQuality = Enum.Parse<AutomaticQualityOption>(this.AudioQualityOption),
-                VideoQuality = Enum.Parse<AutomaticQualityOption>(this.VideoQualityOption)
-            });
+            this.downloadsRegistry.EnqueueFetch(this.Url, Enum.Parse<MediaFileExtension>(this.Format), new QualityOption { AudioQuality = Enum.Parse<AutomaticQualityOption>(this.AudioQualityOption), VideoQuality = Enum.Parse<AutomaticQualityOption>(this.VideoQualityOption) });
         }
         catch (Exception e)
         {
             this.logger.LogError(e, $"Failed to convert {this.Url}");
+        }
+        finally
+        {
+            this.Url = string.Empty;
         }
     }
 

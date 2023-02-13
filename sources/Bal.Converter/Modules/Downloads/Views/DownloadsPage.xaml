@@ -12,56 +12,68 @@
 
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-        <ItemsControl ItemsSource="{x:Bind ViewModel.DownloadJobs}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Spacing="5" />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
+            <CommandBar Grid.Row="0" HorizontalAlignment="Left" Background="Transparent" DefaultLabelPosition="Right" IsSticky="True">
+                <AppBarButton Icon="Sort" Label="Order" />
+                <AppBarButton Icon="Filter" Label="Filter" />
+                <AppBarButton Icon="Clear" Label="Clear" />
+            </CommandBar>
 
-            <ItemsControl.ItemTemplate>
-                <DataTemplate d:DataContext="{d:DesignInstance vm:DownloadJobViewModel}">
-                    <winui:SettingsCard>
-                        <winui:SettingsCard.HeaderIcon>
-                            <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="{Binding StateIcon, Mode=TwoWay}" />
-                        </winui:SettingsCard.HeaderIcon>
+            <ItemsControl Grid.Row="1" ItemsSource="{x:Bind ViewModel.DownloadJobs}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Spacing="5" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
 
-                        <winui:SettingsCard.Header>
-                            <HyperlinkButton Margin="0 0 0 10" Content="{Binding Title, Mode=TwoWay}" NavigateUri="{Binding Url, Mode=TwoWay}"/>
-                        </winui:SettingsCard.Header>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate d:DataContext="{d:DesignInstance vm:DownloadJobViewModel}">
+                        <winui:SettingsCard>
+                            <winui:SettingsCard.HeaderIcon>
+                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="{Binding StateIcon, Mode=TwoWay}" />
+                            </winui:SettingsCard.HeaderIcon>
 
-                        <winui:SettingsCard.Description>
-                            <ProgressBar Value="{Binding Progress, Mode=TwoWay}" />
-                        </winui:SettingsCard.Description>
+                            <winui:SettingsCard.Header>
+                                <HyperlinkButton Margin="0 0 0 10" Content="{Binding Title, Mode=TwoWay}" NavigateUri="{Binding Url, Mode=TwoWay}"/>
+                            </winui:SettingsCard.Header>
 
-                        <Button Style="{StaticResource SubtleButtonStyle}" FontFamily="{ThemeResource SymbolThemeFontFamily}" Content="&#xe712;">
-                            <Button.Flyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem Text="Continue">
-                                        <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xe768;"/>
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
+                            <winui:SettingsCard.Description>
+                                <ProgressBar Value="{Binding Progress, Mode=TwoWay}" />
+                            </winui:SettingsCard.Description>
 
-                                    <MenuFlyoutItem Text="Pause">
-                                        <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xe769;"/>
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
+                            <Button Style="{StaticResource SubtleButtonStyle}" FontFamily="{ThemeResource SymbolThemeFontFamily}" Content="&#xe712;">
+                                <Button.Flyout>
+                                    <MenuFlyout>
+                                        <MenuFlyoutItem Text="Continue">
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xe768;"/>
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
 
-                                    <MenuFlyoutItem Text="Cancel">
-                                        <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xe71a;"/>
-                                        </MenuFlyoutItem.Icon>
-                                    </MenuFlyoutItem>
-                                </MenuFlyout>
-                            </Button.Flyout>
-                        </Button>
-                    </winui:SettingsCard>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+                                        <MenuFlyoutItem Text="Pause">
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xe769;"/>
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+
+                                        <MenuFlyoutItem Text="Cancel">
+                                            <MenuFlyoutItem.Icon>
+                                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xe71a;"/>
+                                            </MenuFlyoutItem.Icon>
+                                        </MenuFlyoutItem>
+                                    </MenuFlyout>
+                                </Button.Flyout>
+                            </Button>
+                        </winui:SettingsCard>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>
     </ScrollViewer>
 
 </Page>

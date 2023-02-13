@@ -78,6 +78,17 @@ public class DownloadsRegistryService : IDownloadsRegistryService, IDisposable
         this.downloadSemaphore.Release();
     }
 
+    public void Remove(int id)
+    {
+        this.collection.Delete(id);
+
+        var found = this.jobs.FirstOrDefault(x => x.Id == id);
+
+        if (found != null)
+        {
+            this.jobs.Remove(found);
+        }
+    }
 
     public void Dispose()
     {

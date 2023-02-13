@@ -17,4 +17,6 @@ public interface IDownloadsRegistryService
     void EnqueueDownload(DownloadJob job);
 
     void UpdateState(DownloadJob job, DownloadState state);
+
+    void Remove(int id);
 }
