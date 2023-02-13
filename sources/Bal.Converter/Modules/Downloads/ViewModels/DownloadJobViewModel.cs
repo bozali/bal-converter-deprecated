@@ -11,9 +11,10 @@ public partial class DownloadJobViewModel : ObservableObject
     [ObservableProperty] private int id;
     [ObservableProperty] private string url;
     [ObservableProperty] private string title;
-    [ObservableProperty] private string progress;
+    [ObservableProperty] private float progress;
     [ObservableProperty] private DownloadState state;
     [ObservableProperty] private string stateIcon;
+    [ObservableProperty] private string progressText;
 
     public DownloadJobViewModel(DownloadJob job)
     {
@@ -24,12 +25,19 @@ public partial class DownloadJobViewModel : ObservableObject
         this.Title = this.job.Tags == null ? this.job.Url : this.job.Tags.Title;
 
         this.job.StateChanged += OnDownloadStateChanged;
+        this.job.ProgressChanged += OnProgressChanged;
     }
 
     private void OnDownloadStateChanged(object sender, DownloadStateChangedEventArgs e)
     {
         this.State = e.State;
         this.Title = this.job.Tags == null ? this.job.Url : this.job.Tags.Title;
+    }
+
+    private void OnProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+    {
+        this.Progress = e.Progress;
+        this.ProgressText = e.Text;
     }
 
     partial void OnStateChanged(DownloadState value)

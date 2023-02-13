@@ -71,17 +71,11 @@ public class DownloadsRegistryService : IDownloadsRegistryService, IDisposable
         this.downloadSemaphore.Release();
     }
     
-    public void UpdateState(int jobId, DownloadState state)
+    public void UpdateState(DownloadJob job, DownloadState state)
     {
-        var job = this.collection.FindById(jobId);
-
-        if (job == null)
-        {
-            return;
-        }
-
         job.State = state;
         this.collection.Update(job);
+        this.downloadSemaphore.Release();
     }
 
 
@@ -98,16 +92,19 @@ public class DownloadsRegistryService : IDownloadsRegistryService, IDisposable
     {
         try
         {
-            if (e.NewItems is not IEnumerable<DownloadJob> items)
+            if (e.NewItems == null)
             {
                 return;
             }
 
-            switch (e.Action)
+            foreach (DownloadJob item in e.NewItems)
             {
-                case NotifyCollectionChangedAction.Add:
-                    this.collection.Insert(items.First());
-                    break;
+                switch (e.Action)
+                {
+                    case NotifyCollectionChangedAction.Add:
+                        this.collection.Insert(item);
+                        break;
+                }
             }
         }
         catch (Exception)

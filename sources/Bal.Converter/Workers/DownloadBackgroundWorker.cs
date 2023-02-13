@@ -2,6 +2,7 @@
 using Bal.Converter.Modules.Downloads;
 using Bal.Converter.Services;
 using Bal.Converter.YouTubeDl;
+using Microsoft.UI.Dispatching;
 
 namespace Bal.Converter.Workers;
 
@@ -39,7 +40,6 @@ public class DownloadBackgroundWorker
                 string downloadPath = downloadPathPattern.Replace("%(ext)s", format);
                 string destinationPath = Path.Combine(configDownloadPath, job.Tags?.Title.RemoveIllegalChars() + "." + format);
 
-
                 var options = new DownloadOptions
                 {
                     DownloadBandwidth = bandwidth,
@@ -47,13 +47,20 @@ public class DownloadBackgroundWorker
                     DownloadExtension = job.TargetFormat,
                 };
 
-                await this.youtubeDl.Download(job.Url, options, (f, s) => { }, cts.Token);
+                await this.youtubeDl.Download(job.Url, options, (f, s) =>
+                {
+                    App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+                    {
+                        job.Progress = f;
+                        job.ProgressText = s;
+                    });
+                }, cts.Token);
 
                 cts.Token.ThrowIfCancellationRequested();
 
                 File.Move(downloadPath, destinationPath);
 
-                job.State = DownloadState.Done;
+                this.downloadsRegistry.UpdateState(job, DownloadState.Done);
             }
             catch (Exception e)
             {

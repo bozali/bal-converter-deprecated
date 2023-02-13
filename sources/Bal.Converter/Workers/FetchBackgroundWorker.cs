@@ -40,7 +40,7 @@ public class FetchBackgroundWorker
 
             job.Tags = tags;
 
-            this.downloadsRegistry.UpdateState(job.Id, DownloadState.Downloading);
+            this.downloadsRegistry.UpdateState(job, DownloadState.Downloading);
         }
     }
 }
