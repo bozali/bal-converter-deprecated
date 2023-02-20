@@ -89,6 +89,7 @@ public partial class App : Application
         collection.AddSingleton<IFileSystemService, FileSystemService>();
         collection.AddSingleton<IFileDownloaderService, FileDownloaderService>();
         collection.AddSingleton<IDownloadsRegistryService, DownloadsRegistryService>();
+        collection.AddSingleton<IMediaTagService, MediaTagService>();
 
         collection.ConfigureLiteDatabase();
 

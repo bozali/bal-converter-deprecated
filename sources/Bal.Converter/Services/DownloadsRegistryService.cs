@@ -35,16 +35,16 @@ public class DownloadsRegistryService : IDownloadsRegistryService, IDisposable
         get => this.jobs;
     }
 
-    public async Task<DownloadJob> NextDownloadJob()
+    public async Task<DownloadJob?> NextDownloadJob()
     {
         await this.downloadSemaphore.WaitAsync();
-        return this.AllJobs.First(x => x.State == DownloadState.Pending || x.State == DownloadState.Downloading);
+        return this.AllJobs.FirstOrDefault(x => x.State == DownloadState.Pending || x.State == DownloadState.Downloading);
     }
 
-    public async Task<DownloadJob> NextFetchJob()
+    public async Task<DownloadJob?> NextFetchJob()
     {
         await this.fetchSemaphore.WaitAsync();
-        return this.AllJobs.First(x => x.State == DownloadState.Fetching);
+        return this.AllJobs.FirstOrDefault(x => x.State == DownloadState.Fetching);
     }
 
     public void EnqueueFetch(string url, MediaFileExtension format, QualityOption quality)
@@ -75,7 +75,11 @@ public class DownloadsRegistryService : IDownloadsRegistryService, IDisposable
     {
         job.State = state;
         this.collection.Update(job);
-        this.downloadSemaphore.Release();
+
+        if (state == DownloadState.Downloading)
+        {
+            this.downloadSemaphore.Release();
+        }
     }
 
     public void Remove(int id)

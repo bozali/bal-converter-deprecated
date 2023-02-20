@@ -1,21 +1,31 @@
 ﻿using Bal.Converter.Common.Extensions;
+using Bal.Converter.Events;
 using Bal.Converter.Modules.Downloads;
 using Bal.Converter.Services;
 using Bal.Converter.YouTubeDl;
+using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 
 namespace Bal.Converter.Workers;
 
 public class DownloadBackgroundWorker
 {
+    private readonly ILogger<DownloadBackgroundWorker> logger;
     private readonly IDownloadsRegistryService downloadsRegistry;
     private readonly ILocalSettingsService localSettingsService;
+    private readonly IMediaTagService mediaTagService;
     private readonly IYouTubeDl youtubeDl;
 
-    public DownloadBackgroundWorker(IDownloadsRegistryService downloadsRegistry, ILocalSettingsService localSettingsService, IYouTubeDl youtubeDl)
+    public DownloadBackgroundWorker(ILogger<DownloadBackgroundWorker> logger,
+                                    IDownloadsRegistryService downloadsRegistry,
+                                    ILocalSettingsService localSettingsService,
+                                    IMediaTagService mediaTagService,
+                                    IYouTubeDl youtubeDl)
     {
+        this.logger = logger;
         this.downloadsRegistry = downloadsRegistry;
         this.localSettingsService = localSettingsService;
+        this.mediaTagService = mediaTagService;
         this.youtubeDl = youtubeDl;
     }
 
@@ -29,6 +39,18 @@ public class DownloadBackgroundWorker
 
                 using var cts = new CancellationTokenSource();
 
+                // Create a local function to call the cancellation token if cancel is requested.
+                void OnStateChanged(object s, DownloadStateChangedEventArgs e)
+                {
+                    if (e.State == DownloadState.Cancelled && cts is { IsCancellationRequested: false })
+                    {
+                        this.logger.LogInformation($"Requesting cancellation for {job.Id}");
+                        cts?.Cancel();
+                    }
+                }
+
+                job.StateChanged += OnStateChanged;
+
                 string configDownloadPath = await this.localSettingsService.ReadSettingsAsync<string>(ILocalSettingsService.DownloadDirectoryKey)
                                             ?? Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyVideos));
 
@@ -40,12 +62,28 @@ public class DownloadBackgroundWorker
                 string downloadPath = downloadPathPattern.Replace("%(ext)s", format);
                 string destinationPath = Path.Combine(configDownloadPath, job.Tags?.Title.RemoveIllegalChars() + "." + format);
 
-                var options = new DownloadOptions
+                this.logger.LogDebug("Downloading parameters");
+                this.logger.LogDebug($"Pattern Path: {downloadPathPattern}");
+                this.logger.LogDebug($"Download Path: {downloadPath}");
+                this.logger.LogDebug($"Destination Path: {destinationPath}");
+
+                new FileInfo(destinationPath).SafeDelete();
+
+                var options = new DownloadOptions { DownloadBandwidth = bandwidth, Destination = downloadPathPattern, DownloadExtension = job.TargetFormat, };
+
+                // Register a callback that removes the job from the registry and also removes
+                // the part files if cancellation is requested.
+                await using var ctr = cts.Token.Register(() =>
                 {
-                    DownloadBandwidth = bandwidth,
-                    Destination = downloadPathPattern,
-                    DownloadExtension = job.TargetFormat,
-                };
+                    job.ProgressText = job.State.ToString("G");
+
+                    var file = new FileInfo(downloadPath + ".part");
+
+                    if (file.Wait())
+                    {
+                        file.SafeDelete();
+                    }
+                });
 
                 await this.youtubeDl.Download(job.Url, options, (f, s) =>
                 {
@@ -54,16 +92,25 @@ public class DownloadBackgroundWorker
                         job.Progress = f;
                         job.ProgressText = s;
                     });
-                }, cts.Token);
+                }, ctr.Token);
 
                 cts.Token.ThrowIfCancellationRequested();
+
+                this.mediaTagService.SetInformation(downloadPath, job.Tags);
+                this.mediaTagService.SetPicture(downloadPath, job.ThumbnailPath);
 
                 File.Move(downloadPath, destinationPath);
 
                 this.downloadsRegistry.UpdateState(job, DownloadState.Done);
+
+                job.StateChanged -= OnStateChanged;
+            }
+            catch (OperationCanceledException)
+            {
             }
             catch (Exception e)
             {
+                this.logger.LogError("Failed to download", e);
             }
         }
     }

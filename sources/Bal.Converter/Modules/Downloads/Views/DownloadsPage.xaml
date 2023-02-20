@@ -19,8 +19,10 @@
             </Grid.RowDefinitions>
 
             <CommandBar Grid.Row="0" HorizontalAlignment="Left" Background="Transparent" DefaultLabelPosition="Right" IsSticky="True">
+                <!--
                 <AppBarButton Icon="Sort" Label="Order" />
                 <AppBarButton Icon="Filter" Label="Filter" />
+                -->
                 <AppBarButton Icon="Clear" Label="Clear" />
             </CommandBar>
 

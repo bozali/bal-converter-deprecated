@@ -8,9 +8,9 @@ public interface IDownloadsRegistryService
 {
     IReadOnlyCollection<DownloadJob> AllJobs { get; }
 
-    Task<DownloadJob> NextDownloadJob();
+    Task<DownloadJob?> NextDownloadJob();
 
-    Task<DownloadJob> NextFetchJob();
+    Task<DownloadJob?> NextFetchJob();
 
     void EnqueueFetch(string url, MediaFileExtension format, QualityOption option);
 

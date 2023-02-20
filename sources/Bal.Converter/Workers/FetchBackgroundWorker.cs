@@ -22,25 +22,32 @@ public class FetchBackgroundWorker
     {
         while (!ct.IsCancellationRequested)
         {
-            var job = await this.downloadsRegistry.NextFetchJob();
-            
-            job.State = DownloadState.Fetching;
-
-            var video = await this.youtubeDl.GetVideo(job.Url);
-
-            var downloadResponse = await this.fileDownloaderService.DownloadFileAsync(video.ThumbnailUrl);
-            job.ThumbnailPath = downloadResponse.DownloadPath;
-            
-            var tags = new MediaTags
+            try
             {
-                Title = video.Title,
-                Artist = video.Channel,
-                Year = video.UploadDate.Year
-            };
+                var job = await this.downloadsRegistry.NextFetchJob();
 
-            job.Tags = tags;
+                job.State = DownloadState.Fetching;
 
-            this.downloadsRegistry.UpdateState(job, DownloadState.Downloading);
+                var video = await this.youtubeDl.GetVideo(job.Url);
+
+                var downloadResponse = await this.fileDownloaderService.DownloadFileAsync(video.ThumbnailUrl);
+                job.ThumbnailPath = downloadResponse.DownloadPath;
+
+                var tags = new MediaTags
+                {
+                    Title = video.Title,
+                    Artist = video.Channel,
+                    Year = video.UploadDate.Year
+                };
+
+                job.Tags = tags;
+
+                this.downloadsRegistry.UpdateState(job, DownloadState.Downloading);
+
+            }
+            catch (Exception e)
+            {
+            }
         }
     }
 }
