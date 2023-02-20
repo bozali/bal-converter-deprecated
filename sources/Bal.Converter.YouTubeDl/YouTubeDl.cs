@@ -26,7 +26,6 @@ public class YouTubeDl : IYouTubeDl
     {
         string pathPattern = Path.Combine(this.tempPath, "%(id)s.%(ext)s");
 
-
         var arguments = new List<string>
         {
             $@"--output ""{pathPattern}""",
