@@ -1,4 +1,5 @@
 ﻿using Bal.Converter.Common.Enums;
+using Bal.Converter.Events;
 using Bal.Converter.Modules.Downloads;
 using Bal.Converter.YouTubeDl.Quality;
 

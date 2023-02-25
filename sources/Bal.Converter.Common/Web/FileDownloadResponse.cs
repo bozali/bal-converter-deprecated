@@ -1,4 +1,4 @@
-﻿namespace Bal.Converter.Domain;
+﻿namespace Bal.Converter.Common.Web;
 
 public class FileDownloadResponse
 {

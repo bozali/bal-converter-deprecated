@@ -2,6 +2,7 @@
 
 using Bal.Converter.Common.Enums;
 using Bal.Converter.Common.Extensions;
+using Bal.Converter.Common.Web;
 using Bal.Converter.Contracts.Services;
 using Bal.Converter.Contracts.ViewModels;
 using Bal.Converter.Messages;
@@ -99,7 +100,7 @@ public partial class MediaDownloaderViewModel : ObservableObject, INavigationAwa
             this.IsProcessing = true;
 
             var video = await this.youtubeDl.GetVideo(this.Url);
-            var thumbnail = await this.fileDownloader.DownloadFileAsync(video.ThumbnailUrl);
+            var thumbnail = await this.fileDownloader.DownloadImageAsync(video.ThumbnailUrl, Path.Combine(ILocalSettingsService.TempPath, "Thumbnails", Guid.NewGuid() + ".jpg"));
 
             var vmVideo = new VideoViewModel
             {

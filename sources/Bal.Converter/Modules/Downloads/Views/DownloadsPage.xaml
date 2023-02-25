@@ -23,7 +23,7 @@
                 <AppBarButton Icon="Sort" Label="Order" />
                 <AppBarButton Icon="Filter" Label="Filter" />
                 -->
-                <AppBarButton Icon="Clear" Label="Clear" />
+                <AppBarButton Icon="Clear" Label="Clear" Command="{x:Bind ViewModel.ClearCommand}" />
             </CommandBar>
 
             <ItemsControl Grid.Row="1" ItemsSource="{x:Bind ViewModel.DownloadJobs}">

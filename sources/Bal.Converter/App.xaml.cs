@@ -1,4 +1,5 @@
 ﻿using Bal.Converter.Activation;
+using Bal.Converter.Common.Web;
 using Bal.Converter.Contracts.Services;
 using Bal.Converter.Extensions;
 using Bal.Converter.Modules.Downloads.ViewModels;
@@ -14,7 +15,7 @@ using Bal.Converter.ViewModels;
 using Bal.Converter.Views;
 using Bal.Converter.Workers;
 using Bal.Converter.YouTubeDl;
-using Microsoft.Extensions.Configuration;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;

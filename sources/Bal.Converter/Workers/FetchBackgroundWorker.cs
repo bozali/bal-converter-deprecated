@@ -1,4 +1,5 @@
 ﻿using Bal.Converter.Common.Media;
+using Bal.Converter.Common.Web;
 using Bal.Converter.Modules.Downloads;
 using Bal.Converter.Services;
 using Bal.Converter.YouTubeDl;
@@ -35,7 +36,7 @@ public class FetchBackgroundWorker
 
                 var video = await this.youtubeDl.GetVideo(job.Url);
 
-                var downloadResponse = await this.fileDownloaderService.DownloadFileAsync(video.ThumbnailUrl);
+                var downloadResponse = await this.fileDownloaderService.DownloadImageAsync(video.ThumbnailUrl, Path.Combine(ILocalSettingsService.TempPath, "Thumbnails", Guid.NewGuid() + ".jpg"));
                 job.ThumbnailPath = downloadResponse.DownloadPath;
 
                 var tags = new MediaTags

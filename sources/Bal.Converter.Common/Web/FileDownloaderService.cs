@@ -1,13 +1,12 @@
-﻿using Bal.Converter.Domain;
+﻿using System.Net;
 
-using System.Net;
 using ImageMagick;
 
-namespace Bal.Converter.Services ;
+namespace Bal.Converter.Common.Web;
 
 public class FileDownloaderService : IFileDownloaderService
 {
-    public async Task<FileDownloadResponse> DownloadFileAsync(string url)
+    public async Task<FileDownloadResponse> DownloadImageAsync(string url, string path)
     {
         var client = new WebClient();
 
@@ -19,7 +18,7 @@ public class FileDownloaderService : IFileDownloaderService
         // ReSharper disable once PossibleNullReferenceException
         string extension = Path.GetExtension(file).Replace(".", string.Empty);
 
-        var destinationThumbnailFile = new FileInfo(Path.Combine(ILocalSettingsService.TempPath, "Thumbnails", Guid.NewGuid() + ".jpg"));
+        var destinationThumbnailFile = new FileInfo(path);
 
         if (destinationThumbnailFile.Directory is { Exists: false })
         {

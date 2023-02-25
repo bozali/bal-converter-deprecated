@@ -2,9 +2,10 @@
 using System.Collections.Specialized;
 
 using Bal.Converter.Common.Enums;
+using Bal.Converter.Messages;
 using Bal.Converter.Modules.Downloads;
 using Bal.Converter.YouTubeDl.Quality;
-
+using CommunityToolkit.Mvvm.Messaging;
 using LiteDB;
 
 namespace Bal.Converter.Services ;
@@ -91,6 +92,7 @@ public class DownloadsRegistryService : IDownloadsRegistryService, IDisposable
         if (found != null)
         {
             this.jobs.Remove(found);
+            WeakReferenceMessenger.Default.Send<DownloadRemovedMessage>(new DownloadRemovedMessage(found.Id));
         }
     }
 

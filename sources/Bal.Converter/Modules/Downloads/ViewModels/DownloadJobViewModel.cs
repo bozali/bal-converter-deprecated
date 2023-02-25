@@ -20,6 +20,7 @@ public partial class DownloadJobViewModel : ObservableObject
     {
         this.job = job;
 
+        this.Id = this.job.Id;
         this.Url = this.job.Url;
         this.State = this.job.State;
         this.Title = this.job.Tags == null ? this.job.Url : this.job.Tags.Title;

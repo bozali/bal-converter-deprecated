@@ -52,7 +52,6 @@
 
   <ItemGroup>
     <Folder Include="Modules\Downloads\ViewModels\" />
-    <Folder Include="Domain\" />
     <Folder Include="Converters\" />
     <Folder Include="Messages\" />
     <Folder Include="Events\" />
