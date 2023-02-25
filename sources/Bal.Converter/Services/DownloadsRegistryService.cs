@@ -5,10 +5,12 @@ using Bal.Converter.Common.Enums;
 using Bal.Converter.Messages;
 using Bal.Converter.Modules.Downloads;
 using Bal.Converter.YouTubeDl.Quality;
+
 using CommunityToolkit.Mvvm.Messaging;
+
 using LiteDB;
 
-namespace Bal.Converter.Services ;
+namespace Bal.Converter.Services;
 
 public class DownloadsRegistryService : IDownloadsRegistryService, IDisposable
 {
@@ -85,15 +87,17 @@ public class DownloadsRegistryService : IDownloadsRegistryService, IDisposable
 
     public void Remove(int id)
     {
-        this.collection.Delete(id);
-
         var found = this.jobs.FirstOrDefault(x => x.Id == id);
 
         if (found != null)
         {
+            this.collection.Delete(id);
+            this.database.Commit();
+
             this.jobs.Remove(found);
             WeakReferenceMessenger.Default.Send<DownloadRemovedMessage>(new DownloadRemovedMessage(found.Id));
         }
+
     }
 
     public void Dispose()

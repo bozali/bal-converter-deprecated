@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Runtime.InteropServices.ComTypes;
+using AutoMapper;
 using Bal.Converter.Common.Enums;
 using Bal.Converter.Common.Extensions;
 using Bal.Converter.Common.Media;
@@ -58,6 +59,7 @@ public partial class MediaTagEditorViewModel : ObservableObject, INavigationAwar
         };
 
         this.downloadsRegistry.EnqueueDownload(job);
+        this.navigationService.NavigateTo(typeof(MediaDownloaderViewModel).FullName!);
     }
 
     [RelayCommand]

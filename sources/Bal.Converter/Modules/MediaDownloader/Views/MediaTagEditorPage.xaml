@@ -21,35 +21,35 @@
 
                 <winui:SettingsExpander.Items>
                     <winui:SettingsCard x:Uid="MediaTagEditorTitle" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
-                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Title}" />
+                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Title, Mode=TwoWay}" />
                     </winui:SettingsCard>
 
                     <winui:SettingsCard x:Uid="MediaTagEditorAlbum" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
-                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Album}" />
+                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Album, Mode=TwoWay}" />
                     </winui:SettingsCard>
 
                     <winui:SettingsCard x:Uid="MediaTagEditorComment" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
-                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Comment}" />
+                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Comment, Mode=TwoWay}" />
                     </winui:SettingsCard>
 
                     <winui:SettingsCard x:Uid="MediaTagEditorCopyright" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
-                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Copyright}" />
+                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Copyright, Mode=TwoWay}" />
                     </winui:SettingsCard>
 
                     <winui:SettingsCard x:Uid="MediaTagEditorAlbumArtist" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
-                        <TextBox Text="{x:Bind ViewModel.Video.Tags.AlbumArtists}" />
+                        <TextBox Text="{x:Bind ViewModel.Video.Tags.AlbumArtists, Mode=TwoWay}" />
                     </winui:SettingsCard>
 
                     <winui:SettingsCard x:Uid="MediaTagEditorGenres" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
-                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Genres}" />
+                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Genres, Mode=TwoWay}" />
                     </winui:SettingsCard>
 
                     <winui:SettingsCard x:Uid="MediaTagEditorPerformers" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
-                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Performers}" />
+                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Performers, Mode=TwoWay}" />
                     </winui:SettingsCard>
 
                     <winui:SettingsCard x:Uid="MediaTagEditorComposers" ContentAlignment="Vertical" HorizontalContentAlignment="Stretch">
-                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Composers}" />
+                        <TextBox Text="{x:Bind ViewModel.Video.Tags.Composers, Mode=TwoWay}" />
                     </winui:SettingsCard>
 
                     <winui:SettingsCard x:Uid="MediaTagEditorYear">
