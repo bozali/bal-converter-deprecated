@@ -2,6 +2,7 @@
 using Bal.Converter.Common.Enums;
 using Bal.Converter.Common.Extensions;
 using Bal.Converter.Common.Media;
+using Bal.Converter.Contracts.Services;
 using Bal.Converter.Contracts.ViewModels;
 using Bal.Converter.Modules.Downloads;
 using Bal.Converter.Services;
@@ -13,6 +14,7 @@ namespace Bal.Converter.Modules.MediaDownloader.ViewModels;
 
 public partial class MediaTagEditorViewModel : ObservableObject, INavigationAware
 {
+    private readonly INavigationService navigationService;
     private readonly IDownloadsRegistryService downloadsRegistry;
     private readonly IMapper mapper;
 
@@ -20,8 +22,9 @@ public partial class MediaTagEditorViewModel : ObservableObject, INavigationAwar
     [ObservableProperty] private string audioQualityOption;
     [ObservableProperty] private string videoQualityOption;
 
-    public MediaTagEditorViewModel(IDownloadsRegistryService downloadsRegistry, IMapper mapper)
+    public MediaTagEditorViewModel(INavigationService navigationService, IDownloadsRegistryService downloadsRegistry, IMapper mapper)
     {
+        this.navigationService = navigationService;
         this.downloadsRegistry = downloadsRegistry;
         this.mapper = mapper;
     }
@@ -55,5 +58,11 @@ public partial class MediaTagEditorViewModel : ObservableObject, INavigationAwar
         };
 
         this.downloadsRegistry.EnqueueDownload(job);
+    }
+
+    [RelayCommand]
+    private void Cancel()
+    {
+        this.navigationService.GoBack();
     }
 }

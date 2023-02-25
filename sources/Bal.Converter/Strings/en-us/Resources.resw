@@ -219,4 +219,10 @@
   <data name="Download.Content" xml:space="preserve">
     <value>Download</value>
   </data>
+  <data name="Cancel.Content" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Continue.Content" xml:space="preserve">
+    <value>Continue</value>
+  </data>
 </root>

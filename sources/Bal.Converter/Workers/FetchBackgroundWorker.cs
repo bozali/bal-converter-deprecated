@@ -26,6 +26,11 @@ public class FetchBackgroundWorker
             {
                 var job = await this.downloadsRegistry.NextFetchJob();
 
+                if (job == null)
+                {
+                    continue;
+                }
+
                 job.State = DownloadState.Fetching;
 
                 var video = await this.youtubeDl.GetVideo(job.Url);

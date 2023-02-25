@@ -37,6 +37,11 @@ public class DownloadBackgroundWorker
             {
                 var job = await this.downloadsRegistry.NextDownloadJob();
 
+                if (job == null)
+                {
+                    continue;
+                }
+
                 using var cts = new CancellationTokenSource();
 
                 // Create a local function to call the cancellation token if cancel is requested.

@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:winui="using:CommunityToolkit.Labs.WinUI"
     xmlns:ui="using:CommunityToolkit.WinUI.UI"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
     mc:Ignorable="d">
 
     <ScrollViewer>
@@ -95,7 +96,12 @@
                 </winui:SettingsExpander.Items>
             </winui:SettingsExpander>
 
-            <Button x:Uid="Download" MinWidth="100" Command="{x:Bind ViewModel.DownloadCommand}" />
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <Button x:Uid="Cancel" MinWidth="100" Command="{x:Bind ViewModel.CancelCommand}" />
+                <Button x:Uid="Download" MinWidth="100" Command="{x:Bind ViewModel.DownloadCommand}" />
+                <Button x:Uid="Continue" MinWidth="100" Command="{x:Bind ViewModel.DownloadCommand}" />
+            </StackPanel>
+
         </StackPanel>
     </ScrollViewer>
 </Page>

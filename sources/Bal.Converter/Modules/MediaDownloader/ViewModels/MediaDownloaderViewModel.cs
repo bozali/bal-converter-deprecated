@@ -3,6 +3,7 @@
 using Bal.Converter.Common.Enums;
 using Bal.Converter.Common.Extensions;
 using Bal.Converter.Contracts.Services;
+using Bal.Converter.Contracts.ViewModels;
 using Bal.Converter.Messages;
 using Bal.Converter.Services;
 using Bal.Converter.YouTubeDl;
@@ -15,7 +16,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Bal.Converter.Modules.MediaDownloader.ViewModels;
 
-public partial class MediaDownloaderViewModel : ObservableObject
+public partial class MediaDownloaderViewModel : ObservableObject, INavigationAware
 {
     private readonly ILogger<MediaDownloaderViewModel> logger;
     private readonly INavigationService navigationService;
@@ -62,6 +63,15 @@ public partial class MediaDownloaderViewModel : ObservableObject
     {
         get => this.format;
         set => this.SetProperty(ref this.format, value);
+    }
+
+    public void OnNavigatedTo(object parameter)
+    {
+        this.Url = string.Empty;
+    }
+
+    public void OnNavigatedFrom()
+    {
     }
 
     [RelayCommand(CanExecute = nameof(CanContinue))]
