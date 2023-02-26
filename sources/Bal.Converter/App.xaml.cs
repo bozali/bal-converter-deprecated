@@ -3,6 +3,7 @@ using Bal.Converter.Common.Conversion;
 using Bal.Converter.Common.Web;
 using Bal.Converter.Contracts.Services;
 using Bal.Converter.Extensions;
+using Bal.Converter.FFmpeg;
 using Bal.Converter.Modules.Conversion.View;
 using Bal.Converter.Modules.Conversion.ViewModels;
 using Bal.Converter.Modules.Downloads.ViewModels;
@@ -89,6 +90,7 @@ public partial class App : Application
         collection.AddSingleton<ILocalSettingsService, LocalSettingsService>();
         collection.AddSingleton<IPageService, PageService>();
         collection.AddSingleton<IYouTubeDl, YouTubeDl.YouTubeDl>(provider => new YouTubeDl.YouTubeDl(@"Tools\yt-dlp.exe", @"Tools\ffmpeg.exe", ILocalSettingsService.TempPath));
+        collection.AddSingleton<IFFmpeg, FFmpeg.FFmpeg>(provider => new FFmpeg.FFmpeg(@"Tools\ffmpeg.exe"));
 
         collection.AddSingleton<IFileSystemService, FileSystemService>();
         collection.AddSingleton<IFileDownloaderService, FileDownloaderService>();

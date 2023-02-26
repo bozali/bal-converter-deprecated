@@ -65,6 +65,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Bal.Converter.Common.Conversion\Bal.Converter.Common.Conversion.csproj" />
     <ProjectReference Include="..\Bal.Converter.Common\Bal.Converter.Common.csproj" />
+    <ProjectReference Include="..\Bal.Converter.FFmpeg\Bal.Converter.FFmpeg.csproj" />
     <ProjectReference Include="..\Bal.Converter.YouTubeDl\Bal.Converter.YouTubeDl.csproj" />
   </ItemGroup>
 

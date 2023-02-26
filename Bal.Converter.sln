@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bal.Converter.Common", "sou
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bal.Converter.Common.Conversion", "sources\Bal.Converter.Common.Conversion\Bal.Converter.Common.Conversion.csproj", "{8EBBE479-5809-463B-9569-62AA2A8ED4B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bal.Converter.FFmpeg", "sources\Bal.Converter.FFmpeg\Bal.Converter.FFmpeg.csproj", "{A5524921-CA4C-4427-876D-6E46A48E30A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -95,6 +97,22 @@ Global
 		{8EBBE479-5809-463B-9569-62AA2A8ED4B6}.Release|x64.Build.0 = Release|Any CPU
 		{8EBBE479-5809-463B-9569-62AA2A8ED4B6}.Release|x86.ActiveCfg = Release|Any CPU
 		{8EBBE479-5809-463B-9569-62AA2A8ED4B6}.Release|x86.Build.0 = Release|Any CPU
+		{A5524921-CA4C-4427-876D-6E46A48E30A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5524921-CA4C-4427-876D-6E46A48E30A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5524921-CA4C-4427-876D-6E46A48E30A7}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{A5524921-CA4C-4427-876D-6E46A48E30A7}.Debug|arm64.Build.0 = Debug|Any CPU
+		{A5524921-CA4C-4427-876D-6E46A48E30A7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A5524921-CA4C-4427-876D-6E46A48E30A7}.Debug|x64.Build.0 = Debug|Any CPU
+		{A5524921-CA4C-4427-876D-6E46A48E30A7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A5524921-CA4C-4427-876D-6E46A48E30A7}.Debug|x86.Build.0 = Debug|Any CPU
+		{A5524921-CA4C-4427-876D-6E46A48E30A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5524921-CA4C-4427-876D-6E46A48E30A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5524921-CA4C-4427-876D-6E46A48E30A7}.Release|arm64.ActiveCfg = Release|Any CPU
+		{A5524921-CA4C-4427-876D-6E46A48E30A7}.Release|arm64.Build.0 = Release|Any CPU
+		{A5524921-CA4C-4427-876D-6E46A48E30A7}.Release|x64.ActiveCfg = Release|Any CPU
+		{A5524921-CA4C-4427-876D-6E46A48E30A7}.Release|x64.Build.0 = Release|Any CPU
+		{A5524921-CA4C-4427-876D-6E46A48E30A7}.Release|x86.ActiveCfg = Release|Any CPU
+		{A5524921-CA4C-4427-876D-6E46A48E30A7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
