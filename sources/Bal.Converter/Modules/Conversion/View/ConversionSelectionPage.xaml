@@ -25,7 +25,6 @@
         </Border>
 
         <ItemsRepeater Grid.Row="1" ItemsSource="{x:Bind ViewModel.SupportedFormats, Mode=TwoWay}">
-
             <ItemsRepeater.Layout>
                 <UniformGridLayout ItemsJustification="Center" Orientation="Horizontal" />
             </ItemsRepeater.Layout>
@@ -36,22 +35,5 @@
                 </DataTemplate>
             </ItemsRepeater.ItemTemplate>
         </ItemsRepeater>
-
-        <!--
-        <ItemsControl Grid.Row="1" HorizontalAlignment="Center" ItemsSource="{x:Bind ViewModel.SupportedFormats}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <GridView />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button Width="200" Content="MP3" />
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-        -->
-
     </Grid>
 </Page>

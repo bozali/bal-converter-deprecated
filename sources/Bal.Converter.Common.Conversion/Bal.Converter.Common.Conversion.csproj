@@ -8,6 +8,9 @@
 
   <ItemGroup>
     <Folder Include="Attributes\" />
+    <Folder Include="Constants\" />
+    <Folder Include="Audio\" />
+    <Folder Include="Video\" />
   </ItemGroup>
 
 </Project>

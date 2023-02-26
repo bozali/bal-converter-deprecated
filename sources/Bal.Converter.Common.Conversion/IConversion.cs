@@ -7,5 +7,7 @@ public interface IConversion
 
     string Extension { get; }
 
+    Type[] SupportedTargets { get; }
+
     Task Convert(string source, string destination);
 }
