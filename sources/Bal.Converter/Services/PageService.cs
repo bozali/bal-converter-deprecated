@@ -1,4 +1,6 @@
 ﻿using Bal.Converter.Contracts.Services;
+using Bal.Converter.Modules.Conversion.View;
+using Bal.Converter.Modules.Conversion.ViewModels;
 using Bal.Converter.Modules.Downloads.ViewModels;
 using Bal.Converter.Modules.Downloads.Views;
 using Bal.Converter.Modules.MediaDownloader.ViewModels;
@@ -20,6 +22,7 @@ public class PageService : IPageService
 
     public PageService()
     {
+        this.Configure<ConversionSelectionViewModel, ConversionSelectionPage>();
         this.Configure<MediaDownloaderViewModel, MediaDownloaderPage>();
         this.Configure<MediaTagEditorViewModel, MediaTagEditorPage>();
         this.Configure<DownloadsViewModel, DownloadsPage>();

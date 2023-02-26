@@ -1,7 +1,10 @@
 ﻿using Bal.Converter.Activation;
+using Bal.Converter.Common.Conversion;
 using Bal.Converter.Common.Web;
 using Bal.Converter.Contracts.Services;
 using Bal.Converter.Extensions;
+using Bal.Converter.Modules.Conversion.View;
+using Bal.Converter.Modules.Conversion.ViewModels;
 using Bal.Converter.Modules.Downloads.ViewModels;
 using Bal.Converter.Modules.Downloads.Views;
 using Bal.Converter.Modules.MediaDownloader.ViewModels;
@@ -91,6 +94,7 @@ public partial class App : Application
         collection.AddSingleton<IFileDownloaderService, FileDownloaderService>();
         collection.AddSingleton<IDownloadsRegistryService, DownloadsRegistryService>();
         collection.AddSingleton<IMediaTagService, MediaTagService>();
+        collection.AddSingleton<IConversionProvider, ConversionProvider>();
 
         collection.ConfigureLiteDatabase();
 
@@ -99,12 +103,14 @@ public partial class App : Application
         // Views and ViewModels
         collection
             .AddTransient<MainViewModel>()
+            .AddTransient<ConversionSelectionViewModel>()
             .AddTransient<MediaDownloaderViewModel>()
             .AddTransient<MediaTagEditorViewModel>()
             .AddTransient<DownloadsViewModel>()
             .AddTransient<SettingsViewModel>()
             .AddTransient<ShellViewModel>()
 
+            .AddTransient<ConversionSelectionPage>()
             .AddTransient<MediaDownloaderPage>()
             .AddTransient<MediaTagEditorPage>()
             .AddTransient<DownloadsPage>()

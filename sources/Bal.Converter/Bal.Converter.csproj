@@ -15,6 +15,7 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Modules\Conversion\View\ConversionSelectionPage.xaml" />
     <None Remove="Modules\Downloads\Views\DownloadsPage.xaml" />
     <None Remove="Modules\MediaDownloader\Views\MediaDownloaderPage.xaml" />
     <None Remove="Modules\MediaDownloader\Views\MediaTagEditorPage.xaml" />
@@ -51,6 +52,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Modules\Conversion\ViewModels\" />
     <Folder Include="Modules\Downloads\ViewModels\" />
     <Folder Include="Converters\" />
     <Folder Include="Messages\" />
@@ -61,6 +63,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Bal.Converter.Common.Conversion\Bal.Converter.Common.Conversion.csproj" />
     <ProjectReference Include="..\Bal.Converter.Common\Bal.Converter.Common.csproj" />
     <ProjectReference Include="..\Bal.Converter.YouTubeDl\Bal.Converter.YouTubeDl.csproj" />
   </ItemGroup>
@@ -69,6 +72,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Modules\Conversion\View\ConversionSelectionPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Modules\MediaDownloader\Views\MediaTagEditorPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

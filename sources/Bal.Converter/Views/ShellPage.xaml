@@ -51,6 +51,12 @@
                         <ImageIcon Source="/Assets/Icons/Download.png" />
                     </NavigationViewItem.Icon>
                 </NavigationViewItem>
+
+                <NavigationViewItem x:Uid="ShellConversion" helpers:NavigationHelper.NavigateTo="Bal.Converter.Modules.Conversion.ViewModels.ConversionSelectionViewModel">
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Source="/Assets/Icons/Transfer.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
             </NavigationView.MenuItems>
 
             <NavigationView.HeaderTemplate>

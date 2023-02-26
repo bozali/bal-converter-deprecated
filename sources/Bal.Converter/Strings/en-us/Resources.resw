@@ -225,4 +225,7 @@
   <data name="Continue.Content" xml:space="preserve">
     <value>Continue</value>
   </data>
+  <data name="ShellConversion.Content" xml:space="preserve">
+    <value>Conversion</value>
+  </data>
 </root>
