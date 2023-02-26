@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:vm="using:Bal.Converter.Modules.Conversion.ViewModels"
     xmlns:winui="using:CommunityToolkit.Labs.WinUI"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    x:Name="Root">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -31,7 +32,7 @@
 
             <ItemsRepeater.ItemTemplate>
                 <DataTemplate x:DataType="x:String">
-                    <Button Width="200" Content="MP3" />
+                    <Button Width="200" Content="MP3" Click="OnContinueButtonClicked" Tag="{Binding}" />
                 </DataTemplate>
             </ItemsRepeater.ItemTemplate>
         </ItemsRepeater>

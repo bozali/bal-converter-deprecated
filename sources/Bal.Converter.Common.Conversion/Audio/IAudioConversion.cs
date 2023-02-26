@@ -2,4 +2,5 @@
 
 public interface IAudioConversion
 {
+    AudioConversionOptions AudioConversionOptions { get; set; }
 }

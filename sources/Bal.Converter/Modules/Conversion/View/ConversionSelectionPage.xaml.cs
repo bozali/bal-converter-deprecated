@@ -39,4 +39,11 @@ public sealed partial class ConversionSelectionPage : Page
     {
         e.AcceptedOperation = DataPackageOperation.Copy;
     }
+
+    private void OnContinueButtonClicked(object sender, RoutedEventArgs e)
+    {
+        // NOTE This is a workaround since binding to the parent from DataTemplate doesn't work.
+        var button = (Button)sender;
+        this.ViewModel.ContinueCommand.Execute(button.Tag);
+    }
 }

@@ -13,4 +13,8 @@
     <Folder Include="Video\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Bal.Converter.FFmpeg\Bal.Converter.FFmpeg.csproj" />
+  </ItemGroup>
+
 </Project>

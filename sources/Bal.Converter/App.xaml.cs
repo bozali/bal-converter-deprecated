@@ -4,6 +4,8 @@ using Bal.Converter.Common.Web;
 using Bal.Converter.Contracts.Services;
 using Bal.Converter.Extensions;
 using Bal.Converter.FFmpeg;
+using Bal.Converter.Modules.Conversion.Video.View;
+using Bal.Converter.Modules.Conversion.Video.ViewModels;
 using Bal.Converter.Modules.Conversion.View;
 using Bal.Converter.Modules.Conversion.ViewModels;
 using Bal.Converter.Modules.Downloads.ViewModels;
@@ -105,6 +107,7 @@ public partial class App : Application
         // Views and ViewModels
         collection
             .AddTransient<MainViewModel>()
+            .AddTransient<VideoConversionEditorViewModel>()
             .AddTransient<ConversionSelectionViewModel>()
             .AddTransient<MediaDownloaderViewModel>()
             .AddTransient<MediaTagEditorViewModel>()
@@ -112,6 +115,7 @@ public partial class App : Application
             .AddTransient<SettingsViewModel>()
             .AddTransient<ShellViewModel>()
 
+            .AddTransient<VideoConversionEditorPage>()
             .AddTransient<ConversionSelectionPage>()
             .AddTransient<MediaDownloaderPage>()
             .AddTransient<MediaTagEditorPage>()
