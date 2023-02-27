@@ -7,6 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:winui="using:CommunityToolkit.Labs.WinUI"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:bal="using:Bal.Converter.Controls.SettingsGroup"
+    xmlns:ui="using:CommunityToolkit.WinUI.UI"
     mc:Ignorable="d">
 
     <ScrollViewer>
@@ -35,6 +37,22 @@
                 </winui:SettingsExpander.Items>
             </winui:SettingsExpander>
 
+            <bal:SettingsGroup Header="Filters">
+                <CommandBar HorizontalAlignment="Left" Background="Transparent" DefaultLabelPosition="Right" IsSticky="True">
+                    <AppBarButton Icon="Add" Label="Add" />
+                    <AppBarButton Icon="Clear" Label="Remove All">
+                        <AppBarButton.Flyout>
+                            <Flyout>
+                                <StackPanel>
+                                    <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="All filters will be removed. Do you want to continue?" Margin="0 0 0 12" />
+                                    <Button Content="Yes, remove all filters" />
+                                </StackPanel>
+                            </Flyout>
+                        </AppBarButton.Flyout>
+                    </AppBarButton>
+                </CommandBar>
+
+            </bal:SettingsGroup>
         </StackPanel>
     </ScrollViewer>
 </Page>

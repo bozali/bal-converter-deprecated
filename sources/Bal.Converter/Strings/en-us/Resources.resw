@@ -228,4 +228,7 @@
   <data name="ShellConversion.Content" xml:space="preserve">
     <value>Conversion</value>
   </data>
+  <data name="Filters.Header" xml:space="preserve">
+    <value>Filters</value>
+  </data>
 </root>

@@ -1,0 +1,25 @@
+<Page
+    x:Class="Bal.Converter.Modules.Conversion.Filters.Views.VolumeFilterPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Bal.Converter.Modules.Conversion.Filters.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:winui="using:CommunityToolkit.Labs.WinUI"
+    xmlns:ui="using:CommunityToolkit.WinUI.UI"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+    <winui:SettingsExpander Header="Volume Multiplier" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe995;}">
+        <winui:SettingsExpander.Items>
+            <winui:SettingsCard Header="Use Decibel">
+                <ToggleSwitch />
+            </winui:SettingsCard>
+
+            <winui:SettingsCard Header="Multiplier Value">
+                <Slider />
+            </winui:SettingsCard>
+        </winui:SettingsExpander.Items>
+    </winui:SettingsExpander>
+</Page>

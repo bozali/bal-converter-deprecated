@@ -15,12 +15,16 @@
     <EnableMsixTooling>true</EnableMsixTooling>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Controls\SettingsGroup\SettingsGroup.xaml" />
+    <None Remove="Modules\Conversion\Filters\Views\VolumeFilterPage.xaml" />
     <None Remove="Modules\Conversion\Video\View\VideoConversionEditorPage.xaml" />
     <None Remove="Modules\Conversion\View\ConversionSelectionPage.xaml" />
     <None Remove="Modules\Downloads\Views\DownloadsPage.xaml" />
     <None Remove="Modules\MediaDownloader\Views\MediaDownloaderPage.xaml" />
     <None Remove="Modules\MediaDownloader\Views\MediaTagEditorPage.xaml" />
     <None Remove="Modules\Settings\Views\SettingsPage.xaml" />
+    <None Remove="Styles\Button.xaml" />
+    <None Remove="Themes\Generic.xaml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -54,6 +58,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Modules\Conversion\Filters\ViewModels\" />
     <Folder Include="Modules\Downloads\ViewModels\" />
     <Folder Include="Converters\" />
     <Folder Include="Messages\" />
@@ -74,6 +79,18 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Modules\Conversion\Filters\Views\VolumeFilterPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Styles\Button.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="Controls\SettingsGroup\SettingsGroup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Modules\Conversion\Video\View\VideoConversionEditorPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

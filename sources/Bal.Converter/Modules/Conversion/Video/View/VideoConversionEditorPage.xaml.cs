@@ -2,7 +2,6 @@
 
 using Microsoft.UI.Xaml.Controls;
 using Windows.Media.Core;
-using CommunityToolkit.WinUI.UI.Controls;
 using Microsoft.UI.Dispatching;
 
 namespace Bal.Converter.Modules.Conversion.Video.View
@@ -33,17 +32,5 @@ namespace Bal.Converter.Modules.Conversion.Video.View
         }
 
         public VideoConversionEditorViewModel ViewModel { get; }
-
-        private void OnTrimValueChanged(object? sender, RangeChangedEventArgs e)
-        {
-            if (e.ChangedRangeProperty == RangeSelectorProperty.MinimumValue)
-            {
-                this.ViewModel.VideoConversionOptions.MinVideoLength = e.NewValue;
-            }
-            else if (e.ChangedRangeProperty == RangeSelectorProperty.MaximumValue)
-            {
-                this.ViewModel.VideoConversionOptions.MaxVideoLength = e.NewValue;
-            }
-        }
     }
 }
