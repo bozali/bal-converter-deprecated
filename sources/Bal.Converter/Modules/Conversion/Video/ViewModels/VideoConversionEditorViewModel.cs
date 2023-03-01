@@ -33,9 +33,7 @@ public partial class VideoConversionEditorViewModel : ObservableObject, INavigat
 
         this.SetMediaPlayerSource(this.SourcePath);
 
-        // this.ViewModel = App.GetService<VolumeFilterViewModel>();
         this.FilterPages = new ObservableCollection<Page>();
-        this.FilterPages.Add(new VolumeFilterPage());
     }
 
     public void OnNavigatedFrom()
@@ -43,7 +41,13 @@ public partial class VideoConversionEditorViewModel : ObservableObject, INavigat
     }
 
     [RelayCommand]
-    private void AddFilter()
+    private void AddFilter(string filter)
     {
+        switch (filter.ToLowerInvariant())
+        {
+            case "volume":
+                this.FilterPages.Add(new VolumeFilterPage());
+                break;
+        }
     }
 }
