@@ -62,6 +62,8 @@
                 <ItemsControl ItemsSource="{x:Bind ViewModel.FilterPages}" />
 
             </bal:SettingsGroup>
+
+            <Button Content="Convert" Command="{x:Bind ViewModel.ConvertCommand}" />
         </StackPanel>
     </ScrollViewer>
 </Page>

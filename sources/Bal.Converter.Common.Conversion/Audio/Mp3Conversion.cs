@@ -1,5 +1,6 @@
 ﻿using Bal.Converter.Common.Conversion.Attributes;
 using Bal.Converter.Common.Conversion.Constants;
+using Bal.Converter.FFmpeg;
 
 namespace Bal.Converter.Common.Conversion.Audio;
 
@@ -8,6 +9,13 @@ namespace Bal.Converter.Common.Conversion.Audio;
 [Target(typeof(Mp3Conversion))]
 public class Mp3Conversion : ConversionBase<Mp3Conversion>, IAudioConversion
 {
+    private readonly IFFmpeg ffmpeg;
+
+    public Mp3Conversion(IFFmpeg ffmpeg)
+    {
+        this.ffmpeg = ffmpeg;
+    }
+
     public override ConversionTopology Topology
     {
         get => ConversionTopology.Audio;
@@ -15,8 +23,12 @@ public class Mp3Conversion : ConversionBase<Mp3Conversion>, IAudioConversion
 
     public AudioConversionOptions AudioConversionOptions { get; set; }
 
-    public override Task Convert(string source, string destination)
+    public override async Task Convert(string source, string destination)
     {
-        return Task.CompletedTask;
+        await this.ffmpeg.Convert(source, destination, new ConversionOptions
+        {
+            // ReSharper disable once CoVariantArrayConversion
+            Filters = this.AudioConversionOptions.AudioFilters
+        });
     }
 }
