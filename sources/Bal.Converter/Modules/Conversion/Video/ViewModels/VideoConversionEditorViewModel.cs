@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+
 using Bal.Converter.Common.Extensions;
 using Bal.Converter.Contracts.ViewModels;
 using Bal.Converter.Modules.Conversion.Filters.Views;
@@ -6,6 +7,7 @@ using Bal.Converter.Modules.Conversion.ViewModels;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+
 using Microsoft.UI.Xaml.Controls;
 
 namespace Bal.Converter.Modules.Conversion.Video.ViewModels;
@@ -49,5 +51,10 @@ public partial class VideoConversionEditorViewModel : ObservableObject, INavigat
                 this.FilterPages.Add(new VolumeFilterPage());
                 break;
         }
+    }
+
+    [RelayCommand]
+    private async Task Convert()
+    {
     }
 }

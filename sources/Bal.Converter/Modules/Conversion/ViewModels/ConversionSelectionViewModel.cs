@@ -33,12 +33,16 @@ public partial class ConversionSelectionViewModel : ObservableObject
     [RelayCommand]
     private void Continue(string format)
     {
-        // var conversion = this.conversionProvider.
+        var conversion = this.conversionProvider.Provide(format);
         var parameters = new Dictionary<string, object>
         {
+            { "Conversion", conversion },
             { "SourcePath", this.path }
         };
 
-        this.navigationService.NavigateTo(typeof(VideoConversionEditorViewModel).FullName!, parameters);
+        if (conversion.Topology.HasFlag(ConversionTopology.Video) || conversion.Topology.HasFlag(ConversionTopology.Audio))
+        {
+            this.navigationService.NavigateTo(typeof(VideoConversionEditorViewModel).FullName!, parameters);
+        }
     }
 }
