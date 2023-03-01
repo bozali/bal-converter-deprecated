@@ -7,18 +7,36 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:winui="using:CommunityToolkit.Labs.WinUI"
     xmlns:ui="using:CommunityToolkit.WinUI.UI"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    xmlns:converters="using:Bal.Converter.Converters"
+    mc:Ignorable="d">
 
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
+        <converters:BooleanToInvertedVisibilityConverter x:Name="BooleanToInvertedVisibilityConverter" />
+    </Page.Resources>
 
     <winui:SettingsExpander Header="Volume Multiplier" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe995;}">
         <winui:SettingsExpander.Items>
             <winui:SettingsCard Header="Use Decibel">
-                <ToggleSwitch />
+                <ToggleSwitch IsOn="{x:Bind ViewModel.UseDecibel, Mode=TwoWay}" />
             </winui:SettingsCard>
 
-            <winui:SettingsCard Header="Multiplier Value">
-                <Slider />
+            <winui:SettingsCard Visibility="{x:Bind ViewModel.UseDecibel, Mode=OneWay, Converter={StaticResource BooleanToInvertedVisibilityConverter}}" Header="Multiplier Value">
+                <Slider MinWidth="225" Value="{x:Bind ViewModel.Multiplier, Mode=TwoWay}" />
+            </winui:SettingsCard>
+
+            <winui:SettingsCard Visibility="{x:Bind ViewModel.UseDecibel, Mode=OneWay, Converter={StaticResource BooleanToVisibilityConverter}}" Header="Decibel">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="125" />
+                        <ColumnDefinition Width="50" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="-10 dB" VerticalAlignment="Center"  HorizontalAlignment="Left"/>
+                    <Slider Grid.Column="1" Value="{x:Bind ViewModel.Decibel, Mode=TwoWay}" Minimum="-10" Maximum="10" VerticalAlignment="Center" />
+                    <TextBlock Grid.Column="2" Text="10 dB" VerticalAlignment="Center" HorizontalAlignment="Right" />
+                </Grid>
             </winui:SettingsCard>
         </winui:SettingsExpander.Items>
     </winui:SettingsExpander>

@@ -60,7 +60,6 @@
   <ItemGroup>
     <Folder Include="Modules\Conversion\Filters\ViewModels\" />
     <Folder Include="Modules\Downloads\ViewModels\" />
-    <Folder Include="Converters\" />
     <Folder Include="Messages\" />
     <Folder Include="Events\" />
     <Folder Include="Profiles\" />

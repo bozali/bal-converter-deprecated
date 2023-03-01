@@ -45,12 +45,14 @@
                             <Flyout>
                                 <StackPanel>
                                     <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="All filters will be removed. Do you want to continue?" Margin="0 0 0 12" />
-                                    <Button Content="Yes, remove all filters" />
+                                    <Button Command="{x:Bind ViewModel.AddFilterCommand}" Content="Yes, remove all filters" />
                                 </StackPanel>
                             </Flyout>
                         </AppBarButton.Flyout>
                     </AppBarButton>
                 </CommandBar>
+
+                <ItemsControl ItemsSource="{x:Bind ViewModel.FilterPages}" />
 
             </bal:SettingsGroup>
         </StackPanel>
