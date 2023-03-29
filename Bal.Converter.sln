@@ -9,9 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bal.Converter.YouTubeDl", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bal.Converter.Common", "sources\Bal.Converter.Common\Bal.Converter.Common.csproj", "{D30CD2CC-E40A-441B-BD07-64F00FF5A416}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bal.Converter.Common.Conversion", "sources\Bal.Converter.Common.Conversion\Bal.Converter.Common.Conversion.csproj", "{8EBBE479-5809-463B-9569-62AA2A8ED4B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bal.Converter.Common.Conversion", "sources\Bal.Converter.Common.Conversion\Bal.Converter.Common.Conversion.csproj", "{8EBBE479-5809-463B-9569-62AA2A8ED4B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bal.Converter.FFmpeg", "sources\Bal.Converter.FFmpeg\Bal.Converter.FFmpeg.csproj", "{A5524921-CA4C-4427-876D-6E46A48E30A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bal.Converter.FFmpeg", "sources\Bal.Converter.FFmpeg\Bal.Converter.FFmpeg.csproj", "{A5524921-CA4C-4427-876D-6E46A48E30A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bal.Converter.CLI", "sources\Bal.Converter.CLI\Bal.Converter.CLI.csproj", "{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -113,6 +115,22 @@ Global
 		{A5524921-CA4C-4427-876D-6E46A48E30A7}.Release|x64.Build.0 = Release|Any CPU
 		{A5524921-CA4C-4427-876D-6E46A48E30A7}.Release|x86.ActiveCfg = Release|Any CPU
 		{A5524921-CA4C-4427-876D-6E46A48E30A7}.Release|x86.Build.0 = Release|Any CPU
+		{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}.Debug|arm64.Build.0 = Debug|Any CPU
+		{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}.Debug|x64.Build.0 = Debug|Any CPU
+		{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}.Debug|x86.Build.0 = Debug|Any CPU
+		{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}.Release|arm64.ActiveCfg = Release|Any CPU
+		{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}.Release|arm64.Build.0 = Release|Any CPU
+		{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}.Release|x64.ActiveCfg = Release|Any CPU
+		{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}.Release|x64.Build.0 = Release|Any CPU
+		{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}.Release|x86.ActiveCfg = Release|Any CPU
+		{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
