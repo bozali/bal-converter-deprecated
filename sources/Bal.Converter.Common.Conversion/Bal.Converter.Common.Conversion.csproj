@@ -11,6 +11,7 @@
     <Folder Include="Constants\" />
     <Folder Include="Audio\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Image\" />
     <Folder Include="Video\" />
   </ItemGroup>
 

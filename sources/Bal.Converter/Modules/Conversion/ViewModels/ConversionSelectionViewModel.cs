@@ -2,6 +2,7 @@
 
 using Bal.Converter.Common.Conversion;
 using Bal.Converter.Contracts.Services;
+using Bal.Converter.Modules.Conversion.Image.ViewModels;
 using Bal.Converter.Modules.Conversion.Video.ViewModels;
 
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -43,6 +44,10 @@ public partial class ConversionSelectionViewModel : ObservableObject
         if (conversion.Topology.HasFlag(ConversionTopology.Video) || conversion.Topology.HasFlag(ConversionTopology.Audio))
         {
             this.navigationService.NavigateTo(typeof(VideoConversionEditorViewModel).FullName!, parameters);
+        }
+        else if (conversion.Topology.HasFlag(ConversionTopology.Image))
+        {
+            this.navigationService.NavigateTo(typeof(ImageConversionEditorViewModel).FullName!, parameters);
         }
     }
 }

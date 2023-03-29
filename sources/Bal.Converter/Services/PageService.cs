@@ -1,4 +1,6 @@
 ﻿using Bal.Converter.Contracts.Services;
+using Bal.Converter.Modules.Conversion.Image.ViewModels;
+using Bal.Converter.Modules.Conversion.Image.Views;
 using Bal.Converter.Modules.Conversion.Video.View;
 using Bal.Converter.Modules.Conversion.Video.ViewModels;
 using Bal.Converter.Modules.Conversion.View;
@@ -24,6 +26,7 @@ public class PageService : IPageService
 
     public PageService()
     {
+        this.Configure<ImageConversionEditorViewModel, ImageConversionEditorPage>();
         this.Configure<VideoConversionEditorViewModel, VideoConversionEditorPage>();
         this.Configure<ConversionSelectionViewModel, ConversionSelectionPage>();
         this.Configure<MediaDownloaderViewModel, MediaDownloaderPage>();

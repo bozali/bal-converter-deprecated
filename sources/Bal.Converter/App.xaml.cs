@@ -7,6 +7,8 @@ using Bal.Converter.Extensions;
 using Bal.Converter.FFmpeg;
 using Bal.Converter.Modules.Conversion.Filters.ViewModels;
 using Bal.Converter.Modules.Conversion.Filters.Views;
+using Bal.Converter.Modules.Conversion.Image.ViewModels;
+using Bal.Converter.Modules.Conversion.Image.Views;
 using Bal.Converter.Modules.Conversion.Video.View;
 using Bal.Converter.Modules.Conversion.Video.ViewModels;
 using Bal.Converter.Modules.Conversion.View;
@@ -111,6 +113,7 @@ public partial class App : Application
         // Views and ViewModels
         collection
             .AddTransient<MainViewModel>()
+            .AddTransient<ImageConversionEditorViewModel>()
             .AddTransient<VideoConversionEditorViewModel>()
             .AddTransient<ConversionSelectionViewModel>()
             .AddTransient<MediaDownloaderViewModel>()
@@ -120,6 +123,7 @@ public partial class App : Application
             .AddTransient<ShellViewModel>()
             .AddTransient<VolumeFilterPage>()
 
+            .AddTransient<ImageConversionEditorPage>()
             .AddTransient<VideoConversionEditorPage>()
             .AddTransient<ConversionSelectionPage>()
             .AddTransient<MediaDownloaderPage>()

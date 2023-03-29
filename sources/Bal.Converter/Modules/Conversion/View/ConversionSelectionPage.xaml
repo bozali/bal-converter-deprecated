@@ -27,12 +27,12 @@
 
         <ItemsRepeater Grid.Row="1" ItemsSource="{x:Bind ViewModel.SupportedFormats, Mode=TwoWay}">
             <ItemsRepeater.Layout>
-                <UniformGridLayout ItemsJustification="Center" Orientation="Horizontal" />
+                <UniformGridLayout ItemsJustification="Center" MinColumnSpacing="10" MinRowSpacing="10" Orientation="Horizontal" />
             </ItemsRepeater.Layout>
 
             <ItemsRepeater.ItemTemplate>
                 <DataTemplate x:DataType="x:String">
-                    <Button Width="200" Content="MP3" Click="OnContinueButtonClicked" Tag="{Binding}" />
+                    <Button Width="200" Content="{Binding}" Click="OnContinueButtonClicked" Tag="{Binding}" />
                 </DataTemplate>
             </ItemsRepeater.ItemTemplate>
         </ItemsRepeater>

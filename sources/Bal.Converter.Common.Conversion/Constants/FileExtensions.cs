@@ -16,4 +16,12 @@ public class FileExtensions
         public const string Wav = "wav";
         public const string Mkv = "mkv";
     }
+
+    public class Image
+    {
+        public const string Png = "png";
+        public const string Jpeg = "jpeg";
+        public const string Gif = "gif";
+        public const string Bmp = "bmp";
+    }
 }
