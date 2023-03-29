@@ -13,7 +13,7 @@
             <Image MinHeight="300" MaxHeight="450" x:Name="ImageControl" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="None" />
         </Border>
 
-        <Button Content="Save" />
+        <Button Content="Save" Command="{x:Bind ViewModel.SaveCommand}" />
 
         <bal:SettingsGroup Header="Effects">
             <CommandBar HorizontalAlignment="Left" Background="Transparent" DefaultLabelPosition="Right" IsSticky="True">
@@ -37,7 +37,7 @@
                 </AppBarButton>
             </CommandBar>
 
-            <ItemsControl ItemsSource="{x:Bind ViewModel.EffectPages}" />
+            <!--<ItemsControl ItemsSource="{x:Bind ViewModel.EffectPages}" />-->
 
         </bal:SettingsGroup>
     </StackPanel>

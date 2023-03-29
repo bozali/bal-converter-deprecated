@@ -2,4 +2,5 @@
 
 public class ImageConversionOptions
 {
+    public byte[] UpdatedImageData { get; set; }
 }

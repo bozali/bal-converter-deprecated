@@ -2,9 +2,13 @@
 #pragma warning disable CS8601
 #pragma warning disable CS8604
 #pragma warning disable CS8602
+
 using System.Collections.ObjectModel;
+
 using Windows.Storage.Pickers;
+
 using AutoMapper;
+
 using Bal.Converter.Common.Conversion;
 using Bal.Converter.Common.Conversion.Audio;
 using Bal.Converter.Common.Conversion.Video;
@@ -18,6 +22,7 @@ using Bal.Converter.Modules.Conversion.Filters.ViewModels;
 using Bal.Converter.Modules.Conversion.Filters.Views;
 using Bal.Converter.Modules.Conversion.ViewModels;
 using Bal.Converter.Modules.MediaDownloader.ViewModels;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
