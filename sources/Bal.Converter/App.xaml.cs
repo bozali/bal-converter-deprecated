@@ -7,6 +7,7 @@ using Bal.Converter.Extensions;
 using Bal.Converter.FFmpeg;
 using Bal.Converter.Modules.Conversion.Filters.ViewModels;
 using Bal.Converter.Modules.Conversion.Filters.Views;
+using Bal.Converter.Modules.Conversion.Image.Effects.Watermark;
 using Bal.Converter.Modules.Conversion.Image.ViewModels;
 using Bal.Converter.Modules.Conversion.Image.Views;
 using Bal.Converter.Modules.Conversion.Video.View;
@@ -122,6 +123,7 @@ public partial class App : Application
             .AddTransient<SettingsViewModel>()
             .AddTransient<ShellViewModel>()
             .AddTransient<VolumeFilterPage>()
+            .AddTransient<WatermarkEffectPage>()
 
             .AddTransient<ImageConversionEditorPage>()
             .AddTransient<VideoConversionEditorPage>()
@@ -132,7 +134,8 @@ public partial class App : Application
             .AddTransient<SettingsPage>()
             .AddTransient<MainPage>()
             .AddTransient<ShellPage>()
-            .AddTransient<VolumeFilterViewModel>();
+            .AddTransient<VolumeFilterViewModel>()
+            .AddTransient<WatermarkEffectViewModel>();
 
         // Background services
         collection.AddSingleton<FetchBackgroundWorker>();

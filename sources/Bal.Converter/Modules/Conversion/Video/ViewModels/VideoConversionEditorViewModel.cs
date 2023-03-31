@@ -115,14 +115,6 @@ public partial class VideoConversionEditorViewModel : ObservableObject, INavigat
             };
         }
 
-
-        // var openPicker = new FolderPicker();
-        // var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
-        // WinRT.Interop.InitializeWithWindow.Initialize(openPicker, hwnd);
-        // openPicker.FileTypeFilter.Add("*");
-        // var folder = await openPicker.PickSingleFolderAsync();
-        // return folder?.Path;
-
         var picker = new FileSavePicker
         {
             SuggestedStartLocation = PickerLocationId.Desktop,

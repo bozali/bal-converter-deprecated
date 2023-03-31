@@ -1,0 +1,74 @@
+﻿<Page
+    x:Class="Bal.Converter.Modules.Conversion.Image.Effects.Watermark.WatermarkEffectPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Bal.Converter.Modules.Conversion.Image.Effects.Watermark"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:winui="using:CommunityToolkit.Labs.WinUI"
+    xmlns:ui="using:CommunityToolkit.WinUI.UI"
+    xmlns:magick="using:ImageMagick"
+    mc:Ignorable="d">
+
+    <winui:SettingsExpander Header="Watermark" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xed64;}">
+        <winui:SettingsExpander.Items>
+            <winui:SettingsCard Header="Position">
+                <ComboBox SelectedValuePath="Tag" MinWidth="{StaticResource SettingActionControlMinWidth}" SelectedValue="{x:Bind ViewModel.Gravity}" Loaded="OnGravityComboboxLoaded">
+                    <ComboBoxItem Content="Northwest">
+                        <ComboBoxItem.Tag>
+                            <magick:Gravity>Northwest</magick:Gravity>
+                        </ComboBoxItem.Tag>
+                    </ComboBoxItem>
+
+                    <ComboBoxItem Content="North">
+                        <ComboBoxItem.Tag>
+                            <magick:Gravity>North</magick:Gravity>
+                        </ComboBoxItem.Tag>
+                    </ComboBoxItem>
+
+                    <ComboBoxItem Content="Northeast">
+                        <ComboBoxItem.Tag>
+                            <magick:Gravity>Northeast</magick:Gravity>
+                        </ComboBoxItem.Tag>
+                    </ComboBoxItem>
+
+                    <ComboBoxItem Content="West">
+                        <ComboBoxItem.Tag>
+                            <magick:Gravity>West</magick:Gravity>
+                        </ComboBoxItem.Tag>
+                    </ComboBoxItem>
+
+                    <ComboBoxItem Content="Center">
+                        <ComboBoxItem.Tag>
+                            <magick:Gravity>Center</magick:Gravity>
+                        </ComboBoxItem.Tag>
+                    </ComboBoxItem>
+
+                    <ComboBoxItem Content="East">
+                        <ComboBoxItem.Tag>
+                            <magick:Gravity>East</magick:Gravity>
+                        </ComboBoxItem.Tag>
+                    </ComboBoxItem>
+
+                    <ComboBoxItem Content="Southwest">
+                        <ComboBoxItem.Tag>
+                            <magick:Gravity>Southwest</magick:Gravity>
+                        </ComboBoxItem.Tag>
+                    </ComboBoxItem>
+
+                    <ComboBoxItem Content="South">
+                        <ComboBoxItem.Tag>
+                            <magick:Gravity>South</magick:Gravity>
+                        </ComboBoxItem.Tag>
+                    </ComboBoxItem>
+
+                    <ComboBoxItem Content="Southeast">
+                        <ComboBoxItem.Tag>
+                            <magick:Gravity>Southeast</magick:Gravity>
+                        </ComboBoxItem.Tag>
+                    </ComboBoxItem>
+                </ComboBox>
+            </winui:SettingsCard>
+        </winui:SettingsExpander.Items>
+    </winui:SettingsExpander>
+</Page>

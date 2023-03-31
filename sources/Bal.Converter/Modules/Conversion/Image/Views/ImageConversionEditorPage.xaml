@@ -37,7 +37,7 @@
                 </AppBarButton>
             </CommandBar>
 
-            <!--<ItemsControl ItemsSource="{x:Bind ViewModel.EffectPages}" />-->
+            <ItemsControl ItemsSource="{x:Bind ViewModel.EffectPages}" />
 
         </bal:SettingsGroup>
     </StackPanel>

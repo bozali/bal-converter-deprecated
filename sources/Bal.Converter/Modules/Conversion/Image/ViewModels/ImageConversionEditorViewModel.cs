@@ -2,18 +2,22 @@
 #pragma warning disable CS8601
 #pragma warning disable CS8618
 
+using System.Collections.ObjectModel;
 using Windows.Storage.Pickers;
+
 using Bal.Converter.Common.Conversion;
 using Bal.Converter.Common.Conversion.Image;
 using Bal.Converter.Common.Extensions;
 using Bal.Converter.Contracts.Services;
 using Bal.Converter.Contracts.ViewModels;
+using Bal.Converter.Modules.Conversion.Image.Effects.Watermark;
 using Bal.Converter.Modules.MediaDownloader.ViewModels;
-using Bal.Converter.Modules.MediaDownloader.Views;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using ImageMagick;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Bal.Converter.Modules.Conversion.Image.ViewModels;
 
@@ -21,6 +25,7 @@ public partial class ImageConversionEditorViewModel : ObservableObject, INavigat
 {
     private readonly INavigationService navigationService;
 
+    [ObservableProperty] private ObservableCollection<Page> effectPages;
     [ObservableProperty] private string? sourcePath;
 
     private IConversion conversion;
@@ -29,6 +34,8 @@ public partial class ImageConversionEditorViewModel : ObservableObject, INavigat
     public ImageConversionEditorViewModel(INavigationService navigationService)
     {
         this.navigationService = navigationService;
+
+        this.EffectPages = new ObservableCollection<Page>();
     }
 
     public Action<string> SetImageSource { get; set; }
@@ -37,6 +44,8 @@ public partial class ImageConversionEditorViewModel : ObservableObject, INavigat
 
     public void OnNavigatedTo(object parameter)
     {
+        this.EffectPages.Clear();
+
         var input = (IDictionary<string, object>)parameter;
 
         this.conversion = input.Get<IConversion>("Conversion");
@@ -59,12 +68,21 @@ public partial class ImageConversionEditorViewModel : ObservableObject, INavigat
     [RelayCommand]
     private void AddEffect(string effect)
     {
+        switch (effect.ToLowerInvariant())
+        {
+            case "watermark":
+                this.EffectPages.Add(new WatermarkEffectPage());
+                break;
+        }
+
+        /*
         using var watermark = new MagickImage(@"C:\Users\alibo\Downloads\character.png");
         watermark.Evaluate(Channels.Alpha, EvaluateOperator.Divide, 4);
         
         this.image.Composite(watermark, Gravity.Center, CompositeOperator.Over);
-
+        
         this.UpdateImage(this.image.ToByteArray());
+        */
     }
 
     [RelayCommand]
