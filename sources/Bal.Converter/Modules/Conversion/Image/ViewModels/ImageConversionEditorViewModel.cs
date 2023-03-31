@@ -2,9 +2,6 @@
 #pragma warning disable CS8601
 #pragma warning disable CS8618
 
-using System.Collections.ObjectModel;
-using Windows.Storage.Pickers;
-
 using Bal.Converter.Common.Conversion;
 using Bal.Converter.Common.Conversion.Image;
 using Bal.Converter.Common.Extensions;
@@ -17,7 +14,12 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using ImageMagick;
+
 using Microsoft.UI.Xaml.Controls;
+
+using System.Collections.ObjectModel;
+
+using Windows.Storage.Pickers;
 
 namespace Bal.Converter.Modules.Conversion.Image.ViewModels;
 

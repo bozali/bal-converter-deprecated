@@ -69,6 +69,11 @@
                     </ComboBoxItem>
                 </ComboBox>
             </winui:SettingsCard>
+
+            <winui:SettingsCard Header="Alpha Divider">
+                <NumberBox MinWidth="{StaticResource SettingActionControlMinWidth}"
+                           Minimum="1" Maximum="6" SpinButtonPlacementMode="Inline" Value="{x:Bind ViewModel.AlphaChannelDivideValue}" />
+            </winui:SettingsCard>
         </winui:SettingsExpander.Items>
     </winui:SettingsExpander>
 </Page>
