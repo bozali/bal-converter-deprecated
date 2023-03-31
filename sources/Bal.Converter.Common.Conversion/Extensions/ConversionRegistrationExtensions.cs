@@ -1,5 +1,6 @@
 ﻿using Bal.Converter.Common.Conversion.Audio;
 using Bal.Converter.Common.Conversion.Image;
+
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bal.Converter.Common.Conversion.Extensions;
@@ -15,7 +16,8 @@ public static class ConversionRegistrationExtensions
             .AddTransient<PngConversion>()
             .AddTransient<BmpConversion>()
             .AddTransient<JpegConversion>()
-            .AddTransient<GifConversion>();
+            .AddTransient<GifConversion>()
+            .AddTransient<IcoConversion>();
 
         return collection;
     }

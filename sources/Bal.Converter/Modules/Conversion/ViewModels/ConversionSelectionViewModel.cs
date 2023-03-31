@@ -38,7 +38,8 @@ public partial class ConversionSelectionViewModel : ObservableObject
         var parameters = new Dictionary<string, object>
         {
             { "Conversion", conversion },
-            { "SourcePath", this.path }
+            { "SourcePath", this.path },
+            { "Target", format }
         };
 
         if (conversion.Topology.HasFlag(ConversionTopology.Video) || conversion.Topology.HasFlag(ConversionTopology.Audio))

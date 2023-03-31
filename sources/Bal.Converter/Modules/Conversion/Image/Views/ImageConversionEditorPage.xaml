@@ -6,21 +6,28 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:bal="using:Bal.Converter.Controls.SettingsGroup"
+    xmlns:converters="using:Bal.Converter.Converters"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
+    </Page.Resources>
 
     <StackPanel Spacing="5">
         <Border MinHeight="300" MaxHeight="450">
             <Image MinHeight="300" MaxHeight="450" x:Name="ImageControl" VerticalAlignment="Center" HorizontalAlignment="Center" Stretch="None" />
         </Border>
 
-        <Button Content="Save" Command="{x:Bind ViewModel.SaveCommand}" />
+        <bal:SettingsGroup Header="Settings" Visibility="{x:Bind ViewModel.HasIndividualSettings, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <ItemsControl ItemsSource="{x:Bind ViewModel.IndividualSettings}" />
+        </bal:SettingsGroup>
 
         <bal:SettingsGroup Header="Effects">
             <CommandBar HorizontalAlignment="Left" Background="Transparent" DefaultLabelPosition="Right" IsSticky="True">
                 <AppBarButton Icon="Add" Label="Add">
                     <AppBarButton.Flyout>
                         <MenuFlyout>
-                            <MenuFlyoutItem Text="Watermark" CommandParameter="watermark" Command="{x:Bind ViewModel.AddEffectCommand}" />
+                            <MenuFlyoutItem Text="Watermark" CommandParameter="Watermark" Command="{x:Bind ViewModel.AddEffectCommand}" />
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
@@ -37,8 +44,10 @@
                 </AppBarButton>
             </CommandBar>
 
-            <ItemsControl ItemsSource="{x:Bind ViewModel.EffectPages}" />
 
+            <ItemsControl ItemsSource="{x:Bind ViewModel.FilterPages}" />
         </bal:SettingsGroup>
+
+        <Button Content="Save" Command="{x:Bind ViewModel.SaveCommand}" />
     </StackPanel>
 </Page>

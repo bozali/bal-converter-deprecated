@@ -1,6 +1,7 @@
 ﻿#pragma warning disable CS8604
 #pragma warning disable CS8601
 #pragma warning disable CS8618
+#pragma warning disable CS8600
 
 using Bal.Converter.Common.Conversion;
 using Bal.Converter.Common.Conversion.Image;
@@ -19,7 +20,9 @@ using Microsoft.UI.Xaml.Controls;
 using System.Collections.ObjectModel;
 
 using Windows.Storage.Pickers;
+using Bal.Converter.Common.Conversion.Constants;
 using Bal.Converter.Modules.Conversion.Filters.Watermark;
+using Bal.Converter.Modules.Conversion.Image.Settings.Ico;
 
 namespace Bal.Converter.Modules.Conversion.Image.ViewModels;
 
@@ -27,7 +30,17 @@ public partial class ImageConversionEditorViewModel : ObservableObject, INavigat
 {
     private readonly INavigationService navigationService;
 
-    [ObservableProperty] private ObservableCollection<Page> effectPages;
+    /// <summary>
+    /// Special settings for individual conversion e.g. converting to ico can have an multi resolution.
+    /// </summary>
+    [ObservableProperty] private ObservableCollection<Page> individualSettings;
+
+    /// <summary>
+    /// Modular pages for filters.
+    /// </summary>
+    [ObservableProperty] private ObservableCollection<Page> filterPages;
+
+    [ObservableProperty] private bool hasIndividualSettings;
     [ObservableProperty] private string? sourcePath;
     [ObservableProperty] private ObservableCollection<string> availableEffects;
 
@@ -38,7 +51,8 @@ public partial class ImageConversionEditorViewModel : ObservableObject, INavigat
     {
         this.navigationService = navigationService;
 
-        this.EffectPages = new ObservableCollection<Page>();
+        this.IndividualSettings = new ObservableCollection<Page>();
+        this.FilterPages = new ObservableCollection<Page>();
         this.AvailableEffects = new ObservableCollection<string>();
     }
 
@@ -48,12 +62,17 @@ public partial class ImageConversionEditorViewModel : ObservableObject, INavigat
 
     public void OnNavigatedTo(object parameter)
     {
-        this.EffectPages.Clear();
-
+        this.IndividualSettings.Clear();
+        this.FilterPages.Clear();
+        
         var input = (IDictionary<string, object>)parameter;
 
         this.conversion = input.Get<IConversion>("Conversion");
         this.SourcePath = input.Get<string>("SourcePath");
+        string target = input.Get<string>("Target");
+
+        this.IndividualSettings.AddRange(this.GetIndividualPages(target));
+        this.HasIndividualSettings = this.IndividualSettings.Any();
 
         this.SetImageSource(this.SourcePath);
 
@@ -76,10 +95,10 @@ public partial class ImageConversionEditorViewModel : ObservableObject, INavigat
     [RelayCommand]
     private void AddEffect(string effect)
     {
-        switch (effect.ToLowerInvariant())
+        switch (effect)
         {
-            case "watermark":
-                this.EffectPages.Add(new WatermarkEffectPage());
+            case FilterNameConstants.Image.Watermark:
+                this.FilterPages.Add(new WatermarkEffectPage());
                 break;
         }
 
@@ -119,6 +138,14 @@ public partial class ImageConversionEditorViewModel : ObservableObject, INavigat
         {
             await this.conversion.Convert(this.SourcePath, file.Path);
             this.navigationService.NavigateTo(typeof(MediaDownloaderViewModel).FullName!);
+        }
+    }
+
+    private IEnumerable<Page> GetIndividualPages(string target)
+    {
+        if (string.Equals(target, FileExtensions.Image.Ico))
+        {
+            yield return new IcoMultiResolutionPage();
         }
     }
 }
