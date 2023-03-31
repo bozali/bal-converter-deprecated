@@ -59,6 +59,14 @@
                 </NavigationViewItem>
             </NavigationView.MenuItems>
 
+            <NavigationView.FooterMenuItems>
+                <NavigationViewItem Content="About" helpers:NavigationHelper.NavigateTo="Bal.Converter.Modules.About">
+                    <NavigationViewItem.Icon>
+                        <ImageIcon Source="/Assets/Icons/Info.png" />
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.FooterMenuItems>
+
             <NavigationView.HeaderTemplate>
                 <DataTemplate>
                     <Grid>
