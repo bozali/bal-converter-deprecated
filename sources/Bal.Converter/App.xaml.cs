@@ -5,9 +5,8 @@ using Bal.Converter.Common.Web;
 using Bal.Converter.Contracts.Services;
 using Bal.Converter.Extensions;
 using Bal.Converter.FFmpeg;
-using Bal.Converter.Modules.Conversion.Filters.ViewModels;
-using Bal.Converter.Modules.Conversion.Filters.Views;
-using Bal.Converter.Modules.Conversion.Image.Effects.Watermark;
+using Bal.Converter.Modules.Conversion.Filters.Volume;
+using Bal.Converter.Modules.Conversion.Filters.Watermark;
 using Bal.Converter.Modules.Conversion.Image.ViewModels;
 using Bal.Converter.Modules.Conversion.Image.Views;
 using Bal.Converter.Modules.Conversion.Video.View;
@@ -31,6 +30,8 @@ using Bal.Converter.YouTubeDl;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
+using VolumeFilterViewModel = Bal.Converter.Modules.Conversion.Filters.Volume.VolumeFilterViewModel;
+using WatermarkEffectViewModel = Bal.Converter.Modules.Conversion.Filters.Watermark.WatermarkEffectViewModel;
 
 namespace Bal.Converter;
 

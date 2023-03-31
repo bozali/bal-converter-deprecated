@@ -25,7 +25,6 @@
   <ItemGroup>
     <None Remove="Controls\SettingsGroup\SettingsGroup.xaml" />
     <None Remove="Modules\Conversion\Filters\Views\VolumeFilterPage.xaml" />
-    <None Remove="Modules\Conversion\Image\Effects\WatermarkEffectPage.xaml" />
     <None Remove="Modules\Conversion\Image\Views\ImageConversionEditorPage.xaml" />
     <None Remove="Modules\Conversion\Video\View\VideoConversionEditorPage.xaml" />
     <None Remove="Modules\Conversion\View\ConversionSelectionPage.xaml" />
@@ -70,7 +69,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Modules\Conversion\Filters\ViewModels\" />
+    <Folder Include="Modules\Conversion\Filters\Watermark\" />
     <Folder Include="Modules\Conversion\Image\ViewModels\" />
     <Folder Include="Modules\Downloads\ViewModels\" />
     <Folder Include="Messages\" />
@@ -91,9 +90,6 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Page Update="Modules\Conversion\Image\Effects\WatermarkEffectPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Update="Modules\Conversion\Image\Views\ImageConversionEditorPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

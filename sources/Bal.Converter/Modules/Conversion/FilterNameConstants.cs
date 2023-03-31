@@ -12,4 +12,9 @@ public class FilterNameConstants
         public const string Rotation = "Rotation";
         public const string Fps = "FPS";
     }
+
+    public class Image
+    {
+        public const string Watermark = "Watermark";
+    }
 }

@@ -1,4 +1,6 @@
-﻿namespace Bal.Converter.Common.Conversion.Constants;
+﻿using System.Xml;
+
+namespace Bal.Converter.Common.Conversion.Constants;
 
 public class FileExtensions
 {
@@ -23,5 +25,6 @@ public class FileExtensions
         public const string Jpeg = "jpeg";
         public const string Gif = "gif";
         public const string Bmp = "bmp";
+        public const string Ico = "ico";
     }
 }

@@ -1,21 +1,19 @@
-﻿using Microsoft.UI.Xaml.Controls;
- 
-using Bal.Converter.Modules.Conversion.Image.Effects.Watermark;
-using ImageMagick;
+﻿using ImageMagick;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
-namespace Bal.Converter.Modules.Conversion.Image.Effects.Watermark;
+namespace Bal.Converter.Modules.Conversion.Filters.Watermark;
 
 public sealed partial class WatermarkEffectPage : Page
 {
     public WatermarkEffectPage()
     {
-        this.ViewModel = App.GetService<WatermarkEffectViewModel>();
+        this.ViewModel = App.GetService<Filters.Watermark.WatermarkEffectViewModel>();
 
         this.InitializeComponent();
     }
 
-    public WatermarkEffectViewModel ViewModel { get; set; }
+    public Filters.Watermark.WatermarkEffectViewModel ViewModel { get; set; }
 
     private void OnGravityComboboxLoaded(object sender, RoutedEventArgs e)
     {

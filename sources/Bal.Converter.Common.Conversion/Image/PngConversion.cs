@@ -8,6 +8,7 @@ namespace Bal.Converter.Common.Conversion.Image;
 [Target(typeof(PngConversion))]
 [Target(typeof(GifConversion))]
 [Target(typeof(BmpConversion))]
+[Target(typeof(IcoConversion))]
 [Target(typeof(JpegConversion))]
 public class PngConversion : DefaultImageConversion<PngConversion>
 {

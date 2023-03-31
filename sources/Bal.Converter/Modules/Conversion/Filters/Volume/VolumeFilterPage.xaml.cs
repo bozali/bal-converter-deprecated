@@ -1,8 +1,6 @@
-using Bal.Converter.Modules.Conversion.Filters.ViewModels;
-
 using Microsoft.UI.Xaml.Controls;
 
-namespace Bal.Converter.Modules.Conversion.Filters.Views
+namespace Bal.Converter.Modules.Conversion.Filters.Volume
 {
     public sealed partial class VolumeFilterPage : Page
     {

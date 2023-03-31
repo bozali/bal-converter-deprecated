@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Bal.Converter.Modules.Conversion.Filters.ViewModels;
+namespace Bal.Converter.Modules.Conversion.Filters.Volume;
 
-public partial class VolumeFilterViewModel : FilterBaseViewModel
+public partial class VolumeFilterViewModel : Filters.FilterBaseViewModel
 {
     [ObservableProperty] private float multiplier;
     [ObservableProperty] private int decibel;

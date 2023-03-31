@@ -18,8 +18,7 @@ using Bal.Converter.Contracts.ViewModels;
 using Bal.Converter.FFmpeg;
 using Bal.Converter.FFmpeg.Filters.Audio;
 using Bal.Converter.FFmpeg.Filters.Video;
-using Bal.Converter.Modules.Conversion.Filters.ViewModels;
-using Bal.Converter.Modules.Conversion.Filters.Views;
+using Bal.Converter.Modules.Conversion.Filters.Volume;
 using Bal.Converter.Modules.Conversion.ViewModels;
 using Bal.Converter.Modules.MediaDownloader.ViewModels;
 
@@ -27,6 +26,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using Microsoft.UI.Xaml.Controls;
+using VolumeFilterViewModel = Bal.Converter.Modules.Conversion.Filters.Volume.VolumeFilterViewModel;
 
 namespace Bal.Converter.Modules.Conversion.Video.ViewModels;
 

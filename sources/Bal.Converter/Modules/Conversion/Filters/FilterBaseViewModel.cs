@@ -1,6 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace Bal.Converter.Modules.Conversion.Filters.ViewModels ;
+namespace Bal.Converter.Modules.Conversion.Filters;
 
 public abstract partial class FilterBaseViewModel : ObservableObject
 {
