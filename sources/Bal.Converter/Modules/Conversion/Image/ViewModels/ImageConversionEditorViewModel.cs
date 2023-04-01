@@ -18,7 +18,6 @@ using ImageMagick;
 using Microsoft.UI.Xaml.Controls;
 
 using System.Collections.ObjectModel;
-
 using Windows.Storage.Pickers;
 using Bal.Converter.Common.Conversion.Constants;
 using Bal.Converter.Domain.Picker;
@@ -105,15 +104,6 @@ public partial class ImageConversionEditorViewModel : ObservableObject, INavigat
                 this.FilterPages.Add(new WatermarkEffectPage());
                 break;
         }
-
-        /*
-        using var watermark = new MagickImage(@"C:\Users\alibo\Downloads\character.png");
-        watermark.Evaluate(Channels.Alpha, EvaluateOperator.Divide, 4);
-        
-        this.image.Composite(watermark, Gravity.Center, CompositeOperator.Over);
-        
-        this.UpdateImage(this.image.ToByteArray());
-        */
     }
 
     [RelayCommand]
@@ -125,7 +115,7 @@ public partial class ImageConversionEditorViewModel : ObservableObject, INavigat
             UpdatedImageData = this.image.ToByteArray()
         };
 
-        var options = new FilePickerOptions
+        var options = new FileSavePickerOptions
         {
             SuggestedStartLocation = PickerLocationId.PicturesLibrary,
             SuggestedFileName = Path.GetFileNameWithoutExtension(this.SourcePath),
@@ -137,6 +127,14 @@ public partial class ImageConversionEditorViewModel : ObservableObject, INavigat
 
         if (file != null)
         {
+            // TODO We need to think how we can handle individual settings
+            // if (this.IndividualSettings.Any())
+            // {
+            //     foreach (var page in this.IndividualSettings)
+            //     {
+            //     }
+            // }
+
             await this.conversion.Convert(this.SourcePath, file.Path);
             this.navigationService.NavigateTo(typeof(MediaDownloaderViewModel).FullName!);
         }

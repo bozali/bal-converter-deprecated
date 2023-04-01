@@ -6,5 +6,7 @@ namespace Bal.Converter.Services;
 
 public interface IDialogPickerService
 {
-    Task<StorageFile?> OpenFileSave(FilePickerOptions options);
+    Task<StorageFile?> OpenFileSave(FileSavePickerOptions options);
+
+    Task<StorageFile?> OpenFile(FileOpenPickerOptions options);
 }

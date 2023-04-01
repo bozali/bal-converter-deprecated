@@ -1,4 +1,5 @@
 ﻿using ImageMagick;
+
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
@@ -8,12 +9,12 @@ public sealed partial class WatermarkEffectPage : Page
 {
     public WatermarkEffectPage()
     {
-        this.ViewModel = App.GetService<Filters.Watermark.WatermarkEffectViewModel>();
+        this.ViewModel = App.GetService<WatermarkEffectViewModel>();
 
         this.InitializeComponent();
     }
 
-    public Filters.Watermark.WatermarkEffectViewModel ViewModel { get; set; }
+    public WatermarkEffectViewModel ViewModel { get; set; }
 
     private void OnGravityComboboxLoaded(object sender, RoutedEventArgs e)
     {

@@ -2,9 +2,9 @@
 
 namespace Bal.Converter.Domain.Picker;
 
-public class FilePickerOptions
+public class FileSavePickerOptions
 {
-    public FilePickerOptions()
+    public FileSavePickerOptions()
     {
         this.SuggestedStartLocation = PickerLocationId.Desktop;
         this.FileTypeChoices = new Dictionary<string, IList<string>>();

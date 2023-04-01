@@ -11,6 +11,21 @@
 
     <winui:SettingsExpander Header="Watermark" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xed64;}">
         <winui:SettingsExpander.Items>
+            <winui:SettingsCard Header="Image">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="6">
+                    <TextBlock Text="{x:Bind ViewModel.ImagePath, Mode=TwoWay}" 
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               FontSize="12"
+                               VerticalAlignment="Center"
+                               IsTextSelectionEnabled="True"
+                               TextAlignment="Right" />
+
+                    <Button Command="{x:Bind ViewModel.ChangeImagePathCommand}" Style="{StaticResource SubtleButtonStyle}"
+                            FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                            Content="&#xe8da;" />
+                </StackPanel>
+            </winui:SettingsCard>
+
             <winui:SettingsCard Header="Position">
                 <ComboBox SelectedValuePath="Tag" MinWidth="{StaticResource SettingActionControlMinWidth}" SelectedValue="{x:Bind ViewModel.Gravity}" Loaded="OnGravityComboboxLoaded">
                     <ComboBoxItem Content="Northwest">
