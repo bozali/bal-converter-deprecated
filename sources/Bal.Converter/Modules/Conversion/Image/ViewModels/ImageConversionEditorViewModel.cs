@@ -21,14 +21,17 @@ using System.Collections.ObjectModel;
 
 using Windows.Storage.Pickers;
 using Bal.Converter.Common.Conversion.Constants;
+using Bal.Converter.Domain.Picker;
 using Bal.Converter.Modules.Conversion.Filters.Watermark;
 using Bal.Converter.Modules.Conversion.Image.Settings.Ico;
+using Bal.Converter.Services;
 
 namespace Bal.Converter.Modules.Conversion.Image.ViewModels;
 
 public partial class ImageConversionEditorViewModel : ObservableObject, INavigationAware
 {
     private readonly INavigationService navigationService;
+    private readonly IDialogPickerService pickerService;
 
     /// <summary>
     /// Special settings for individual conversion e.g. converting to ico can have an multi resolution.
@@ -47,9 +50,10 @@ public partial class ImageConversionEditorViewModel : ObservableObject, INavigat
     private IConversion conversion;
     private MagickImage image;
 
-    public ImageConversionEditorViewModel(INavigationService navigationService)
+    public ImageConversionEditorViewModel(INavigationService navigationService, IDialogPickerService pickerService)
     {
         this.navigationService = navigationService;
+        this.pickerService = pickerService;
 
         this.IndividualSettings = new ObservableCollection<Page>();
         this.FilterPages = new ObservableCollection<Page>();
@@ -113,26 +117,23 @@ public partial class ImageConversionEditorViewModel : ObservableObject, INavigat
     }
 
     [RelayCommand]
-    private async Task Save()
+    private async Task Convert()
     {
         // TODO If any effects apply them to the options
         ((IImageConversion)this.conversion).ImageConversionOptions = new ImageConversionOptions
         {
             UpdatedImageData = this.image.ToByteArray()
-        };  
-
-        var picker = new FileSavePicker
-        {
-            SuggestedStartLocation = PickerLocationId.PicturesLibrary
         };
 
-        picker.FileTypeChoices.Add($".{this.conversion.Extension}", new List<string> { $".{this.conversion.Extension}" });
-        picker.SuggestedFileName = Path.GetFileNameWithoutExtension(this.SourcePath);
+        var options = new FilePickerOptions
+        {
+            SuggestedStartLocation = PickerLocationId.PicturesLibrary,
+            SuggestedFileName = Path.GetFileNameWithoutExtension(this.SourcePath),
+        };
 
-        var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
-        WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
+        options.FileTypeChoices.Add($".{this.conversion.Extension}", new List<string> { $".{this.conversion.Extension}" });
 
-        var file = await picker.PickSaveFileAsync();
+        var file = await this.pickerService.OpenFileSave(options);
 
         if (file != null)
         {

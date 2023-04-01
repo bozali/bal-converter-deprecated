@@ -48,6 +48,6 @@
             <ItemsControl ItemsSource="{x:Bind ViewModel.FilterPages}" />
         </bal:SettingsGroup>
 
-        <Button Content="Save" Command="{x:Bind ViewModel.SaveCommand}" />
+        <Button Content="Save" Command="{x:Bind ViewModel.ConvertCommand}" />
     </StackPanel>
 </Page>

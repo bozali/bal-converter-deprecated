@@ -15,10 +15,9 @@
                 <ToggleSwitch IsOn="{x:Bind ViewModel.UseMultiResolution}" />
             </winui:SettingsCard>
 
-            <!--
             <winui:SettingsCard Header="Resolutions">
+                <TextBox Text="{x:Bind ViewModel.Resolutions}" Description="Separate resolution sizes with with a comma e.g 256, 128, 32" />
             </winui:SettingsCard>
-            -->
         </winui:SettingsExpander.Items>
     </winui:SettingsExpander>
 </Page>

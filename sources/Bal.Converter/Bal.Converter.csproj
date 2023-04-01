@@ -70,6 +70,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Domain\Picker\" />
     <Folder Include="Modules\Conversion\Filters\Watermark\" />
     <Folder Include="Modules\Conversion\Image\ViewModels\" />
     <Folder Include="Modules\Downloads\ViewModels\" />

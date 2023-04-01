@@ -26,7 +26,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using Microsoft.UI.Xaml.Controls;
-using VolumeFilterViewModel = Bal.Converter.Modules.Conversion.Filters.Volume.VolumeFilterViewModel;
 
 namespace Bal.Converter.Modules.Conversion.Video.ViewModels;
 

@@ -107,6 +107,7 @@ public partial class App : Application
         collection.AddSingleton<IDownloadsRegistryService, DownloadsRegistryService>();
         collection.AddSingleton<IMediaTagService, MediaTagService>();
         collection.AddSingleton<IConversionProvider, ConversionProvider>();
+        collection.AddSingleton<IDialogPickerService, DialogPickerService>();
 
         collection.ConfigureLiteDatabase();
         collection.ConfigureConversions();
