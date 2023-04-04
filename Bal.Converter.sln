@@ -13,7 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bal.Converter.Common.Conver
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bal.Converter.FFmpeg", "sources\Bal.Converter.FFmpeg\Bal.Converter.FFmpeg.csproj", "{A5524921-CA4C-4427-876D-6E46A48E30A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bal.Converter.CLI", "sources\Bal.Converter.CLI\Bal.Converter.CLI.csproj", "{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bal.Converter.CLI", "sources\Bal.Converter.CLI\Bal.Converter.CLI.csproj", "{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bal-shellext", "sources\bal-shellext\bal-shellext.vcxproj", "{140BDD29-FE45-4536-8470-74533E8BCFC2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Native", "Native", "{5E777ADD-CD41-43A1-A25B-A968C9CDD5D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,9 +135,28 @@ Global
 		{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}.Release|x64.Build.0 = Release|Any CPU
 		{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}.Release|x86.ActiveCfg = Release|Any CPU
 		{AA079E0B-9B0D-4F4B-9E27-8D5A12F24840}.Release|x86.Build.0 = Release|Any CPU
+		{140BDD29-FE45-4536-8470-74533E8BCFC2}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{140BDD29-FE45-4536-8470-74533E8BCFC2}.Debug|Any CPU.Build.0 = Debug|x64
+		{140BDD29-FE45-4536-8470-74533E8BCFC2}.Debug|arm64.ActiveCfg = Debug|x64
+		{140BDD29-FE45-4536-8470-74533E8BCFC2}.Debug|arm64.Build.0 = Debug|x64
+		{140BDD29-FE45-4536-8470-74533E8BCFC2}.Debug|x64.ActiveCfg = Debug|x64
+		{140BDD29-FE45-4536-8470-74533E8BCFC2}.Debug|x64.Build.0 = Debug|x64
+		{140BDD29-FE45-4536-8470-74533E8BCFC2}.Debug|x86.ActiveCfg = Debug|Win32
+		{140BDD29-FE45-4536-8470-74533E8BCFC2}.Debug|x86.Build.0 = Debug|Win32
+		{140BDD29-FE45-4536-8470-74533E8BCFC2}.Release|Any CPU.ActiveCfg = Release|x64
+		{140BDD29-FE45-4536-8470-74533E8BCFC2}.Release|Any CPU.Build.0 = Release|x64
+		{140BDD29-FE45-4536-8470-74533E8BCFC2}.Release|arm64.ActiveCfg = Release|x64
+		{140BDD29-FE45-4536-8470-74533E8BCFC2}.Release|arm64.Build.0 = Release|x64
+		{140BDD29-FE45-4536-8470-74533E8BCFC2}.Release|x64.ActiveCfg = Release|x64
+		{140BDD29-FE45-4536-8470-74533E8BCFC2}.Release|x64.Build.0 = Release|x64
+		{140BDD29-FE45-4536-8470-74533E8BCFC2}.Release|x86.ActiveCfg = Release|Win32
+		{140BDD29-FE45-4536-8470-74533E8BCFC2}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{140BDD29-FE45-4536-8470-74533E8BCFC2} = {5E777ADD-CD41-43A1-A25B-A968C9CDD5D8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C44C2584-7AD0-4FDC-AA1F-6398E232DC47}
