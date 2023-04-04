@@ -81,7 +81,14 @@ public partial class MediaDownloaderViewModel : ObservableObject, INavigationAwa
     {
         try
         {
-            this.downloadsRegistry.EnqueueFetch(this.Url, Enum.Parse<MediaFileExtension>(this.Format), new QualityOption { AudioQuality = Enum.Parse<AutomaticQualityOption>(this.AudioQualityOption), VideoQuality = Enum.Parse<AutomaticQualityOption>(this.VideoQualityOption) });
+            this.downloadsRegistry.EnqueueFetch(
+                this.Url,
+                Enum.Parse<MediaFileExtension>(this.Format),
+                new QualityOption
+                {
+                    AudioQuality = Enum.Parse<AutomaticQualityOption>(this.AudioQualityOption),
+                    VideoQuality = Enum.Parse<AutomaticQualityOption>(this.VideoQualityOption)
+                });
         }
         catch (Exception e)
         {
@@ -99,6 +106,14 @@ public partial class MediaDownloaderViewModel : ObservableObject, INavigationAwa
         try
         {
             this.IsProcessing = true;
+
+            if (this.ProceedAsPlaylist)
+            {
+                var playlist = await this.youtubeDl.GetPlaylist(this.Url);
+
+                return;
+            }
+
 
             var video = await this.youtubeDl.GetVideo(this.Url);
             var thumbnail = await this.fileDownloader.DownloadImageAsync(video.ThumbnailUrl, Path.Combine(ILocalSettingsService.TempPath, "Thumbnails", Guid.NewGuid() + ".jpg"));

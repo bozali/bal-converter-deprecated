@@ -1,11 +1,17 @@
 ﻿using Newtonsoft.Json.Converters;
 using Newtonsoft.Json;
+
+using Bal.Converter.Common;
+
+using System.Text.RegularExpressions;
+using System.Globalization;
 using System.Diagnostics;
 using System.Web;
-using Bal.Converter.Common;
-using System.Text.RegularExpressions;
+
 using Bal.Converter.Common.Enums;
-using System.Globalization;
+using System;
+using Bal.Converter.Common.Extensions;
+using System.IO;
 
 namespace Bal.Converter.YouTubeDl ;
 
@@ -78,6 +84,88 @@ public class YouTubeDl : IYouTubeDl
         }
     }
 
+    public async Task<Playlist> GetPlaylist(string url)
+    {
+        string pathPattern = Path.Combine(this.tempPath, "%(id)s.%(ext)s");
+
+        var arguments = new List<string>
+        {
+            $@"--output ""{pathPattern}""",
+            $@"""{url}""",
+            "--write-info-json",
+            "--skip-download"
+        };
+
+        using var process = new ProcessWrapper(this.youtubeDlPath);
+
+        var infoFileNames = new List<string>();
+        string playlistFileName = string.Empty;
+
+        var handler = new DataReceivedEventHandler((s, e) =>
+        {
+            string extracted = ExtractPlaylistPath(e.Data);
+
+            if (!string.IsNullOrEmpty(extracted))
+            {
+                playlistFileName = Path.GetFileName(extracted);
+            }
+            else
+            {
+                extracted = ExtractFilePath(e.Data);
+
+                if (!string.IsNullOrEmpty(extracted))
+                {
+                    infoFileNames.Add(extracted);
+                }
+            }
+        });
+
+
+        process.OutputDataReceived += handler;
+
+        await process.Execute(string.Join(' ', arguments));
+
+        process.OutputDataReceived -= handler;
+
+        string fullPlaylistPath = Path.Combine(this.tempPath, playlistFileName);
+        Playlist playlist;
+
+        try
+        {
+
+            using var reader = new StreamReader(fullPlaylistPath);
+            playlist = JsonConvert.DeserializeObject<Playlist>(
+                await reader.ReadToEndAsync(),
+                new IsoDateTimeConverter { DateTimeFormat = "yyyyMMdd" });
+        }
+        finally
+        {
+            new FileInfo(fullPlaylistPath).Delete();
+        }
+
+        playlist.Videos = new List<Video>();
+
+        foreach (string file in infoFileNames)
+        {
+            string path = Path.Combine(this.tempPath, file);
+
+            try
+            {
+                {
+                    using var reader = new StreamReader(path);
+                    playlist.Videos.Add(JsonConvert.DeserializeObject<Video>(await reader.ReadToEndAsync(), new IsoDateTimeConverter { DateTimeFormat = "yyyyMMdd" }));
+                }
+            }
+            finally
+            {
+                new FileInfo(path).Delete();
+            }
+        }
+
+
+        return playlist;
+    }
+
     public async Task Download(string url, DownloadOptions options, Action<float, string> progressReport = null, CancellationToken ct = default)
     {
         var arguments = new List<string>
@@ -141,8 +229,22 @@ public class YouTubeDl : IYouTubeDl
         process.ErrorDataReceived -= OnOutputDataReceived;
     }
 
+    private static string ExtractPlaylistPath(string? data)
+    {
+        if (string.IsNullOrEmpty(data) || !data.Contains(".info.json"))
+        {
+            return string.Empty;
+        }
+
+        var pattern = new Regex(@".*playlist.*\.info\.json$", RegexOptions.IgnoreCase);
+        var match = pattern.Match(data);
+
+        return match.Value;
+    }
+
     private static string ExtractFilePath(string? data)
     {
+
         if (string.IsNullOrEmpty(data) || !data.Contains(".info.json"))
         {
             return string.Empty;
