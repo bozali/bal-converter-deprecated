@@ -20,8 +20,7 @@ struct DllContext
 };
 
 
-EXTERN_C BALSHELLEXT_DLL std::wstring WINAPI BalGetModuleFileName(const DllContext& context);
-
+EXTERN_C BALSHELLEXT_DLL std::wstring WINAPI GetModuleFileNameFromContext(const DllContext& context);
 
 }
 

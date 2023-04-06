@@ -3,7 +3,7 @@
 using namespace core;
 
 
-EXTERN_C BALSHELLEXT_DLL std::wstring WINAPI BalGetModuleFileName(const DllContext& context)
+EXTERN_C BALSHELLEXT_DLL std::wstring WINAPI GetModuleFileNameFromContext(const DllContext& context)
 {
 	WCHAR buffer[MAX_PATH];
 	SecureZeroMemory(buffer, MAX_PATH);

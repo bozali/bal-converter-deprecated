@@ -9,7 +9,7 @@ DEFINE_GUID(CLSID_BalContextMenu, 0x3956e7f6, 0x392b, 0x493b, 0xb0, 0xd2, 0x89, 
 
 
 
-class BalContextMenu : public IContextMenu,/* public IShellExtInit,*/ public IUnknown
+class BalContextMenu : public IContextMenu, public IShellExtInit, public IUnknown
 {
 public:
 	HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, LPVOID* object);
@@ -18,11 +18,14 @@ public:
 
 	ULONG STDMETHODCALLTYPE Release();
 
+	HRESULT STDMETHODCALLTYPE Initialize(PCIDLIST_ABSOLUTE pidlFolder, IDataObject* pdtobj, HKEY hkeyProgID);
+
 	HRESULT STDMETHODCALLTYPE QueryContextMenu(HMENU menu, UINT index_menu, UINT cmd_first, UINT cmd_last, UINT flags);
 
 	HRESULT STDMETHODCALLTYPE InvokeCommand(LPCMINVOKECOMMANDINFO pici);
 
 	HRESULT STDMETHODCALLTYPE GetCommandString(UINT_PTR cmd, UINT type, UINT* reserved, CHAR* name, UINT cch_max);
+
 private:
 	ULONG ref_count_;
 };

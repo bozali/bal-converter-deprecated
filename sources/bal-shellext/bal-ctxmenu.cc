@@ -37,6 +37,12 @@ ULONG STDMETHODCALLTYPE BalContextMenu::Release()
 }
 
 
+HRESULT STDMETHODCALLTYPE BalContextMenu::Initialize(PCIDLIST_ABSOLUTE pidlFolder, IDataObject* pdtobj, HKEY hkeyProgID)
+{
+	return S_OK;
+}
+
+
 HRESULT STDMETHODCALLTYPE BalContextMenu::QueryContextMenu(HMENU menu, UINT index_menu, UINT cmd_first, UINT cmd_last, UINT flags)
 {
 	UINT id = cmd_first;

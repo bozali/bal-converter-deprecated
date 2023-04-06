@@ -1,8 +1,10 @@
 #include <Windows.h>
 
+#include <win32/registry.h>
 #include <bal-ctxmenu.h>
 #include <utils.h>
 
+#include <iostream>
 #include <string>
 
 
@@ -47,37 +49,28 @@ EXTERN_C HRESULT STDAPICALLTYPE DllGetClassObject(REFCLSID rclsid, REFIID riid, 
 }
 
 
-extern "C" __declspec(dllexport) HRESULT STDAPICALLTYPE DllRegisterServer()
+EXTERN_C BALSHELLEXT_DLL HRESULT STDAPICALLTYPE DllRegisterServer()
 {
-	const std::wstring sub_key_path = TEXT("SOFTWARE\\Classes\\CLSID\\") + utils::CLSIDToString(CLSID_BalContextMenu);
-	const std::wstring module_path = core::BalGetModuleFileName(g_context);
-	const std::wstring threading_model = TEXT("Apartment");
+	const std::wstring clsid_key_path = TEXT("SOFTWARE\\Classes\\CLSID\\") + utils::CLSIDToString(CLSID_BalContextMenu);
 
-	DWORD disposition;
-	HKEY key;
+	// Create the CLSID key
+	auto clsid_key = win32::Registry::LocalMachine().CreateSubKey(clsid_key_path);
 
+	// Create InProcServer32 key
+	auto inprocserver_key = clsid_key.CreateSubKey(TEXT("InProcServer32"));
+	
+	// Create (default) value (Path to dll)
+	inprocserver_key.SetValue(nullptr, core::GetModuleFileNameFromContext(g_context).c_str());
 
-	// Create CLSID key
-	RETURN_IF_FAILED(RegCreateKeyEx(HKEY_LOCAL_MACHINE, sub_key_path.c_str(), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE, NULL, &key, &disposition));
+	// Create ThradingModel value (Apartment)
+	inprocserver_key.SetValue(TEXT("ThreadingModel"), TEXT("Apartment"));
 
-	// Create InProcServer32
-	RETURN_IF_FAILED(RegCreateKeyEx(key, TEXT("InProcServer32"), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE, NULL, &key, &disposition));
+	// Register shell extension for specific file types
+	const std::wstring classes_mp3_clsid_path = TEXT(".mp3\\ShellEx\\CustomMenuHandlers\\" + utils::CLSIDToString(CLSID_BalContextMenu));
 
-	// Set (default) value
-	RETURN_IF_FAILED(RegSetValueEx(key, NULL, 0, REG_SZ, reinterpret_cast<const BYTE*>(module_path.c_str()), (module_path.size() + 1) * sizeof(WCHAR)));
+	auto mp3_clsid_key = win32::Registry::ClassesRoot().CreateSubKey(classes_mp3_clsid_path);
 
-	// Create ThreadingModel to Apartment
-	RETURN_IF_FAILED(RegSetValueEx(key, TEXT("ThreadingModel"), 0, REG_SZ, reinterpret_cast<const BYTE*>(threading_model.c_str()), (threading_model.size() + 1) * sizeof(WCHAR)));
-
-	RegCloseKey(key);
-
-	// Create handler key
-	RETURN_IF_FAILED(RegCreateKeyEx(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\Classes\\txtfile\\ShellEx\\ContextMenuHandlers\\balshellext"), 0, NULL, REG_OPTION_NON_VOLATILE, KEY_WRITE, NULL, &key, &disposition));
-
-	// Set handler key (default) value
-	// RETURN_IF_FAILED(RegSetValueEx(key, NULL, 0, REG_SZ, reinterpret_cast<const BYTE*>()));
-
-	SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, NULL, NULL);
+	SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, nullptr, nullptr);
 
 	return S_OK;
 }

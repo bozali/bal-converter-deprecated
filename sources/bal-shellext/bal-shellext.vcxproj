@@ -119,6 +119,7 @@
       <PreprocessorDefinitions>_DEBUG;BALSHELLEXT_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,10 +149,12 @@
     <ClCompile Include="core.cc" />
     <ClCompile Include="dllmain.cc" />
     <ClCompile Include="utils.cc" />
+    <ClCompile Include="win32\registry.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bal-ctxmenu.h" />
     <ClInclude Include="core.h" />
+    <ClInclude Include="win32\registry.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -27,6 +27,9 @@
     <ClCompile Include="core.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="win32\registry.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bal-ctxmenu.h">
@@ -36,6 +39,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="win32\registry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
