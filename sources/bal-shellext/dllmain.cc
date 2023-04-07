@@ -40,6 +40,8 @@ BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved)
 
 HRESULT STDAPICALLTYPE DllCanUnloadNow()
 {
+	MessageBox(nullptr, TEXT("Can unload"), TEXT("DEBUG"), MB_OK);
+
 	return g_context.object_count > 0 ? S_FALSE : S_OK;
 }
 

@@ -4,9 +4,23 @@
 
 HRESULT STDMETHODCALLTYPE BalContextMenu::QueryInterface(REFIID riid, LPVOID* object)
 {
-	if (IsEqualIID(riid, IID_IUnknown) || IsEqualIID(riid, IID_IContextMenu))
+	if (IsEqualIID(riid, IID_IUnknown))
+	{
+		*object = this;
+		AddRef();
+
+		return S_OK;
+	}
+	else if (IsEqualIID(riid, IID_IContextMenu))
 	{
 		*object = static_cast<IContextMenu*>(this);
+		AddRef();
+
+		return S_OK;
+	}
+	else if (IsEqualIID(riid, IID_IShellExtInit))
+	{
+		*object = static_cast<IShellExtInit*>(this);
 		AddRef();
 
 		return S_OK;
@@ -44,11 +58,30 @@ HRESULT STDMETHODCALLTYPE BalContextMenu::Initialize(PCIDLIST_ABSOLUTE pidlFolde
 
 HRESULT STDMETHODCALLTYPE BalContextMenu::QueryContextMenu(HMENU menu, UINT index_menu, UINT cmd_first, UINT cmd_last, UINT flags)
 {
-	UINT id = cmd_first;
+	if (flags & CMF_DEFAULTONLY)
+	{
+		return MAKE_HRESULT(SEVERITY_SUCCESS, FACILITY_NULL, 0);
+	}
 
-	InsertMenu(menu, index_menu++, MF_STRING | MF_BYPOSITION, id++, TEXT("Bal Converter Menu"));
+	MENUITEMINFO item;
+	
+	WCHAR item_text[MAX_PATH] = TEXT("Bal Converter Menu");
 
-	return MAKE_HRESULT(SEVERITY_SUCCESS, 0, id);
+	item.wID = cmd_first + 1;
+	item.cbSize = sizeof(item);
+	item.fMask = MIIM_STRING | MIIM_ID;
+	item.dwTypeData = item_text;
+	// item.hbmpItem = 
+
+	// InsertMenuItem(menu, 0, TRUE, &item);
+	// InsertMenu(menu, index_menu++, MF_STRING | MF_BYPOSITION, cmd_first, TEXT("Bal Converter Menu"));
+	// InsertMenu(menu,
+	// 	index_menu,
+	// 	MF_STRING | MF_BYPOSITION,
+	// 	cmd_first,
+	// 	TEXT("&Bal Converter"));
+
+	return MAKE_HRESULT(SEVERITY_SUCCESS, FACILITY_NULL, item.wID - cmd_first + 1);
 }
 
 
@@ -86,7 +119,14 @@ HRESULT STDMETHODCALLTYPE BalContextMenu::GetCommandString(UINT_PTR cmd, UINT ty
 
 HRESULT STDMETHODCALLTYPE BalClassFactory::QueryInterface(REFIID riid, LPVOID* object)
 {
-	if (IsEqualIID(riid, IID_IUnknown) || IsEqualIID(riid, IID_IClassFactory))
+	if (IsEqualIID(riid, IID_IUnknown))
+	{
+		*object = this;
+		AddRef();
+
+		return S_OK;
+	}
+	else if (IsEqualIID(riid, IID_IClassFactory))
 	{
 		*object = static_cast<IClassFactory*>(this);
 		AddRef();
@@ -132,7 +172,10 @@ HRESULT STDMETHODCALLTYPE BalClassFactory::CreateInstance(IUnknown* unkown, REFI
 
 	HRESULT hr = E_UNEXPECTED;
 
-	if (IsEqualIID(riid, IID_IShellExtInit) || IsEqualIID(riid, IID_IContextMenu)) {
+	if (IsEqualIID(riid, IID_IShellExtInit) || IsEqualIID(riid, IID_IContextMenu))
+	{
+		MessageBox(nullptr, TEXT("Creating instacen"), TEXT("DEBUG"), MB_OK);
+
 		auto context_menu = new BalContextMenu();
 
 		if (context_menu == nullptr) {
@@ -142,6 +185,8 @@ HRESULT STDMETHODCALLTYPE BalClassFactory::CreateInstance(IUnknown* unkown, REFI
 		context_menu->AddRef();
 
 		hr = context_menu->QueryInterface(riid, object);
+
+		context_menu->Release();
 	}
 	else {
 		hr = E_NOINTERFACE;
