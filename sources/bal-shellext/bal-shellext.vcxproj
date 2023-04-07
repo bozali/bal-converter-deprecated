@@ -156,6 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="bal-ctxmenu.cc" />
+    <ClCompile Include="bal-factory.cc" />
     <ClCompile Include="core.cc" />
     <ClCompile Include="dllmain.cc" />
     <ClCompile Include="utils.cc" />
@@ -163,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bal-ctxmenu.h" />
+    <ClInclude Include="bal-factory.h" />
     <ClInclude Include="core.h" />
     <ClInclude Include="win32\registry.h" />
     <ClInclude Include="utils.h" />

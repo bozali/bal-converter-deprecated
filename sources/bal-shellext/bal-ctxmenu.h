@@ -21,7 +21,7 @@ public:
 
 	ULONG STDMETHODCALLTYPE Release();
 
-	HRESULT STDMETHODCALLTYPE Initialize(PCIDLIST_ABSOLUTE pidlFolder, IDataObject* pdtobj, HKEY hkeyProgID);
+	HRESULT STDMETHODCALLTYPE Initialize(PCIDLIST_ABSOLUTE pidl_folder, IDataObject* pdtobj, HKEY hkey_progid);
 
 	HRESULT STDMETHODCALLTYPE QueryContextMenu(HMENU menu, UINT index_menu, UINT cmd_first, UINT cmd_last, UINT flags);
 
@@ -34,19 +34,3 @@ private:
 };
 
 
-class BalClassFactory : IClassFactory, IUnknown
-{
-public:
-	HRESULT STDMETHODCALLTYPE QueryInterface(REFIID riid, LPVOID* object);
-
-	ULONG STDMETHODCALLTYPE AddRef();
-
-	ULONG STDMETHODCALLTYPE Release();
-
-	HRESULT STDMETHODCALLTYPE CreateInstance(IUnknown* unkown, REFIID riid, LPVOID* object);
-
-	HRESULT STDMETHODCALLTYPE LockServer(BOOL lock);
-
-private:
-	ULONG ref_count_;
-};

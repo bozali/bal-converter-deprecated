@@ -14,9 +14,11 @@ class BALSHELLEXT_DLL RegistryKey
 public:
 	explicit RegistryKey(HKEY handle);
 
-	RegistryKey CreateSubKey(const std::wstring_view subkey);
+	RegistryKey CreateSubKey(const std::wstring_view subkey_path);
 
-	RegistryKey OpenSubKey(const std::wstring_view subkey);
+	RegistryKey OpenSubKey(const std::wstring_view subkey_path);
+
+	void DeleteSubKey(const std::wstring_view subkey_path);
 
 	template <typename T>
 	void SetValue(LPCWSTR name, T value) {}
