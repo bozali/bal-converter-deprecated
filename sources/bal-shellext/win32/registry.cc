@@ -9,7 +9,8 @@ RegistryKey::RegistryKey(HKEY handle)
 }
 
 
-RegistryKey RegistryKey::CreateSubKey(const std::wstring_view subkey) {
+RegistryKey RegistryKey::CreateSubKey(const std::wstring_view subkey)
+{
 	HKEY subkey_handle;
 	DWORD disposition;
 
@@ -21,3 +22,19 @@ RegistryKey RegistryKey::CreateSubKey(const std::wstring_view subkey) {
 
 	return RegistryKey(subkey_handle);
 }
+
+
+RegistryKey RegistryKey::OpenSubKey(const std::wstring_view subkey)
+{
+	HKEY subkey_handle;
+	DWORD disposition;
+
+	HRESULT hr = RegOpenKeyEx(handle_, subkey.data(), REG_OPTION_NON_VOLATILE, KEY_ALL_ACCESS, &subkey_handle);
+
+	if (FAILED(hr)) {
+		std::cerr << "Failed to create registry key: " << std::hex << hr << std::endl;
+	}
+
+	return RegistryKey(subkey_handle);
+}
+

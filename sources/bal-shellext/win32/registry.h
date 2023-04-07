@@ -2,8 +2,9 @@
 
 #include <core.h>
 
-#include <memory>
 #include <iostream>
+#include <memory>
+#include <string>
 
 
 namespace win32 {
@@ -14,6 +15,8 @@ public:
 	explicit RegistryKey(HKEY handle);
 
 	RegistryKey CreateSubKey(const std::wstring_view subkey);
+
+	RegistryKey OpenSubKey(const std::wstring_view subkey);
 
 	template <typename T>
 	void SetValue(LPCWSTR name, T value) {}

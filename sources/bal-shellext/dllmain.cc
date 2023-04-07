@@ -12,6 +12,7 @@
 #	define RETURN_IF_FAILED(expr) if (FAILED(expr)) return E_UNEXPECTED
 #endif // RETURN_IF_FAILED
 
+
 core::DllContext g_context;
 
 
@@ -37,19 +38,43 @@ BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved)
 }
 
 
-EXTERN_C HRESULT STDAPICALLTYPE DllCanunloadNow()
+HRESULT STDAPICALLTYPE DllCanUnloadNow()
 {
-	return E_NOTIMPL;
+	return g_context.object_count > 0 ? S_FALSE : S_OK;
+}
+
+HRESULT STDAPICALLTYPE DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
+{
+	if (!IsEqualCLSID(rclsid, CLSID_BalContextMenu)) {
+		return CLASS_E_CLASSNOTAVAILABLE;
+	}
+
+	if (!ppv) {
+		return E_INVALIDARG;
+	}
+
+
+	*ppv = nullptr;
+
+	auto factory = new BalClassFactory();
+
+	*ppv = factory;
+
+	HRESULT hr = E_UNEXPECTED;
+
+
+	if (factory != nullptr)
+	{
+		factory->AddRef();
+		hr = factory->QueryInterface(riid, ppv);
+		factory->Release();
+	}
+
+	// return hr;
 }
 
 
-EXTERN_C HRESULT STDAPICALLTYPE DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
-{
-	return E_NOTIMPL;
-}
-
-
-EXTERN_C BALSHELLEXT_DLL HRESULT STDAPICALLTYPE DllRegisterServer()
+HRESULT STDAPICALLTYPE DllRegisterServer()
 {
 	const std::wstring clsid_key_path = TEXT("SOFTWARE\\Classes\\CLSID\\") + utils::CLSIDToString(CLSID_BalContextMenu);
 
@@ -65,10 +90,16 @@ EXTERN_C BALSHELLEXT_DLL HRESULT STDAPICALLTYPE DllRegisterServer()
 	// Create ThradingModel value (Apartment)
 	inprocserver_key.SetValue(TEXT("ThreadingModel"), TEXT("Apartment"));
 
-	// Register shell extension for specific file types
-	const std::wstring classes_mp3_clsid_path = TEXT(".mp3\\ShellEx\\CustomMenuHandlers\\" + utils::CLSIDToString(CLSID_BalContextMenu));
+	// Set an approved value
+	win32::Registry::LocalMachine()
+		.OpenSubKey(TEXT("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Approved"))
+		.SetValue(utils::CLSIDToString(CLSID_BalContextMenu).c_str(), TEXT("Bal Converter Shell Extensions"));
 
+	// Register shell extension for specific file types
+	const std::wstring classes_mp3_clsid_path = TEXT("*\\ShellEx\\ContextMenuHandlers\\BalConverter");
+	
 	auto mp3_clsid_key = win32::Registry::ClassesRoot().CreateSubKey(classes_mp3_clsid_path);
+	mp3_clsid_key.SetValue(nullptr, utils::CLSIDToString(CLSID_BalContextMenu).c_str());
 
 	SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, nullptr, nullptr);
 
@@ -76,7 +107,7 @@ EXTERN_C BALSHELLEXT_DLL HRESULT STDAPICALLTYPE DllRegisterServer()
 }
 
 
-EXTERN_C HRESULT STDAPICALLTYPE DllUnregsterServer()
+HRESULT STDAPICALLTYPE DllUnregisterServer()
 {
 	return E_NOTIMPL;
 }

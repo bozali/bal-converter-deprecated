@@ -17,10 +17,12 @@ namespace core {
 struct DllContext
 {
 	HINSTANCE dll_instance;
+	ULONG object_count;
 };
 
 
 EXTERN_C BALSHELLEXT_DLL std::wstring WINAPI GetModuleFileNameFromContext(const DllContext& context);
 
 }
+
 
