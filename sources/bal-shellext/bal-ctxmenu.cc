@@ -1,12 +1,10 @@
 #include <bal-ctxmenu.h>
 #include <strsafe.h>
 #include <resource.h>
-#include <wrl/client.h>
-#include <wincodec.h>
-
-#pragma comment(lib, "windowscodecs.lib")
-
 #include <filesystem>
+#include <utils.h>
+
+#include <wrl/client.h>
 
 using namespace Microsoft::WRL;
 
@@ -129,66 +127,6 @@ std::wstring GetLastErrorAsString()
 	return message;
 }
 
-HBITMAP Create32BitHBITMAP(UINT cx, UINT cy, PBYTE* ppbBits)
-{
-	BITMAPINFO bmi;
-	ZeroMemory(&bmi, sizeof(bmi));
-	bmi.bmiHeader.biSize = sizeof(bmi.bmiHeader);
-	bmi.bmiHeader.biWidth = cx;
-	bmi.bmiHeader.biHeight = -(LONG)cy;
-	bmi.bmiHeader.biPlanes = 1;
-	bmi.bmiHeader.biBitCount = 32;
-	bmi.bmiHeader.biCompression = BI_RGB;
-	HDC hDC = GetDC(NULL);
-	HBITMAP hbmp = CreateDIBSection(hDC, &bmi, DIB_RGB_COLORS, (void**)ppbBits, NULL, 0);
-	ReleaseDC(NULL, hDC);
-	return(hbmp);
-}
-
-
-HBITMAP ConvertIconToBitmap(HICON hicon)
-{
-	IWICImagingFactory* pFactory;
-	IWICBitmap* pBitmap;
-	IWICFormatConverter* pConverter;
-	HBITMAP ret = NULL;
-
-	if (SUCCEEDED(CoCreateInstance(CLSID_WICImagingFactory, NULL,
-		CLSCTX_INPROC_SERVER, IID_IWICImagingFactory, (void**)&pFactory)))
-	{
-		if (SUCCEEDED(pFactory->CreateBitmapFromHICON(hicon, &pBitmap)))
-		{
-			if (SUCCEEDED(pFactory->CreateFormatConverter(&pConverter)))
-			{
-				UINT cx, cy;
-				PBYTE pbBits;
-				HBITMAP hbmp;
-
-				if (SUCCEEDED(pConverter->Initialize(pBitmap, GUID_WICPixelFormat32bppPBGRA,
-					WICBitmapDitherTypeNone, NULL, 0.0f, WICBitmapPaletteTypeCustom)) && SUCCEEDED(
-						pConverter->GetSize(&cx, &cy)) && NULL != (hbmp = Create32BitHBITMAP(cx, cy, &pbBits)))
-				{
-					UINT cbStride = cx * sizeof(UINT32);
-					UINT cbBitmap = cy * cbStride;
-
-					if (SUCCEEDED(pConverter->CopyPixels(NULL, cbStride, cbBitmap, pbBits)))
-						ret = hbmp;
-					else
-						DeleteObject(hbmp);
-				}
-
-				pConverter->Release();
-			}
-
-			pBitmap->Release();
-		}
-
-		pFactory->Release();
-	}
-
-	return ret;
-}
-
 
 HRESULT STDMETHODCALLTYPE BalContextMenu::QueryContextMenu(HMENU menu, UINT index_menu, UINT cmd_first, UINT cmd_last, UINT flags)
 {
@@ -206,7 +144,7 @@ HRESULT STDMETHODCALLTYPE BalContextMenu::QueryContextMenu(HMENU menu, UINT inde
 	item.cbSize = sizeof(item);
 	item.fMask = MIIM_STRING | MIIM_ID | MIIM_BITMAP;
 	item.dwTypeData = item_text;
-	item.hbmpItem = ConvertIconToBitmap(icon);
+	item.hbmpItem = utils::ConvertIconToBitmap(icon);
 	item.fType = MFT_STRING;
 
 	if (!InsertMenuItem(menu, index_menu, TRUE, &item)) {
