@@ -166,11 +166,18 @@
     <ClInclude Include="bal-ctxmenu.h" />
     <ClInclude Include="bal-factory.h" />
     <ClInclude Include="core.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="win32\registry.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bal-shellext.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resource.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="logo.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

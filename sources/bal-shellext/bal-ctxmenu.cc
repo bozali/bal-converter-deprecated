@@ -1,6 +1,10 @@
 #include <bal-ctxmenu.h>
 #include <strsafe.h>
+#include <resource.h>
 #include <wrl/client.h>
+#include <wincodec.h>
+
+#pragma comment(lib, "windowscodecs.lib")
 
 #include <filesystem>
 
@@ -101,6 +105,91 @@ HRESULT STDMETHODCALLTYPE BalContextMenu::Initialize(PCIDLIST_ABSOLUTE pidl_fold
 }
 
 
+std::wstring GetLastErrorAsString()
+{
+	//Get the error message ID, if any.
+	DWORD errorMessageID = ::GetLastError();
+	if (errorMessageID == 0) {
+		return std::wstring(); //No error message has been recorded
+	}
+
+	LPWSTR messageBuffer = nullptr;
+
+	//Ask Win32 to give us the string version of that message ID.
+	//The parameters we pass in, tell Win32 to create the buffer that holds the message for us (because we don't yet know how long the message string will be).
+	size_t size = FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS,
+		NULL, errorMessageID, MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), (LPWSTR)&messageBuffer, 0, NULL);
+
+	//Copy the error message into a std::string.
+	std::wstring message(messageBuffer, size);
+
+	//Free the Win32's string's buffer.
+	LocalFree(messageBuffer);
+
+	return message;
+}
+
+HBITMAP Create32BitHBITMAP(UINT cx, UINT cy, PBYTE* ppbBits)
+{
+	BITMAPINFO bmi;
+	ZeroMemory(&bmi, sizeof(bmi));
+	bmi.bmiHeader.biSize = sizeof(bmi.bmiHeader);
+	bmi.bmiHeader.biWidth = cx;
+	bmi.bmiHeader.biHeight = -(LONG)cy;
+	bmi.bmiHeader.biPlanes = 1;
+	bmi.bmiHeader.biBitCount = 32;
+	bmi.bmiHeader.biCompression = BI_RGB;
+	HDC hDC = GetDC(NULL);
+	HBITMAP hbmp = CreateDIBSection(hDC, &bmi, DIB_RGB_COLORS, (void**)ppbBits, NULL, 0);
+	ReleaseDC(NULL, hDC);
+	return(hbmp);
+}
+
+
+HBITMAP ConvertIconToBitmap(HICON hicon)
+{
+	IWICImagingFactory* pFactory;
+	IWICBitmap* pBitmap;
+	IWICFormatConverter* pConverter;
+	HBITMAP ret = NULL;
+
+	if (SUCCEEDED(CoCreateInstance(CLSID_WICImagingFactory, NULL,
+		CLSCTX_INPROC_SERVER, IID_IWICImagingFactory, (void**)&pFactory)))
+	{
+		if (SUCCEEDED(pFactory->CreateBitmapFromHICON(hicon, &pBitmap)))
+		{
+			if (SUCCEEDED(pFactory->CreateFormatConverter(&pConverter)))
+			{
+				UINT cx, cy;
+				PBYTE pbBits;
+				HBITMAP hbmp;
+
+				if (SUCCEEDED(pConverter->Initialize(pBitmap, GUID_WICPixelFormat32bppPBGRA,
+					WICBitmapDitherTypeNone, NULL, 0.0f, WICBitmapPaletteTypeCustom)) && SUCCEEDED(
+						pConverter->GetSize(&cx, &cy)) && NULL != (hbmp = Create32BitHBITMAP(cx, cy, &pbBits)))
+				{
+					UINT cbStride = cx * sizeof(UINT32);
+					UINT cbBitmap = cy * cbStride;
+
+					if (SUCCEEDED(pConverter->CopyPixels(NULL, cbStride, cbBitmap, pbBits)))
+						ret = hbmp;
+					else
+						DeleteObject(hbmp);
+				}
+
+				pConverter->Release();
+			}
+
+			pBitmap->Release();
+		}
+
+		pFactory->Release();
+	}
+
+	return ret;
+}
+
+
 HRESULT STDMETHODCALLTYPE BalContextMenu::QueryContextMenu(HMENU menu, UINT index_menu, UINT cmd_first, UINT cmd_last, UINT flags)
 {
 	if (flags & CMF_DEFAULTONLY)
@@ -108,23 +197,21 @@ HRESULT STDMETHODCALLTYPE BalContextMenu::QueryContextMenu(HMENU menu, UINT inde
 		return MAKE_HRESULT(SEVERITY_SUCCESS, FACILITY_NULL, 0);
 	}
 
-	MENUITEMINFO item;
-	
-	WCHAR item_text[MAX_PATH] = TEXT("Bal Converter Menu");
+	WCHAR item_text[MAX_PATH] = TEXT("Bal Converter");
 
+	HICON icon = (HICON)LoadImage(g_context.dll_instance, MAKEINTRESOURCE(IDI_LOGO), IMAGE_ICON, 16, 16, LR_DEFAULTSIZE | LR_LOADTRANSPARENT);
+
+	MENUITEMINFOW item;
 	item.wID = cmd_first + 1;
 	item.cbSize = sizeof(item);
-	item.fMask = MIIM_STRING | MIIM_ID;
+	item.fMask = MIIM_STRING | MIIM_ID | MIIM_BITMAP;
 	item.dwTypeData = item_text;
-	// item.hbmpItem = 
+	item.hbmpItem = ConvertIconToBitmap(icon);
+	item.fType = MFT_STRING;
 
-	// InsertMenuItem(menu, 0, TRUE, &item);
-	// InsertMenu(menu, index_menu++, MF_STRING | MF_BYPOSITION, cmd_first, TEXT("Bal Converter Menu"));
-	// InsertMenu(menu,
-	// 	index_menu,
-	// 	MF_STRING | MF_BYPOSITION,
-	// 	cmd_first,
-	// 	TEXT("&Bal Converter"));
+	if (!InsertMenuItem(menu, index_menu, TRUE, &item)) {
+		return HRESULT_FROM_WIN32(GetLastError());
+	}
 
 	return MAKE_HRESULT(SEVERITY_SUCCESS, FACILITY_NULL, item.wID - cmd_first + 1);
 }
