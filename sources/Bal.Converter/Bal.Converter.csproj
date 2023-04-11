@@ -32,6 +32,7 @@
     <None Remove="Modules\Downloads\Views\DownloadsPage.xaml" />
     <None Remove="Modules\MediaDownloader\Views\MediaDownloaderPage.xaml" />
     <None Remove="Modules\MediaDownloader\Views\MediaTagEditorPage.xaml" />
+    <None Remove="Modules\MediaDownloader\Views\PlaylistOverviewPage.xaml" />
     <None Remove="Modules\Settings\Views\SettingsPage.xaml" />
     <None Remove="Styles\Button.xaml" />
     <None Remove="Themes\Generic.xaml" />
@@ -91,6 +92,9 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <Page Update="Modules\MediaDownloader\Views\PlaylistOverviewPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Modules\Conversion\Image\Settings\Ico\IcoMultiResolutionPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

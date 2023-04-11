@@ -34,6 +34,7 @@ public class PageService : IPageService
         this.Configure<DownloadsViewModel, DownloadsPage>();
         this.Configure<MainViewModel, MainPage>();
         this.Configure<SettingsViewModel, SettingsPage>();
+        this.Configure<PlaylistOverviewViewModel, PlaylistOverviewPage>();
     }
 
     public Type GetPageType(string key)

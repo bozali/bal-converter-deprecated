@@ -111,35 +111,43 @@ public partial class MediaDownloaderViewModel : ObservableObject, INavigationAwa
             {
                 var playlist = await this.youtubeDl.GetPlaylist(this.Url);
 
-                return;
-            }
-
-
-            var video = await this.youtubeDl.GetVideo(this.Url);
-            var thumbnail = await this.fileDownloader.DownloadImageAsync(video.ThumbnailUrl, Path.Combine(ILocalSettingsService.TempPath, "Thumbnails", Guid.NewGuid() + ".jpg"));
-
-            var vmVideo = new VideoViewModel
-            {
-                Format = this.Format,
-                Url = video.Url,
-                ThumbnailData = thumbnail.Data,
-                ThumbnailPath = thumbnail.DownloadPath,
-                Tags = new MediaTagsViewModel
+                var parameters = new Dictionary<string, object>
                 {
-                    Title = video.Title.RemoveIllegalChars(),
-                    Artist = video.Channel,
-                    Year = video.UploadDate.Year
-                }
-            };
+                    { "Playlist", playlist },
+                    { "VideoQuality", this.VideoQualityOption },
+                    { "AudioQuality", this.AudioQualityOption }
+                };
 
-            var parameters = new Dictionary<string, object>
+                this.navigationService.NavigateTo(typeof(PlaylistOverviewViewModel).FullName!, parameters);
+            }
+            else
             {
-                { "Video", vmVideo },
-                { "VideoQuality", this.VideoQualityOption },
-                { "AudioQuality", this.AudioQualityOption }
-            };
+                var video = await this.youtubeDl.GetVideo(this.Url);
+                var thumbnail = await this.fileDownloader.DownloadImageAsync(video.ThumbnailUrl, Path.Combine(ILocalSettingsService.TempPath, "Thumbnails", Guid.NewGuid() + ".jpg"));
 
-            this.navigationService.NavigateTo(typeof(MediaTagEditorViewModel).FullName!, parameters);
+                var vmVideo = new VideoViewModel
+                {
+                    Format = this.Format,
+                    Url = video.Url,
+                    ThumbnailData = thumbnail.Data,
+                    ThumbnailPath = thumbnail.DownloadPath,
+                    Tags = new MediaTagsViewModel
+                    {
+                        Title = video.Title.RemoveIllegalChars(),
+                        Artist = video.Channel,
+                        Year = video.UploadDate.Year
+                    }
+                };
+
+                var parameters = new Dictionary<string, object>
+                {
+                    { "Video", vmVideo },
+                    { "VideoQuality", this.VideoQualityOption },
+                    { "AudioQuality", this.AudioQualityOption }
+                };
+
+                this.navigationService.NavigateTo(typeof(MediaTagEditorViewModel).FullName!, parameters);
+            }
         }
         catch (Exception e)
         {

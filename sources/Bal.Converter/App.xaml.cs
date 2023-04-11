@@ -31,8 +31,6 @@ using Bal.Converter.YouTubeDl;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
-using VolumeFilterViewModel = Bal.Converter.Modules.Conversion.Filters.Volume.VolumeFilterViewModel;
-using WatermarkEffectViewModel = Bal.Converter.Modules.Conversion.Filters.Watermark.WatermarkEffectViewModel;
 
 namespace Bal.Converter;
 
@@ -125,6 +123,7 @@ public partial class App : Application
             .AddTransient<DownloadsViewModel>()
             .AddTransient<SettingsViewModel>()
             .AddTransient<ShellViewModel>()
+            .AddTransient<PlaylistOverviewViewModel>()
             .AddTransient<VolumeFilterPage>()
             .AddTransient<WatermarkEffectPage>()
             .AddTransient<IcoMultiResolutionPage>()
@@ -134,6 +133,7 @@ public partial class App : Application
             .AddTransient<ConversionSelectionPage>()
             .AddTransient<MediaDownloaderPage>()
             .AddTransient<MediaTagEditorPage>()
+            .AddTransient<PlaylistOverviewPage>()
             .AddTransient<DownloadsPage>()
             .AddTransient<SettingsPage>()
             .AddTransient<MainPage>()

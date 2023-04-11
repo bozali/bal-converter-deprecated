@@ -30,6 +30,12 @@
 
                     <x:Double x:Key="SettingActionControlMinWidth">240</x:Double>
 
+                    <AcrylicBrush x:Key="TestAcrylicBrush"
+                                  TintColor="Black"
+                                  TintOpacity="0.5"
+                                  TintLuminosityOpacity="1"
+                                  FallbackColor="#111111" />
+
                     <Style x:Key="SubtleButtonStyle" TargetType="Button">
                         <Setter Property="Background" Value="{ThemeResource SubtleButtonBackground}" />
                         <Setter Property="BackgroundSizing" Value="InnerBorderEdge" />
