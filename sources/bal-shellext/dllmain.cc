@@ -1,28 +1,24 @@
 #include <Windows.h>
 
 #include <win32/registry.h>
-#include <bal-factory.h>
+#include <core/context.h>
+
 #include <bal-ctxmenu.h>
+#include <bal-factory.h>
 #include <utils.h>
 
 #include <iostream>
 #include <string>
 
 
-#if !defined(RETURN_IF_FAILED)
-#	define RETURN_IF_FAILED(expr) if (FAILED(expr)) return E_UNEXPECTED
-#endif // RETURN_IF_FAILED
-
-
 core::DllContext g_context;
-
 
 BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved)
 {
 	switch (reason)
 	{
 	case DLL_PROCESS_ATTACH:
-		g_context.dll_instance = instance;
+		g_context.Initialize(instance);
 		break;
 
 	case DLL_THREAD_ATTACH:
@@ -41,8 +37,9 @@ BOOL WINAPI DllMain(HINSTANCE instance, DWORD reason, LPVOID reserved)
 
 HRESULT STDAPICALLTYPE DllCanUnloadNow()
 {
-	return g_context.object_count > 0 ? S_FALSE : S_OK;
+	return g_context.GetRefCount() > 0 ? S_FALSE : S_OK;
 }
+
 
 HRESULT STDAPICALLTYPE DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv)
 {
@@ -84,7 +81,7 @@ HRESULT STDAPICALLTYPE DllRegisterServer()
 	auto inprocserver_key = clsid_key.CreateSubKey(TEXT("InProcServer32"));
 	
 	// Create (default) value (Path to dll)
-	inprocserver_key.SetValue(nullptr, core::GetModuleFileNameFromContext(g_context).c_str());
+	inprocserver_key.SetValue(nullptr, g_context.GetModulePath().c_str());
 
 	// Create ThradingModel value (Apartment)
 	inprocserver_key.SetValue(TEXT("ThreadingModel"), TEXT("Apartment"));

@@ -1,6 +1,8 @@
 #pragma once
 
-#include <core.h>
+#include <core/exports.h>
+
+#include <windows.h>
 
 #include <iostream>
 #include <memory>

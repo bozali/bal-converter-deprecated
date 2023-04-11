@@ -1,7 +1,9 @@
 #pragma once
 
+#include <core/exports.h>
+
+#include <Windows.h>
 #include <ShlObj.h>
-#include <core.h>
 #include <string>
 
 

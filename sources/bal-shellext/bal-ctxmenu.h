@@ -4,7 +4,8 @@
 #include <initguid.h>
 #include <ShlObj.h>
 
-#include <core.h>
+#include <core/context.h>
+
 
 // {3956E7F6-392B-493B-B0D2-89AF7E60E342}
 DEFINE_GUID(CLSID_BalContextMenu, 0x3956e7f6, 0x392b, 0x493b, 0xb0, 0xd2, 0x89, 0xaf, 0x7e, 0x60, 0xe3, 0x42);

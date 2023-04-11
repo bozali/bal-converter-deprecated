@@ -4,8 +4,6 @@
 #include <initguid.h>
 #include <ShlObj.h>
 
-#include <core.h>
-
 
 class BalClassFactory : IClassFactory, IUnknown
 {

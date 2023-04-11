@@ -137,7 +137,7 @@ HRESULT STDMETHODCALLTYPE BalContextMenu::QueryContextMenu(HMENU menu, UINT inde
 
 	WCHAR item_text[MAX_PATH] = TEXT("Bal Converter");
 
-	HICON icon = (HICON)LoadImage(g_context.dll_instance, MAKEINTRESOURCE(IDI_LOGO), IMAGE_ICON, 16, 16, LR_DEFAULTSIZE | LR_LOADTRANSPARENT);
+	HICON icon = (HICON)LoadImage(g_context.GetHandle(), MAKEINTRESOURCE(IDI_LOGO), IMAGE_ICON, 16, 16, LR_DEFAULTSIZE | LR_LOADTRANSPARENT);
 
 	MENUITEMINFOW item;
 	item.wID = cmd_first + 1;

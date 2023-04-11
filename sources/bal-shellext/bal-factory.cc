@@ -26,14 +26,14 @@ HRESULT STDMETHODCALLTYPE BalClassFactory::QueryInterface(REFIID riid, LPVOID* o
 
 ULONG STDMETHODCALLTYPE BalClassFactory::AddRef()
 {
-	InterlockedIncrement(&g_context.object_count);
+	g_context.Increment();
 	return InterlockedIncrement(&ref_count_);
 }
 
 
 ULONG STDMETHODCALLTYPE BalClassFactory::Release()
 {
-	InterlockedDecrement(&g_context.object_count);
+	g_context.Decrement();
 	ULONG temp_ref_count = InterlockedDecrement(&ref_count_);
 
 	if (temp_ref_count == 0)

@@ -24,13 +24,13 @@
     <ClCompile Include="utils.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="core.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="win32\registry.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="bal-factory.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="core\context.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -41,9 +41,6 @@
     <ClInclude Include="utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="core.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="win32\registry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -51,6 +48,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\context.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\exports.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
