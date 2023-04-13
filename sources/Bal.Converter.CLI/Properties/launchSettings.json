@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Bal.Converter.CLI": {
+      "commandName": "Project",
+      "commandLineArgs": "convert --path \"C:\\Users\\alibo\\Videos\\One World - Gargantuan Music.mp4\" --destination \"C:\\Users\\alibo\\Videos\\One World - Gargantuan Music.mp3\""
+    }
+  }
+}

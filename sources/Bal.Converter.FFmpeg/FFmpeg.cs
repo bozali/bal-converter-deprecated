@@ -23,7 +23,7 @@ public class FFmpeg : IFFmpeg
             $@"-i ""{path}""",
         };
 
-        if (options.Filters.Any())
+        if (options.Filters != null && options.Filters.Any())
         {
             arguments.Add(this.BuildFilterArguments(options.Filters));
         }
