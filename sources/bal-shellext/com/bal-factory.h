@@ -4,6 +4,7 @@
 #include <initguid.h>
 #include <ShlObj.h>
 
+namespace com {
 
 class BalClassFactory : IClassFactory, IUnknown
 {
@@ -21,3 +22,5 @@ public:
 private:
 	ULONG ref_count_;
 };
+
+}

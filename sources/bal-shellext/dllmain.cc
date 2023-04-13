@@ -3,8 +3,8 @@
 #include <win32/registry.h>
 #include <core/context.h>
 
-#include <bal-ctxmenu.h>
-#include <bal-factory.h>
+#include <com/bal-ctxmenu.h>
+#include <com/bal-factory.h>
 #include <utils.h>
 
 #include <iostream>
@@ -51,10 +51,9 @@ HRESULT STDAPICALLTYPE DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* p
 		return E_INVALIDARG;
 	}
 
-
 	*ppv = nullptr;
 
-	auto factory = new BalClassFactory();
+	auto factory = new com::BalClassFactory();
 
 	*ppv = factory;
 

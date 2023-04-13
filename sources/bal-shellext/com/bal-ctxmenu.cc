@@ -1,12 +1,14 @@
-#include <bal-ctxmenu.h>
+#include <com/bal-ctxmenu.h>
+#include <ctxmenu-service.h>
 #include <strsafe.h>
 #include <resource.h>
-#include <filesystem>
 #include <utils.h>
 
 #include <wrl/client.h>
 
 using namespace Microsoft::WRL;
+using namespace com;
+
 
 HRESULT STDMETHODCALLTYPE BalContextMenu::QueryInterface(REFIID riid, LPVOID* object)
 {
@@ -93,7 +95,7 @@ HRESULT STDMETHODCALLTYPE BalContextMenu::Initialize(PCIDLIST_ABSOLUTE pidl_fold
 				return E_INVALIDARG;
 			}
 
-			const auto extension = fs::path(filepath).extension();
+			filepath_ = fs::path(filepath);
 		}
 
 		GlobalUnlock(medium.hGlobal);
@@ -136,36 +138,56 @@ HRESULT STDMETHODCALLTYPE BalContextMenu::QueryContextMenu(HMENU menu, UINT inde
 	}
 
 	WCHAR item_text[MAX_PATH] = TEXT("Bal Converter");
+	WCHAR mp3_item_text[MAX_PATH] = TEXT("MP3");
 
 	HICON icon = (HICON)LoadImage(g_context.GetHandle(), MAKEINTRESOURCE(IDI_LOGO), IMAGE_ICON, 16, 16, LR_DEFAULTSIZE | LR_LOADTRANSPARENT);
 
-	MENUITEMINFOW item;
-	item.wID = cmd_first + 1;
-	item.cbSize = sizeof(item);
-	item.fMask = MIIM_STRING | MIIM_ID | MIIM_BITMAP;
-	item.dwTypeData = item_text;
-	item.hbmpItem = utils::ConvertIconToBitmap(icon);
-	item.fType = MFT_STRING;
+	const auto extension = filepath_.extension();
 
-	if (!InsertMenuItem(menu, index_menu, TRUE, &item)) {
-		return HRESULT_FROM_WIN32(GetLastError());
+	ContextMenuService ctxmenu_service;
+
+	const auto menu_items = ctxmenu_service.GetMenuItemsFromExtension(extension.string(), cmd_first);
+
+	if (menu_items.size() > 0)
+	{
+		MENUITEMINFOW item;
+		item.wID = cmd_first;
+		item.cbSize = sizeof(item);
+		item.fMask = MIIM_STRING | MIIM_ID | MIIM_BITMAP | MIIM_SUBMENU;
+		item.dwTypeData = item_text;
+		item.hbmpItem = utils::ConvertIconToBitmap(icon);
+		item.fType = MFT_STRING;
+		item.hSubMenu = CreatePopupMenu();
+
+		if (!InsertMenuItem(menu, index_menu, TRUE, &item)) {
+			return HRESULT_FROM_WIN32(GetLastError());
+		}
+
+		for (const auto& menu : menu_items) {
+			if (!InsertMenuItem(item.hSubMenu, index_menu + 1, TRUE, &menu)) {
+				return HRESULT_FROM_WIN32(GetLastError());
+			}
+		}
+
+		return MAKE_HRESULT(SEVERITY_SUCCESS, FACILITY_NULL, item.wID - cmd_first + menu_items.size() + 1);
 	}
 
-	return MAKE_HRESULT(SEVERITY_SUCCESS, FACILITY_NULL, item.wID - cmd_first + 1);
+	return MAKE_HRESULT(SEVERITY_SUCCESS, FACILITY_NULL, 0);
 }
 
 
 HRESULT STDMETHODCALLTYPE BalContextMenu::InvokeCommand(LPCMINVOKECOMMANDINFO pici)
 {
-	if (HIWORD(pici))
+	if (HIWORD(pici->lpVerb) != NULL)
 	{
 		return E_INVALIDARG;
 	}
 
 	switch (LOWORD(pici->lpVerb))
 	{
-	case 0:
-		// Handle MyMenu command
+	case 1:
+		// Start here the process lets first get the item path
+
 		break;
 	default:
 		return E_INVALIDARG;

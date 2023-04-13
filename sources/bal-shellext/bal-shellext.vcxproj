@@ -155,19 +155,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="bal-ctxmenu.cc" />
-    <ClCompile Include="bal-factory.cc" />
+    <ClCompile Include="com\bal-ctxmenu.cc" />
+    <ClCompile Include="com\bal-factory.cc" />
     <ClCompile Include="core\context.cc" />
     <ClCompile Include="dllmain.cc" />
     <ClCompile Include="utils.cc" />
+    <ClCompile Include="ctxmenu-service.cc" />
     <ClCompile Include="win32\registry.cc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bal-ctxmenu.h" />
-    <ClInclude Include="bal-factory.h" />
+    <ClInclude Include="com\bal-ctxmenu.h" />
+    <ClInclude Include="com\bal-factory.h" />
     <ClInclude Include="core\context.h" />
     <ClInclude Include="core\exports.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="ctxmenu-service.h" />
+    <ClInclude Include="win32\process.h" />
     <ClInclude Include="win32\registry.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>

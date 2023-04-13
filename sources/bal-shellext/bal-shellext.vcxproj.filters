@@ -18,7 +18,7 @@
     <ClCompile Include="dllmain.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="bal-ctxmenu.cc">
+    <ClCompile Include="com\bal-ctxmenu.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="utils.cc">
@@ -27,15 +27,18 @@
     <ClCompile Include="win32\registry.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="bal-factory.cc">
+    <ClCompile Include="com\bal-factory.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="core\context.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ctxmenu-service.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bal-ctxmenu.h">
+    <ClInclude Include="com\bal-ctxmenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utils.h">
@@ -44,7 +47,7 @@
     <ClInclude Include="win32\registry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="bal-factory.h">
+    <ClInclude Include="com\bal-factory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
@@ -54,6 +57,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\exports.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="win32\process.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ctxmenu-service.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

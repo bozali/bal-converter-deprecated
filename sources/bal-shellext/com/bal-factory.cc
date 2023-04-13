@@ -1,5 +1,7 @@
-#include <bal-factory.h>
-#include <bal-ctxmenu.h>
+#include <com/bal-factory.h>
+#include <com/bal-ctxmenu.h>
+
+using namespace com;
 
 
 HRESULT STDMETHODCALLTYPE BalClassFactory::QueryInterface(REFIID riid, LPVOID* object)
