@@ -111,6 +111,8 @@ public partial class MediaDownloaderViewModel : ObservableObject, INavigationAwa
             {
                 var playlist = await this.youtubeDl.GetPlaylist(this.Url);
 
+                // TODO Map the 
+
                 var parameters = new Dictionary<string, object>
                 {
                     { "Playlist", playlist },

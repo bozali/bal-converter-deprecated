@@ -45,4 +45,12 @@ public class FileDownloaderService : IFileDownloaderService
             DownloadPath = destinationThumbnailFile.FullName
         };
     }
+
+    public async Task<byte[]> DownloadImageDataAsync(string url)
+    {
+        var client = new WebClient();
+        byte[] thumbnailData = await client.DownloadDataTaskAsync(url);
+
+        return thumbnailData;
+    }
 }

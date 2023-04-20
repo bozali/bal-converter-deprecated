@@ -14,6 +14,8 @@ using System.Runtime.InteropServices.WindowsRuntime;
 
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Bal.Converter.Modules.MediaDownloader.ViewModels;
+using Bal.Converter.YouTubeDl;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -25,6 +27,10 @@ public sealed partial class PlaylistOverviewPage : Page
 {
     public PlaylistOverviewPage()
     {
+        this.ViewModel = App.GetService<PlaylistOverviewViewModel>();
+
         this.InitializeComponent();
     }
+
+    public PlaylistOverviewViewModel ViewModel { get; set; }
 }

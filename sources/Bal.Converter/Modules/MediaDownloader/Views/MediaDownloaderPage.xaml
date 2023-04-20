@@ -10,6 +10,7 @@
     xmlns:quality="using:Bal.Converter.YouTubeDl.Quality"
     xmlns:vm="using:Bal.Converter.Modules.MediaDownloader.ViewModels"
     xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters"
+    xmlns:card="using:Bal.Converter.Controls.Card"
     mc:Ignorable="d" x:Name="Root">
 
     <Page.Resources>

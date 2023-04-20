@@ -5,12 +5,34 @@
     xmlns:local="using:Bal.Converter.Modules.MediaDownloader.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    xmlns:ydl="using:Bal.Converter.YouTubeDl"
+    xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    mc:Ignorable="d"
+    x:Name="ThisPage">
 
-    <Grid Background="{ThemeResource TestAcrylicBrush}"
-          BorderBrush="{ThemeResource SurfaceStrokeColorFlyoutBrush}"
-          CornerRadius="8" Width="200" Height="200">
 
-        <Button Width="100" Content="Some" />
-    </Grid>
+    <ItemsControl ItemsSource="{x:Bind ViewModel.Playlist.Videos}" HorizontalAlignment="Left">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <controls:WrapPanel Orientation="Horizontal" VerticalSpacing="5" HorizontalSpacing="5"
+                                    HorizontalAlignment="Left"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+
+        <ItemsControl.ItemTemplate>
+            <DataTemplate x:DataType="ydl:Video">
+                <Border Width="200" Height="250"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                        CornerRadius="{ThemeResource OverlayCornerRadius}"
+                        BorderThickness="1"
+                        Padding="3">
+
+                    <Image Source="{Binding ThumbnailData}" />
+
+                    <!--<TextBlock Text="{x:Bind Title}" FontSize="12" TextWrapping="Wrap" />-->
+                </Border>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
 </Page>
