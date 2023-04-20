@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿using System.Collections.ObjectModel;
+using System.Web;
 
 using Bal.Converter.Common.Enums;
 using Bal.Converter.Common.Extensions;
@@ -111,11 +112,10 @@ public partial class MediaDownloaderViewModel : ObservableObject, INavigationAwa
             {
                 var playlist = await this.youtubeDl.GetPlaylist(this.Url);
 
-                // TODO Map the 
-
                 var parameters = new Dictionary<string, object>
                 {
                     { "Playlist", playlist },
+                    { "Format", this.Format },
                     { "VideoQuality", this.VideoQualityOption },
                     { "AudioQuality", this.AudioQualityOption }
                 };
@@ -131,7 +131,6 @@ public partial class MediaDownloaderViewModel : ObservableObject, INavigationAwa
                 {
                     Format = this.Format,
                     Url = video.Url,
-                    ThumbnailData = thumbnail.Data,
                     ThumbnailPath = thumbnail.DownloadPath,
                     Tags = new MediaTagsViewModel
                     {

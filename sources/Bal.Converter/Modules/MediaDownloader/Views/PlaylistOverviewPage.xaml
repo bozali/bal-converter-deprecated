@@ -7,6 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ydl="using:Bal.Converter.YouTubeDl"
     xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:vm="using:Bal.Converter.Modules.MediaDownloader.ViewModels"
+    xmlns:ui="using:CommunityToolkit.WinUI.UI"
     mc:Ignorable="d"
     x:Name="ThisPage">
 
@@ -20,19 +24,39 @@
         </ItemsControl.ItemsPanel>
 
         <ItemsControl.ItemTemplate>
-            <DataTemplate x:DataType="ydl:Video">
+            <DataTemplate x:DataType="vm:VideoViewModel">
                 <Border Width="200" Height="250"
                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                         CornerRadius="{ThemeResource OverlayCornerRadius}"
                         BorderThickness="1"
-                        Padding="3">
+                        Padding="5">
+ 
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="2*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                        </Grid.RowDefinitions>
 
-                    <Image Source="{Binding ThumbnailData}" />
+                        <Border Grid.Row="0" VerticalAlignment="Top" CornerRadius="{ThemeResource OverlayCornerRadius}">
+                            <Image Source="{Binding ThumbnailPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                        </Border>
 
-                    <!--<TextBlock Text="{x:Bind Title}" FontSize="12" TextWrapping="Wrap" />-->
+                        <TextBlock Grid.Row="1" VerticalAlignment="Top" FontSize="12" TextWrapping="Wrap" Text="{Binding Title}" />
+
+                        <!--
+                        TODO First version we don't allow to edit playlist videos
+                        <controls:UniformGrid Grid.Row="2" Orientation="Horizontal">
+                            <Button FontSize="12" Content="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe70f;}" />
+                        </controls:UniformGrid>
+                        -->
+                       
+                        
+                    </Grid>
+
                 </Border>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
     </ItemsControl>
-</Page>
+</Page> 
