@@ -108,7 +108,7 @@ public partial class MediaDownloaderViewModel : ObservableObject, INavigationAwa
         {
             this.IsProcessing = true;
 
-            if (this.ProceedAsPlaylist)
+            if (this.IsPlaylist && this.ProceedAsPlaylist)
             {
                 var playlist = await this.youtubeDl.GetPlaylist(this.Url);
 
