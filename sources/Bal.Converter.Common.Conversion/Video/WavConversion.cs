@@ -6,13 +6,14 @@ using Bal.Converter.FFmpeg;
 
 namespace Bal.Converter.Common.Conversion.Video;
 
-[Extension(FileExtensions.Video.Mp4)]
+[Extension(FileExtensions.Video.Wav)]
 [Target(typeof(Mp3Conversion))]
-[Target(typeof(AviConversion))]
+[Target(typeof(Mp4Conversion))]
 [Target(typeof(WavConversion))]
-public class Mp4Conversion : DefaultVideoConversion<Mp4Conversion>
+[Target(typeof(AviConversion))]
+public class WavConversion : DefaultVideoConversion<WavConversion>
 {
-    public Mp4Conversion(IFFmpeg ffmpeg) : base(ffmpeg)
+    public WavConversion(IFFmpeg ffmpeg) : base(ffmpeg)
     {
     }
 }

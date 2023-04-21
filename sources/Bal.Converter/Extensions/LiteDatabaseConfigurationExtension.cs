@@ -10,7 +10,7 @@ public static class LiteDatabaseConfigurationExtension
 {
     public static IServiceCollection ConfigureLiteDatabase(this IServiceCollection collection)
     {
-        var file = new FileInfo(Path.Combine(ILocalSettingsService.TempPath, "Data", "Storage.db"));
+        var file = new FileInfo(Path.Combine(ILocalSettingsService.AppDataPath, "Data", "Storage.db"));
 
         if (file.Directory is { Exists: false })
         {

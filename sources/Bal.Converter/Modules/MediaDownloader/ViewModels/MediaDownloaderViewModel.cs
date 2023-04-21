@@ -1,6 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.Web;
-
+using AutoMapper;
 using Bal.Converter.Common.Enums;
 using Bal.Converter.Common.Extensions;
 using Bal.Converter.Common.Web;
@@ -26,6 +26,7 @@ public partial class MediaDownloaderViewModel : ObservableObject, INavigationAwa
     private readonly IFileDownloaderService fileDownloader;
     private readonly IDownloadsRegistryService downloadsRegistry;
     private readonly IYouTubeDl youtubeDl;
+    private readonly IMapper mapper;
 
     [ObservableProperty] private string audioQualityOption;
     [ObservableProperty] private string videoQualityOption;
@@ -45,13 +46,16 @@ public partial class MediaDownloaderViewModel : ObservableObject, INavigationAwa
                                     INavigationService navigationService,
                                     IFileDownloaderService fileDownloader,
                                     IDownloadsRegistryService downloadsRegistry,
-                                    IYouTubeDl youtubeDl)
+                                    IYouTubeDl youtubeDl,
+                                    IMapper mapper)
     {
         this.logger = logger;
         this.navigationService = navigationService;
         this.fileDownloader = fileDownloader;
         this.downloadsRegistry = downloadsRegistry;
         this.youtubeDl = youtubeDl;
+        this.mapper = mapper;
+
         this.Url = string.Empty;
 
         this.AudioQualityOption = AutomaticQualityOption.Best.ToString();
@@ -127,22 +131,13 @@ public partial class MediaDownloaderViewModel : ObservableObject, INavigationAwa
                 var video = await this.youtubeDl.GetVideo(this.Url);
                 var thumbnail = await this.fileDownloader.DownloadImageAsync(video.ThumbnailUrl, Path.Combine(ILocalSettingsService.TempPath, "Thumbnails", Guid.NewGuid() + ".jpg"));
 
-                var vmVideo = new VideoViewModel
-                {
-                    Format = this.Format,
-                    Url = video.Url,
-                    ThumbnailPath = thumbnail.DownloadPath,
-                    Tags = new MediaTagsViewModel
-                    {
-                        Title = video.Title.RemoveIllegalChars(),
-                        Artist = video.Channel,
-                        Year = video.UploadDate.Year
-                    }
-                };
+                var vm = this.mapper.Map<VideoViewModel>(video);
+                vm.ThumbnailPath = thumbnail.DownloadPath;
+                vm.Format = this.Format;
 
                 var parameters = new Dictionary<string, object>
                 {
-                    { "Video", vmVideo },
+                    { "Video", vm },
                     { "VideoQuality", this.VideoQualityOption },
                     { "AudioQuality", this.AudioQualityOption }
                 };
@@ -169,7 +164,7 @@ public partial class MediaDownloaderViewModel : ObservableObject, INavigationAwa
     {
         if (!Uri.TryCreate(value, UriKind.Absolute, out var uri))
         {
-            this.IsPlaylist = true;
+            this.IsPlaylist = false;
             return;
         }
 

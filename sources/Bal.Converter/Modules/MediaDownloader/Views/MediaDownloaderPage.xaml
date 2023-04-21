@@ -38,7 +38,7 @@
             </ComboBox>
         </winui:SettingsCard>
 
-        <winui:SettingsCard x:Uid="MediaDownloaderProceedPlaylist" IsEnabled="{x:Bind ViewModel.IsPlaylist, Mode=TwoWay}">
+        <winui:SettingsCard x:Uid="MediaDownloaderProceedPlaylist" IsEnabled="{x:Bind ViewModel.IsPlaylist}">
             <ToggleSwitch IsOn="{x:Bind ViewModel.ProceedAsPlaylist, Mode=TwoWay}" />
         </winui:SettingsCard>
 

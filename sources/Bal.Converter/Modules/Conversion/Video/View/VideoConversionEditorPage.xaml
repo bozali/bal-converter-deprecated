@@ -47,6 +47,7 @@
                         </AppBarButton.Flyout>
                     </AppBarButton>
 
+
                     <AppBarButton Icon="Clear" Label="Remove All">
                         <AppBarButton.Flyout>
                             <Flyout>
@@ -60,7 +61,6 @@
                 </CommandBar>
 
                 <ItemsControl ItemsSource="{x:Bind ViewModel.FilterPages}" />
-
             </bal:SettingsGroup>
 
             <Button Content="Convert" Command="{x:Bind ViewModel.ConvertCommand}" />
