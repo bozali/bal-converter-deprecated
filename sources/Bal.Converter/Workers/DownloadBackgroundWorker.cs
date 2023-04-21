@@ -1,10 +1,13 @@
 ﻿using Bal.Converter.Common.Extensions;
+using Bal.Converter.Common.Services;
 using Bal.Converter.Events;
 using Bal.Converter.Modules.Downloads;
 using Bal.Converter.Services;
 using Bal.Converter.YouTubeDl;
+
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
+// ReSharper disable AccessToDisposedClosure
 
 namespace Bal.Converter.Workers;
 
@@ -14,18 +17,21 @@ public class DownloadBackgroundWorker
     private readonly IDownloadsRegistryService downloadsRegistry;
     private readonly ILocalSettingsService localSettingsService;
     private readonly IMediaTagService mediaTagService;
+    private readonly IFileSystemService fileSystemService;
     private readonly IYouTubeDl youtubeDl;
 
     public DownloadBackgroundWorker(ILogger<DownloadBackgroundWorker> logger,
                                     IDownloadsRegistryService downloadsRegistry,
                                     ILocalSettingsService localSettingsService,
                                     IMediaTagService mediaTagService,
+                                    IFileSystemService fileSystemService,
                                     IYouTubeDl youtubeDl)
     {
         this.logger = logger;
         this.downloadsRegistry = downloadsRegistry;
         this.localSettingsService = localSettingsService;
         this.mediaTagService = mediaTagService;
+        this.fileSystemService = fileSystemService;
         this.youtubeDl = youtubeDl;
     }
 
@@ -72,7 +78,7 @@ public class DownloadBackgroundWorker
                 this.logger.LogDebug($"Download Path: {downloadPath}");
                 this.logger.LogDebug($"Destination Path: {destinationPath}");
 
-                new FileInfo(destinationPath).SafeDelete();
+                this.fileSystemService.DeleteFile(destinationPath);
 
                 var options = new DownloadOptions { DownloadBandwidth = bandwidth, Destination = downloadPathPattern, DownloadExtension = job.TargetFormat, };
 
@@ -104,7 +110,7 @@ public class DownloadBackgroundWorker
                 this.mediaTagService.SetInformation(downloadPath, job.Tags);
                 this.mediaTagService.SetPicture(downloadPath, job.ThumbnailPath);
 
-                File.Move(downloadPath, destinationPath);
+                this.fileSystemService.MoveFile(downloadPath, destinationPath);
 
                 this.downloadsRegistry.UpdateState(job, DownloadState.Done);
 

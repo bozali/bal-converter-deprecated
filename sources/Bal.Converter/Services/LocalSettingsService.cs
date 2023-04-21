@@ -1,6 +1,9 @@
 ﻿using Windows.Storage;
+
+using Bal.Converter.Common.Services;
 using Bal.Converter.Helpers;
 using Bal.Converter.Modules.Settings;
+
 using Microsoft.Extensions.Options;
 
 namespace Bal.Converter.Services ;
@@ -75,7 +78,7 @@ public class LocalSettingsService : ILocalSettingsService
 
             this.settings[key] = Json.Stringify(value);
 
-            this.filesystemService.WriteJson(this.applicationDataFolder, this.localSettingsFile, this.settings);
+            this.filesystemService.WriteJson(Path.Combine(this.applicationDataFolder, this.localSettingsFile), this.settings);
         }
     }
 
@@ -83,7 +86,7 @@ public class LocalSettingsService : ILocalSettingsService
     {
         if (this.isInitialized)
         {
-            this.settings = this.filesystemService.ReadJson<IDictionary<string, object>>(this.applicationDataFolder, this.localSettingsFile) ?? new Dictionary<string, object>();
+            this.settings = this.filesystemService.ReadJson<IDictionary<string, object>>(Path.Combine(this.applicationDataFolder, this.localSettingsFile)) ?? new Dictionary<string, object>();
             this.isInitialized = true;
         }
     }
