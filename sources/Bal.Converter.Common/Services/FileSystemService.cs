@@ -5,7 +5,7 @@ namespace Bal.Converter.Common.Services;
 
 public class FileSystemService : IFileSystemService
 {
-    public void DeleteFile(string path)
+    public void DeleteFile(string? path)
     {
         if (File.Exists(path))
         {

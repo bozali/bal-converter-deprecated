@@ -110,6 +110,7 @@ public class DownloadBackgroundWorker
                 this.mediaTagService.SetInformation(downloadPath, job.Tags);
                 this.mediaTagService.SetPicture(downloadPath, job.ThumbnailPath);
 
+                this.fileSystemService.DeleteFile(job.ThumbnailPath);
                 this.fileSystemService.MoveFile(downloadPath, destinationPath);
 
                 this.downloadsRegistry.UpdateState(job, DownloadState.Done);

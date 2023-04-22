@@ -2,7 +2,7 @@
 
 public interface IFileSystemService
 {
-    void DeleteFile(string path);
+    void DeleteFile(string? path);
 
     void MoveFile(string source, string destination);
 

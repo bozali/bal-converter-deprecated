@@ -46,16 +46,18 @@ public partial class MediaTagEditorViewModel : ObservableObject, INavigationAwar
     [RelayCommand]
     private void Download()
     {
+        var option = new QualityOption
+        {
+            AudioQuality = Enum.Parse<AutomaticQualityOption>(this.AudioQualityOption),
+            VideoQuality = Enum.Parse<AutomaticQualityOption>(this.VideoQualityOption)
+        };
+
         var job = new DownloadJob(this.Video.Url)
         {
             State = DownloadState.Pending,
             Tags = this.mapper.Map<MediaTags>(this.Video.Tags),
             TargetFormat = Enum.Parse<MediaFileExtension>(this.Video.Format),
-            AutomaticQualityOption = new QualityOption
-            {
-                AudioQuality = Enum.Parse<AutomaticQualityOption>(this.AudioQualityOption),
-                VideoQuality = Enum.Parse<AutomaticQualityOption>(this.VideoQualityOption)
-            }
+            AutomaticQualityOption = option
         };
 
         this.downloadsRegistry.EnqueueDownload(job);

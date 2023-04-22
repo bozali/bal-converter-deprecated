@@ -1,5 +1,6 @@
 ﻿using System.Net;
-
+using System.Runtime.InteropServices;
+using Bal.Converter.Common.Services;
 using ImageMagick;
 
 namespace Bal.Converter.Common.Web;
@@ -8,10 +9,19 @@ public class FileDownloaderService : IFileDownloaderService
 {
     public async Task<FileDownloadResponse> DownloadImageAsync(string url, string path)
     {
-        var client = new WebClient();
+        // var client = new WebClient();
+        using var client = new HttpClient();
 
-        byte[] thumbnailData = await client.DownloadDataTaskAsync(url);
+        var response = await client.GetAsync(url);
 
+        if (!response.IsSuccessStatusCode)
+        {
+            string message = await response.Content.ReadAsStringAsync();
+            throw new HttpRequestException($"Could not get thumbnail from {url}", new Exception(message));
+        }
+
+        byte[] data = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
+        
         var thumbnailUri = new Uri(url);
         string file = thumbnailUri.Segments.Last();
 
@@ -31,17 +41,17 @@ public class FileDownloaderService : IFileDownloaderService
         if (string.Equals(extension, "jpeg", StringComparison.OrdinalIgnoreCase) ||
             string.Equals(extension, "jpg", StringComparison.OrdinalIgnoreCase))
         {
-            await stream.WriteAsync(thumbnailData);
+            await stream.WriteAsync(data);
         }
         else
         {
-            using var image = new MagickImage(thumbnailData, Enum.Parse<MagickFormat>(extension, true));
+            using var image = new MagickImage(data, Enum.Parse<MagickFormat>(extension, true));
             await image.WriteAsync(stream, MagickFormat.Jpeg);
         }
 
         return new FileDownloadResponse
         {
-            Data = thumbnailData,
+            Data = data,
             DownloadPath = destinationThumbnailFile.FullName
         };
     }
