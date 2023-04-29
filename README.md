@@ -4,6 +4,9 @@ This is a free and open source software that is wrapping FFmpeg, yt-dlp and imag
 
 ![image](https://user-images.githubusercontent.com/29146363/235271749-f4505e58-6d6a-4285-ab83-659daeed0f68.png)
 
+![image](https://user-images.githubusercontent.com/29146363/235271910-98f62d74-40ca-4f43-b366-c1277701be17.png)
+
+
 This software is still in development. In this state I would not recommend anyone to use it.
 
 ## Features
@@ -16,6 +19,7 @@ This software is still in development. In this state I would not recommend anyon
 # Roadmap
 
 - Fixing many issues
+- Allow to convert files from file explorer (shell extensions)
 - Adding playlist to download
 - More options when converting files
 - More editing features
