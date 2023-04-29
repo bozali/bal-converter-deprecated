@@ -348,3 +348,9 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+/sources/Bal.Converter/Tools/yt-dlp.exe
+/sources/Bal.Converter/Tools/ffprobe.exe
+/sources/Bal.Converter/Tools/ffmpeg.exe
+/sources/Bal.Converter.CLI/Tools/yt-dlp.exe
+/sources/Bal.Converter.CLI/Tools/ffprobe.exe
+/sources/Bal.Converter.CLI/Tools/ffmpeg.exe
