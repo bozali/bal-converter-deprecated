@@ -50,6 +50,13 @@ public class DownloadsRegistryService : IDownloadsRegistryService, IDisposable
         return this.AllJobs.FirstOrDefault(x => x.State == DownloadState.Fetching);
     }
 
+    public void EnqueuePlaylist(string url, MediaFileExtension format, QualityOption option)
+    {
+        var job = new DownloadPlaylistJob
+        {
+        };
+    }
+
     public void EnqueueFetch(string url, MediaFileExtension format, QualityOption quality)
     {
         var job = new DownloadJob(url)

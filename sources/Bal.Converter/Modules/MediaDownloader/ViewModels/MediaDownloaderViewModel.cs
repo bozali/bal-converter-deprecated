@@ -92,7 +92,16 @@ public partial class MediaDownloaderViewModel : ObservableObject, INavigationAwa
                 VideoQuality = Enum.Parse<AutomaticQualityOption>(this.VideoQualityOption)
             };
 
-            this.downloadsRegistry.EnqueueFetch(this.Url, Enum.Parse<MediaFileExtension>(this.Format), option);
+            var format = Enum.Parse<MediaFileExtension>(this.Format);
+
+            if (this.IsPlaylist && this.ProceedAsPlaylist)
+            {
+                this.downloadsRegistry.EnqueueFetch(this.Url, format, option);
+            }
+            else
+            {
+                this.downloadsRegistry.EnqueueFetch(this.Url, format, option);
+            }
         }
         catch (Exception e)
         {
