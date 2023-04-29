@@ -25,6 +25,11 @@ This software is still in development. In this state I would not recommend anyon
 - More editing features
 - ...
 
+# How to build
+
+Before starting to build or debug you will need to copy `yt-dlp.exe`, `ffmpeg.exe` and `ffprobe.exe` to the following folders `\Bal.Converter\Tools\` and `Bal.Converter.CLI\Tools\`.
+After that you can just restore packages and build the application.
+
 # Help needed
 
 I am struggling to package this app and set it up in a continues integration environment. It would be nice if you could help me with it.
