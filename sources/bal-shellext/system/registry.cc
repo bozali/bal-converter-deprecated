@@ -1,15 +1,15 @@
-#include <win32/registry.h>
+#include <system/registry.h>
 
-using namespace win32;
+using namespace system;
 
 
-RegistryKey::RegistryKey(HKEY handle)
+RegistryKey::RegistryKey(const HKEY handle)
 	: handle_(handle)
 {
 }
 
 
-RegistryKey RegistryKey::CreateSubKey(const std::wstring_view subkey_path)
+RegistryKey RegistryKey::CreateSubKey(const std::wstring_view subkey_path) const
 {
 	HKEY subkey_handle;
 	DWORD disposition;
@@ -24,7 +24,7 @@ RegistryKey RegistryKey::CreateSubKey(const std::wstring_view subkey_path)
 }
 
 
-RegistryKey RegistryKey::OpenSubKey(const std::wstring_view subkey_path)
+RegistryKey RegistryKey::OpenSubKey(const std::wstring_view subkey_path) const
 {
 	HKEY subkey_handle;
 	DWORD disposition;
@@ -39,7 +39,7 @@ RegistryKey RegistryKey::OpenSubKey(const std::wstring_view subkey_path)
 }
 
 
-void RegistryKey::DeleteSubKey(const std::wstring_view subkey_path)
+void RegistryKey::DeleteSubKey(const std::wstring_view subkey_path) const
 {
 	HRESULT hr = RegDeleteKey(handle_, subkey_path.data());
 

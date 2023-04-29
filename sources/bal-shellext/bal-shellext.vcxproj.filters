@@ -24,7 +24,7 @@
     <ClCompile Include="utils.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="win32\registry.cc">
+    <ClCompile Include="system\registry.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="com\bal-factory.cc">
@@ -44,7 +44,7 @@
     <ClInclude Include="utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="win32\registry.h">
+    <ClInclude Include="system\registry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="com\bal-factory.h">
@@ -59,7 +59,7 @@
     <ClInclude Include="core\exports.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="win32\process.h">
+    <ClInclude Include="system\process.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ctxmenu-service.h">

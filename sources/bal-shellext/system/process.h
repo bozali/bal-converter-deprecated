@@ -3,7 +3,7 @@
 #include <core/exports.h>
 
 
-namespace win32 {
+namespace system {
 
 class Process
 {

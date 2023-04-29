@@ -161,7 +161,7 @@
     <ClCompile Include="dllmain.cc" />
     <ClCompile Include="utils.cc" />
     <ClCompile Include="ctxmenu-service.cc" />
-    <ClCompile Include="win32\registry.cc" />
+    <ClCompile Include="system\registry.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="com\bal-ctxmenu.h" />
@@ -170,8 +170,8 @@
     <ClInclude Include="core\exports.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="ctxmenu-service.h" />
-    <ClInclude Include="win32\process.h" />
-    <ClInclude Include="win32\registry.h" />
+    <ClInclude Include="system\process.h" />
+    <ClInclude Include="system\registry.h" />
     <ClInclude Include="utils.h" />
   </ItemGroup>
   <ItemGroup>

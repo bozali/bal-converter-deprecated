@@ -9,25 +9,25 @@
 #include <string>
 
 
-namespace win32 {
+namespace system {
 
 class BALSHELLEXT_DLL RegistryKey
 {
 public:
 	explicit RegistryKey(HKEY handle);
 
-	RegistryKey CreateSubKey(const std::wstring_view subkey_path);
+	RegistryKey CreateSubKey(const std::wstring_view subkey_path) const;
 
-	RegistryKey OpenSubKey(const std::wstring_view subkey_path);
+	RegistryKey OpenSubKey(const std::wstring_view subkey_path) const;
 
-	void DeleteSubKey(const std::wstring_view subkey_path);
+	void DeleteSubKey(const std::wstring_view subkey_path) const;
 
 	template <typename T>
 	void SetValue(LPCWSTR name, T value) {}
 
 	template <>
 	void SetValue(LPCWSTR name, LPCWSTR value) {
-		size_t size = wcsnlen_s(value, MAX_PATH);
+		const size_t size = wcsnlen_s(value, MAX_PATH);
 
 		HRESULT hr = RegSetValueEx(handle_, name, 0, REG_SZ, reinterpret_cast<const BYTE*>(value), (size + 1) * sizeof(WCHAR));
 
