@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml.Controls;
 
-namespace Bal.Converter.Contracts.Services;
+namespace Bal.Converter.Services;
 
 public interface INavigationViewService
 {

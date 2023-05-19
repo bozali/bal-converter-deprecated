@@ -6,7 +6,6 @@
 using Bal.Converter.Common.Conversion;
 using Bal.Converter.Common.Conversion.Image;
 using Bal.Converter.Common.Extensions;
-using Bal.Converter.Contracts.Services;
 using Bal.Converter.Contracts.ViewModels;
 using Bal.Converter.Modules.MediaDownloader.ViewModels;
 

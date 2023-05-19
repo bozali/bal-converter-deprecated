@@ -1,7 +1,6 @@
-﻿using Bal.Converter.Contracts.Services;
-using Bal.Converter.Messages;
+﻿using Bal.Converter.Messages;
 using Bal.Converter.Modules.Settings.Views;
-
+using Bal.Converter.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml.Navigation;

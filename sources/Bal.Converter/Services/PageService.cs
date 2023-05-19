@@ -1,5 +1,4 @@
-﻿using Bal.Converter.Contracts.Services;
-using Bal.Converter.Modules.Conversion.Image.ViewModels;
+﻿using Bal.Converter.Modules.Conversion.Image.ViewModels;
 using Bal.Converter.Modules.Conversion.Image.Views;
 using Bal.Converter.Modules.Conversion.Video.View;
 using Bal.Converter.Modules.Conversion.Video.ViewModels;

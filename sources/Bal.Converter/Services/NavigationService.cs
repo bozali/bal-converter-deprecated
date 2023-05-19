@@ -1,8 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-
-using Bal.Converter.Contracts.Services;
 using Bal.Converter.Contracts.ViewModels;
-using Bal.Converter.Helpers;
+using Bal.Converter.Extensions;
 
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;

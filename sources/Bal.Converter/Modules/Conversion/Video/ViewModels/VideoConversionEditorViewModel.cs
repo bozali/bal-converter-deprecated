@@ -13,7 +13,6 @@ using Bal.Converter.Common.Conversion;
 using Bal.Converter.Common.Conversion.Audio;
 using Bal.Converter.Common.Conversion.Video;
 using Bal.Converter.Common.Extensions;
-using Bal.Converter.Contracts.Services;
 using Bal.Converter.Contracts.ViewModels;
 using Bal.Converter.FFmpeg;
 using Bal.Converter.FFmpeg.Filters.Audio;
@@ -26,6 +25,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using Microsoft.UI.Xaml.Controls;
+using Bal.Converter.Services;
 
 namespace Bal.Converter.Modules.Conversion.Video.ViewModels;
 

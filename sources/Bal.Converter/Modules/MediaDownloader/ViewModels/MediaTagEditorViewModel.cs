@@ -4,7 +4,6 @@ using AutoMapper;
 using Bal.Converter.Common.Enums;
 using Bal.Converter.Common.Extensions;
 using Bal.Converter.Common.Media;
-using Bal.Converter.Contracts.Services;
 using Bal.Converter.Contracts.ViewModels;
 using Bal.Converter.Modules.Downloads;
 using Bal.Converter.Services;

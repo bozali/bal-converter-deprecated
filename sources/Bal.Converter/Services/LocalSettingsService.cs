@@ -5,6 +5,7 @@ using Bal.Converter.Helpers;
 using Bal.Converter.Modules.Settings;
 
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace Bal.Converter.Services ;
 
@@ -45,7 +46,7 @@ public class LocalSettingsService : ILocalSettingsService
         {
             if (ApplicationData.Current.LocalSettings.Values.TryGetValue(key, out object? obj))
             {
-                return Json.ToObject<T>((string)obj);
+                return JsonConvert.DeserializeObject<T>((string)obj);
             }
         }
         else
@@ -54,7 +55,7 @@ public class LocalSettingsService : ILocalSettingsService
 
             if (this.settings.TryGetValue(key, out object? obj))
             {
-                return Json.ToObject<T>((string)obj);
+                return JsonConvert.DeserializeObject<T>((string)obj);
             }
         }
 
@@ -70,13 +71,13 @@ public class LocalSettingsService : ILocalSettingsService
     {
         if (RuntimeHelper.IsMsix)
         {
-            ApplicationData.Current.LocalSettings.Values[key] = Json.Stringify(value);
+            ApplicationData.Current.LocalSettings.Values[key] = JsonConvert.SerializeObject(value);
         }
         else
         {
             this.Initialize();
 
-            this.settings[key] = Json.Stringify(value);
+            this.settings[key] = JsonConvert.SerializeObject(value);
 
             this.filesystemService.WriteJson(Path.Combine(this.applicationDataFolder, this.localSettingsFile), this.settings);
         }
