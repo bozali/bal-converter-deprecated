@@ -3,7 +3,7 @@
 #include <core/exports.h>
 
 
-namespace system {
+namespace sys {
 
 class Process
 {

@@ -22,6 +22,7 @@
     <GenerateTestArtifacts>True</GenerateTestArtifacts>
     <AppxBundle>Never</AppxBundle>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+	<ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Controls\SettingsGroup\SettingsGroup.xaml" />
@@ -77,12 +78,14 @@
     <Folder Include="Modules\Downloads\ViewModels\" />
     <Folder Include="Messages\" />
     <Folder Include="Events\" />
+    <Folder Include="com\" />
     <Folder Include="Profiles\" />
     <Folder Include="Workers\" />
     <Folder Include="Tools\" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Bal.Converter.CLI\Bal.Converter.CLI.csproj" />
     <ProjectReference Include="..\Bal.Converter.Common.Conversion\Bal.Converter.Common.Conversion.csproj" />
     <ProjectReference Include="..\Bal.Converter.Common\Bal.Converter.Common.csproj" />
     <ProjectReference Include="..\Bal.Converter.FFmpeg\Bal.Converter.FFmpeg.csproj" />
@@ -92,6 +95,9 @@
   <ItemGroup>
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="com\balshellext.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <Page Update="Modules\MediaDownloader\Views\PlaylistOverviewPage.xaml">
       <Generator>MSBuild:Compile</Generator>

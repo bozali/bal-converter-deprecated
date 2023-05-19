@@ -8,8 +8,7 @@
 #include <memory>
 #include <string>
 
-
-namespace system {
+namespace sys {
 
 class BALSHELLEXT_DLL RegistryKey
 {

@@ -74,7 +74,7 @@ HRESULT STDAPICALLTYPE DllGetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* p
 HRESULT STDAPICALLTYPE DllRegisterServer()
 {
 	// Create the CLSID key
-	auto clsid_key = system::Registry::LocalMachine().CreateSubKey(TEXT("SOFTWARE\\Classes\\CLSID\\") + utils::CLSIDToString(CLSID_BalContextMenu));
+	auto clsid_key = sys::Registry::LocalMachine().CreateSubKey(TEXT("SOFTWARE\\Classes\\CLSID\\") + utils::CLSIDToString(CLSID_BalContextMenu));
 
 	// Create InProcServer32 key
 	auto inprocserver_key = clsid_key.CreateSubKey(TEXT("InProcServer32"));
@@ -86,14 +86,14 @@ HRESULT STDAPICALLTYPE DllRegisterServer()
 	inprocserver_key.SetValue(TEXT("ThreadingModel"), TEXT("Apartment"));
 
 	// Set an approved value
-	system::Registry::LocalMachine()
+	sys::Registry::LocalMachine()
 		.OpenSubKey(TEXT("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Shell Extensions\\Approved"))
 		.SetValue(utils::CLSIDToString(CLSID_BalContextMenu).c_str(), TEXT("Bal Converter Shell Extensions"));
 
 	// Register shell extension for specific file types
 	const std::wstring classes_mp3_clsid_path = TEXT("*\\ShellEx\\ContextMenuHandlers\\BalConverter");
 	
-	system::Registry::ClassesRoot()
+	sys::Registry::ClassesRoot()
 		.CreateSubKey(classes_mp3_clsid_path)
 		.SetValue(nullptr, utils::CLSIDToString(CLSID_BalContextMenu).c_str());
 
@@ -105,7 +105,7 @@ HRESULT STDAPICALLTYPE DllRegisterServer()
 
 HRESULT STDAPICALLTYPE DllUnregisterServer()
 {
-	system::Registry::LocalMachine().DeleteSubKey(TEXT("SOFTWARE\\Classes\\CLSID\\") + utils::CLSIDToString(CLSID_BalContextMenu) + TEXT("\\InprocServer32"));
+	sys::Registry::LocalMachine().DeleteSubKey(TEXT("SOFTWARE\\Classes\\CLSID\\") + utils::CLSIDToString(CLSID_BalContextMenu) + TEXT("\\InprocServer32"));
 
 	SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST, nullptr, nullptr);
 

@@ -1,6 +1,6 @@
 #include <system/registry.h>
 
-using namespace system;
+using namespace sys;
 
 
 RegistryKey::RegistryKey(const HKEY handle)

@@ -132,6 +132,9 @@
       <AdditionalDependencies>shell32.lib;ole32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>bal-shellext.def</ModuleDefinitionFile>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(TargetDir)balshellext.dll" "$(SolutionDir)sources\Bal.Converter\com\" /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -153,6 +156,9 @@
       <AdditionalDependencies>shell32.lib;ole32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>bal-shellext.def</ModuleDefinitionFile>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy "$(TargetDir)balshellext.dll" "$(SolutionDir)sources\Bal.Converter\com\" /Y</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="com\bal-ctxmenu.cc" />
