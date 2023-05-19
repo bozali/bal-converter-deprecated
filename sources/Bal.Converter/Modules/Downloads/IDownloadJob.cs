@@ -1,5 +1,5 @@
 ﻿using Bal.Converter.Common.Enums;
-using Bal.Converter.YouTubeDl.Quality;
+
 using LiteDB;
 
 namespace Bal.Converter.Modules.Downloads;

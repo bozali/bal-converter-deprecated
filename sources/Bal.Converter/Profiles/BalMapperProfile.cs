@@ -1,7 +1,5 @@
-﻿using System.Collections.ObjectModel;
-using AutoMapper;
+﻿using AutoMapper;
 
-using Bal.Converter.Common.Media;
 using Bal.Converter.FFmpeg.Filters.Audio;
 using Bal.Converter.Modules.Conversion.Filters.Volume;
 using Bal.Converter.Modules.MediaDownloader.ViewModels;
@@ -13,10 +11,18 @@ public class BalMapperProfile : Profile
 {
     public BalMapperProfile()
     {
-        this.CreateMap<MediaTagsViewModel, MediaTags>().ReverseMap();
-        this.CreateMap<VideoViewModel, Video>().ReverseMap();
-        this.CreateMap<PlaylistViewModel, Playlist>().ReverseMap();
+        this.CreateMap<VideoViewModel, Video>()
+            .ForMember(x => x.Tags, expression => expression.Ignore());
+
+        this.CreateMap<Video, VideoViewModel>()
+            .ForMember(x => x.Tags, expression => expression.Ignore());
 
         this.CreateMap<VolumeFilterViewModel, VolumeFilter>().ReverseMap();
+
+        this.CreateMap<PlaylistViewModel, Playlist>()
+            .ForMember(x => x.Videos, expression => expression.MapFrom(y => y.Videos));
+
+        this.CreateMap<Playlist, PlaylistViewModel>()
+            .ForMember(x => x.Videos, expression => expression.MapFrom(y => y.Videos));
     }
 }

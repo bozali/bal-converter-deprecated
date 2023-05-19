@@ -1,8 +1,8 @@
-﻿using System.Collections.ObjectModel;
-using System.Web;
+﻿using System.Web;
+
 using AutoMapper;
+
 using Bal.Converter.Common.Enums;
-using Bal.Converter.Common.Extensions;
 using Bal.Converter.Common.Web;
 using Bal.Converter.Contracts.Services;
 using Bal.Converter.Contracts.ViewModels;
@@ -92,11 +92,12 @@ public partial class MediaDownloaderViewModel : ObservableObject, INavigationAwa
                 VideoQuality = Enum.Parse<AutomaticQualityOption>(this.VideoQualityOption)
             };
 
+            // ReSharper disable once LocalVariableHidesMember
             var format = Enum.Parse<MediaFileExtension>(this.Format);
 
             if (this.IsPlaylist && this.ProceedAsPlaylist)
             {
-                this.downloadsRegistry.EnqueueFetch(this.Url, format, option);
+                this.downloadsRegistry.EnqueuePlaylist(this.Url, format, option);
             }
             else
             {
@@ -139,9 +140,18 @@ public partial class MediaDownloaderViewModel : ObservableObject, INavigationAwa
                 var video = await this.youtubeDl.GetVideo(this.Url);
                 var thumbnail = await this.fileDownloader.DownloadImageAsync(video.ThumbnailUrl, Path.Combine(ILocalSettingsService.TempPath, "Thumbnails", Guid.NewGuid() + ".jpg"));
 
-                var vm = this.mapper.Map<VideoViewModel>(video);
-                vm.ThumbnailPath = thumbnail.DownloadPath;
-                vm.Format = this.Format;
+                var vm = new VideoViewModel
+                {
+                    Title = video.Title,
+                    ThumbnailPath = thumbnail.DownloadPath,
+                    Format = this.Format,
+                    Tags = new MediaTagsViewModel
+                    {
+                        Title = video.Title,
+                        Artist = video.Channel,
+                        Year = video.UploadDate.Year
+                    }
+                };
 
                 var parameters = new Dictionary<string, object>
                 {

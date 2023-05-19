@@ -81,6 +81,7 @@ public partial class App : Application
 #pragma warning disable CS4014
         App.GetService<FetchBackgroundWorker>().Process().ConfigureAwait(false);
         App.GetService<DownloadBackgroundWorker>().Process().ConfigureAwait(false);
+        App.GetService<PlaylistFetchBackgroundWorker>().Process().ConfigureAwait(false);
 #pragma warning restore CS4014
     }
 
@@ -146,6 +147,7 @@ public partial class App : Application
         // Background services
         collection.AddSingleton<FetchBackgroundWorker>();
         collection.AddSingleton<DownloadBackgroundWorker>();
+        collection.AddSingleton<PlaylistFetchBackgroundWorker>();
 
         // Configuration
         collection.Configure<LocalSettingsOptions>(context.Configuration.GetSection(nameof(LocalSettingsOptions)));

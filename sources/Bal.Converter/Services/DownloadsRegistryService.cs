@@ -17,9 +17,11 @@ public class DownloadsRegistryService : IDownloadsRegistryService, IDisposable
     private readonly ILiteDatabase database;
     private readonly SemaphoreSlim downloadSemaphore;
     private readonly SemaphoreSlim fetchSemaphore;
+    private readonly SemaphoreSlim playlistFetchSemaphore;
 
     private readonly ILiteCollection<DownloadJob> collection;
     private readonly ObservableCollection<DownloadJob> jobs;
+    private readonly Stack<PlaylistFetchJob> playlistFetchJobs;
 
     public DownloadsRegistryService(ILiteDatabase database)
     {
@@ -31,11 +33,20 @@ public class DownloadsRegistryService : IDownloadsRegistryService, IDisposable
 
         this.fetchSemaphore = new SemaphoreSlim(this.collection.Query().Where(x => x.State == DownloadState.Pending || x.State == DownloadState.Fetching).Count());
         this.downloadSemaphore = new SemaphoreSlim(this.collection.Query().Where(x => x.State == DownloadState.Downloading).Count());
+        this.playlistFetchSemaphore = new SemaphoreSlim(0);
+
+        this.playlistFetchJobs = new Stack<PlaylistFetchJob>();
     }
 
     public IReadOnlyCollection<DownloadJob> AllJobs
     {
         get => this.jobs;
+    }
+
+    public async Task<PlaylistFetchJob?> NextPlaylistFetchJob()
+    {
+        await this.playlistFetchSemaphore.WaitAsync().ConfigureAwait(false);
+        return this.playlistFetchJobs.Pop();
     }
 
     public async Task<DownloadJob?> NextDownloadJob()
@@ -52,9 +63,15 @@ public class DownloadsRegistryService : IDownloadsRegistryService, IDisposable
 
     public void EnqueuePlaylist(string url, MediaFileExtension format, QualityOption option)
     {
-        var job = new DownloadPlaylistJob
+        var job = new PlaylistFetchJob
         {
+            AutomaticQualityOption = option,
+            TargetFormat = format,
+            Url = url
         };
+        
+        this.playlistFetchJobs.Push(job);
+        this.playlistFetchSemaphore.Release();
     }
 
     public void EnqueueFetch(string url, MediaFileExtension format, QualityOption quality)
@@ -67,7 +84,6 @@ public class DownloadsRegistryService : IDownloadsRegistryService, IDisposable
         };
 
         this.jobs.Add(job);
-
         this.fetchSemaphore.Release();
     }
 
@@ -135,7 +151,7 @@ public class DownloadsRegistryService : IDownloadsRegistryService, IDisposable
                 }
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
             // ignored
         }

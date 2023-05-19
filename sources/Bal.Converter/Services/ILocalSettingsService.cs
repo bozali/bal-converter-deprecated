@@ -17,7 +17,8 @@ public interface ILocalSettingsService
 
     static string AppDataPath
     {
-        get => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "BalConverter");
+        // get => Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "BalConverter");
+        get => TempPath;
     }
 
     Task<T?> ReadSettingsAsync<T>(string key);

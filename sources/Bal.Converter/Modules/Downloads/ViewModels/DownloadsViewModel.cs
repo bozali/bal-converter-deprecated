@@ -18,7 +18,9 @@ public partial class DownloadsViewModel : ObservableObject
         this.downloadsRegistry = downloadsRegistry;
 
         this.DownloadJobs = new ObservableCollection<DownloadJobViewModel>(this.downloadsRegistry.AllJobs.Select(x => new DownloadJobViewModel(x)));
+
         WeakReferenceMessenger.Default.Register<DownloadRemovedMessage>(this, this.OnDownloadRemoved);
+        WeakReferenceMessenger.Default.Register<DownloadAddedMessage>(this, this.OnDownloadAdded);
     }
 
     public ObservableCollection<DownloadJobViewModel> DownloadJobs { get; set; }
@@ -26,6 +28,8 @@ public partial class DownloadsViewModel : ObservableObject
     [RelayCommand]
     private void Clear()
     {
+        var toRemove = new List<int>();
+
         for (int i = 0; i < this.DownloadJobs.Count; i++)
         {
             var item = this.DownloadJobs[i];
@@ -35,7 +39,12 @@ public partial class DownloadsViewModel : ObservableObject
                 continue;
             }
 
-            this.downloadsRegistry.Remove(item.Id);
+            toRemove.Add(item.Id);
+        }
+
+        foreach (int id in toRemove)
+        {
+            this.downloadsRegistry.Remove(id);
         }
     }
 
@@ -47,5 +56,10 @@ public partial class DownloadsViewModel : ObservableObject
         {
             this.DownloadJobs.Remove(item);
         }
+    }
+
+    private void OnDownloadAdded(object recipient, DownloadAddedMessage message)
+    {
+        this.DownloadJobs.Add(new DownloadJobViewModel(message.Value));
     }
 }

@@ -25,8 +25,8 @@ public partial class DownloadJobViewModel : ObservableObject
         this.State = this.job.State;
         this.Title = this.job.Tags == null ? this.job.Url : this.job.Tags.Title;
 
-        this.job.StateChanged += OnDownloadStateChanged;
-        this.job.ProgressChanged += OnProgressChanged;
+        this.job.StateChanged += this.OnDownloadStateChanged;
+        this.job.ProgressChanged += this.OnProgressChanged;
     }
 
     private void OnDownloadStateChanged(object sender, DownloadStateChangedEventArgs e)

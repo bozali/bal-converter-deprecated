@@ -8,6 +8,8 @@ public interface IDownloadsRegistryService
 {
     IReadOnlyCollection<DownloadJob> AllJobs { get; }
 
+    Task<PlaylistFetchJob?> NextPlaylistFetchJob();
+
     Task<DownloadJob?> NextDownloadJob();
 
     Task<DownloadJob?> NextFetchJob();
