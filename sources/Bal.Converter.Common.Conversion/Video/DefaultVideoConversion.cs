@@ -1,9 +1,8 @@
 ﻿using Bal.Converter.Common.Conversion.Audio;
-using Bal.Converter.Common.Conversion.Video;
 using Bal.Converter.FFmpeg;
 using Bal.Converter.FFmpeg.Filters;
 
-namespace Bal.Converter.Common.Conversion.Image;
+namespace Bal.Converter.Common.Conversion.Video;
 
 public class DefaultVideoConversion<T> : ConversionBase<T>, IVideoConversion, IAudioConversion where T : IConversion
 {
@@ -21,11 +20,11 @@ public class DefaultVideoConversion<T> : ConversionBase<T>, IVideoConversion, IA
 
     public override async Task Convert(string source, string destination)
     {
-        await this.ffmpeg.Convert(source, destination, new ConversionOptions
+        await ffmpeg.Convert(source, destination, new ConversionOptions
         {
-            Filters = this.VideoConversionOptions.VideoFilters
+            Filters = VideoConversionOptions.VideoFilters
                 .Cast<IFilter>()
-                .Concat(this.AudioConversionOptions.AudioFilters).ToArray()
+                .Concat(AudioConversionOptions.AudioFilters).ToArray()
         });
     }
 

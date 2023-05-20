@@ -51,7 +51,7 @@ public partial class App : Application
     
     public IHost Host { get; }
 
-    public static WindowEx MainWindow { get; } = new MainWindow();
+    public static WindowEx MainWindow { get; private set; }
 
     public static T GetService<T>() where T : class
     {
@@ -74,6 +74,8 @@ public partial class App : Application
         base.OnLaunched(args);
 
         await SetupSettings();
+
+        MainWindow = App.GetService<MainWindow>();
         await App.GetService<IActivationService>().ActivateAsync(args);
 
         // ReSharper disable once ArrangeStaticMemberQualifier
@@ -107,6 +109,7 @@ public partial class App : Application
         collection.AddSingleton<IMediaTagService, MediaTagService>();
         collection.AddSingleton<IConversionProvider, ConversionProvider>();
         collection.AddSingleton<IDialogPickerService, DialogPickerService>();
+        collection.AddSingleton<MainWindow>();
 
         collection.ConfigureLiteDatabase();
         collection.ConfigureConversions();

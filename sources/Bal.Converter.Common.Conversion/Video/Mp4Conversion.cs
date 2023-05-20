@@ -1,7 +1,6 @@
 ﻿using Bal.Converter.Common.Conversion.Attributes;
 using Bal.Converter.Common.Conversion.Audio;
 using Bal.Converter.Common.Conversion.Constants;
-using Bal.Converter.Common.Conversion.Image;
 using Bal.Converter.FFmpeg;
 
 namespace Bal.Converter.Common.Conversion.Video;

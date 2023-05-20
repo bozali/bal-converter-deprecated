@@ -4,17 +4,17 @@ namespace Bal.Converter.Common.Conversion;
 
 public static class ConversionAttributeExtractor
 {
-    public static string ExtractExtension(Type type)
+    public static string? ExtractExtension(Type type)
     {
 
         if (!type.GetInterfaces().Contains(typeof(IConversion)))
         {
-            throw new ArgumentException(nameof(type));
+            return null;
         }
 
         if (Attribute.GetCustomAttribute(type, typeof(ExtensionAttribute)) is not ExtensionAttribute extensionAttribute)
         {
-            throw new Exception($"Extension is missing for {type.FullName}.");
+            return null;
         }
 
         return extensionAttribute.Extension;
