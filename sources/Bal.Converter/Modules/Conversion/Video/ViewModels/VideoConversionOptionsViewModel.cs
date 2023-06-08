@@ -15,8 +15,6 @@ public partial class VideoConversionOptionsViewModel : ObservableObject
 
     public VideoConversionOptionsViewModel()
     {
-        this.MinVideoLength = 0.0;
-        this.MaxVideoLength = 0.0;
     }
 
     public bool HasMinLengthTimeChanges()
@@ -33,13 +31,13 @@ public partial class VideoConversionOptionsViewModel : ObservableObject
     {
         this.MinVideoLengthTime = TimeSpan.FromSeconds(value);
         this.MinVideoText = this.MinVideoLengthTime.ToString(@"mm\:ss");
-        this.OnPropertyChanged(nameof(MinVideoText));
+        this.OnPropertyChanged(nameof(this.MinVideoText));
     }
 
     partial void OnMaxVideoLengthChanging(double value)
     {
         this.MaxVideoLengthTime = TimeSpan.FromSeconds(value);
         this.MaxVideoText = this.MaxVideoLengthTime.ToString(@"mm\:ss");
-        this.OnPropertyChanged(nameof(MaxVideoText));
+        this.OnPropertyChanged(nameof(this.MaxVideoText));
     }
 }

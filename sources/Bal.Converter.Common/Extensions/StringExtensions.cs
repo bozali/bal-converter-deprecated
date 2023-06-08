@@ -13,4 +13,14 @@ public static class StringExtensions
 
         return str;
     }
+
+    public static string ToTitleCase(this string str)
+    {
+        return str.Length switch
+        {
+            0 => string.Empty,
+            1 => str.ToUpper(),
+            _ => char.ToUpper(str[0]) + str[1..]
+        };
+    }
 }

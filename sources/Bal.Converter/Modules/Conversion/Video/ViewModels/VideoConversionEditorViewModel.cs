@@ -110,7 +110,9 @@ public partial class VideoConversionEditorViewModel : ObservableObject, INavigat
         {
             ((IAudioConversion)this.conversion).AudioConversionOptions = new AudioConversionOptions
             {
-                AudioFilters = this.GetAudioFilters().ToArray()
+                AudioFilters = this.GetAudioFilters().ToArray(),
+                StartPosition = this.VideoConversionOptions.MinVideoLengthTime,
+                EndPosition = this.VideoConversionOptions.MaxVideoLengthTime
             };
         }
 

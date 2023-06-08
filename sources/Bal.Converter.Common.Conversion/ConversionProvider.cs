@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Reflection;
+using Bal.Converter.Common.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bal.Converter.Common.Conversion;
@@ -38,7 +39,7 @@ public class ConversionProvider : IConversionProvider
             return Enumerable.Empty<string>().ToArray();
         }
 
-        return ConversionAttributeExtractor.ExtractSupportedTypes(found).Select(x => ConversionAttributeExtractor.ExtractExtension(x).ToLowerInvariant()).ToArray();
+        return ConversionAttributeExtractor.ExtractSupportedTypes(found).Select(x => ConversionAttributeExtractor.ExtractExtension(x).ToTitleCase()).ToArray();
     }
 
     public IConversion Provide(string target)

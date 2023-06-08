@@ -10,4 +10,8 @@ public class AudioConversionOptions
     }
 
     public IAudioFilter[] AudioFilters { get; set; }
+
+    public TimeSpan? StartPosition { get; set; }
+
+    public TimeSpan? EndPosition { get; set; }
 }

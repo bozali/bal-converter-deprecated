@@ -23,6 +23,16 @@ public class FFmpeg : IFFmpeg
             $@"-i ""{path}""",
         };
 
+        if (options.StartPosition != null)
+        {
+            arguments.Add($@"-ss ""{options.StartPosition?.ToString($"hh\\:mm\\:ss")}""");
+        }
+
+        if (options.EndPosition != null)
+        {
+            arguments.Add($@"-t ""{options.EndPosition.Value.ToString($"hh\\:mm\\:ss")}""");
+        }
+
         if (options.Filters != null && options.Filters.Any())
         {
             arguments.Add(this.BuildFilterArguments(options.Filters));

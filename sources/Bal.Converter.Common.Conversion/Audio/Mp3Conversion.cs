@@ -28,7 +28,9 @@ public class Mp3Conversion : ConversionBase<Mp3Conversion>, IAudioConversion
         await this.ffmpeg.Convert(source, destination, new ConversionOptions
         {
             // ReSharper disable once CoVariantArrayConversion
-            Filters = this.AudioConversionOptions.AudioFilters
+            Filters = this.AudioConversionOptions.AudioFilters,
+            StartPosition = this.AudioConversionOptions.StartPosition,
+            EndPosition = this.AudioConversionOptions.EndPosition
         });
     }
 }
