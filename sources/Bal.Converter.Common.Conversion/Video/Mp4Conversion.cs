@@ -6,6 +6,7 @@ using Bal.Converter.FFmpeg;
 namespace Bal.Converter.Common.Conversion.Video;
 
 [Extension(FileExtensions.Video.Mp4)]
+[Target(typeof(Mp4Conversion))]
 [Target(typeof(Mp3Conversion))]
 [Target(typeof(AviConversion))]
 [Target(typeof(WavConversion))]

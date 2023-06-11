@@ -5,6 +5,7 @@ using Bal.Converter.Common.Services;
 using Bal.Converter.Common.Web;
 using Bal.Converter.Extensions;
 using Bal.Converter.FFmpeg;
+using Bal.Converter.Modules.Conversion.Filters.Unsharp;
 using Bal.Converter.Modules.Conversion.Filters.Volume;
 using Bal.Converter.Modules.Conversion.Filters.Watermark;
 using Bal.Converter.Modules.Conversion.Image.Settings.Ico;
@@ -129,6 +130,8 @@ public partial class App : Application
             .AddTransient<ShellViewModel>()
             .AddTransient<PlaylistOverviewViewModel>()
             .AddTransient<VolumeFilterPage>()
+            .AddTransient<UnsharpFilterPage>()
+            .AddTransient<UnsharpFilterViewModel>()
             .AddTransient<WatermarkEffectPage>()
             .AddTransient<IcoMultiResolutionPage>()
 

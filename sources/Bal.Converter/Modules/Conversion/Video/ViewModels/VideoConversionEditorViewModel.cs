@@ -6,7 +6,7 @@
 using System.Collections.ObjectModel;
 
 using Windows.Storage.Pickers;
-
+using ABI.Windows.ApplicationModel.Calls.Background;
 using AutoMapper;
 
 using Bal.Converter.Common.Conversion;
@@ -17,6 +17,7 @@ using Bal.Converter.Contracts.ViewModels;
 using Bal.Converter.FFmpeg;
 using Bal.Converter.FFmpeg.Filters.Audio;
 using Bal.Converter.FFmpeg.Filters.Video;
+using Bal.Converter.Modules.Conversion.Filters.Unsharp;
 using Bal.Converter.Modules.Conversion.Filters.Volume;
 using Bal.Converter.Modules.Conversion.ViewModels;
 using Bal.Converter.Modules.MediaDownloader.ViewModels;
@@ -76,7 +77,7 @@ public partial class VideoConversionEditorViewModel : ObservableObject, INavigat
 
         if (this.conversion.Topology.HasFlag(ConversionTopology.Video))
         {
-            this.AvailableFilters.AddRange(new[] { FilterNameConstants.Video.Rotation, FilterNameConstants.Video.Fps });
+            this.AvailableFilters.AddRange(new[] { FilterNameConstants.Video.Rotation, FilterNameConstants.Video.Fps, FilterNameConstants.Video.Unsharp });
         }
     }
 
@@ -91,6 +92,10 @@ public partial class VideoConversionEditorViewModel : ObservableObject, INavigat
         {
             case "volume":
                 this.FilterPages.Add(new VolumeFilterPage());
+                break;
+
+            case "unsharp":
+                this.FilterPages.Add(new UnsharpFilterPage());
                 break;
         }
     }
@@ -136,11 +141,20 @@ public partial class VideoConversionEditorViewModel : ObservableObject, INavigat
         }
     }
 
+    [RelayCommand]
+    private void ClearFilter()
+    {
+        this.FilterPages.Clear();
+    }
+
     private IEnumerable<IVideoFilter> GetVideoFilters()
     {
         foreach (var filter in this.FilterPages)
         {
-            yield break;
+            if (string.Equals(filter.Name, FilterNameConstants.Video.Unsharp))
+            {
+                yield return this.mapper.Map<UnsharpFilterViewModel, UnsharpFilter>(((UnsharpFilterPage)filter).ViewModel);
+            }
         }
     }
 

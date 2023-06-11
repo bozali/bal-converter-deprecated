@@ -40,20 +40,25 @@
             <bal:SettingsGroup Header="Filters">
                 <CommandBar HorizontalAlignment="Left" Background="Transparent" DefaultLabelPosition="Right" IsSticky="True">
                     <AppBarButton Icon="Add" Label="Add">
+
+                        <ItemsControl ItemsSource="{x:Bind ViewModel.AvailableFilters}">
+                            <ItemsControl.ItemTemplate>
+
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
                         <AppBarButton.Flyout>
-                            <MenuFlyout>
-                                <MenuFlyoutItem Text="Volume" Command="{x:Bind ViewModel.AddFilterCommand}" CommandParameter="Volume" />
-                            </MenuFlyout>
+                            <MenuFlyout x:Name="Flyout"/>
                         </AppBarButton.Flyout>
                     </AppBarButton>
 
 
                     <AppBarButton Icon="Clear" Label="Remove All">
                         <AppBarButton.Flyout>
-                            <Flyout>
+                            <Flyout x:Name="ClearFlyout">
                                 <StackPanel>
                                     <TextBlock Style="{ThemeResource BaseTextBlockStyle}" Text="All filters will be removed. Do you want to continue?" Margin="0 0 0 12" />
-                                    <Button Content="Yes, remove all filters" />
+                                    <Button Content="Yes, remove all filters" Command="{x:Bind ViewModel.ClearFilterCommand}" Click="FlyoutClearButtonClicked" />
                                 </StackPanel>
                             </Flyout>
                         </AppBarButton.Flyout>

@@ -1,0 +1,27 @@
+<Page
+    x:Class="Bal.Converter.Modules.Conversion.Filters.Unsharp.UnsharpFilterPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Bal.Converter.Modules.Conversion.Filters.Unsharp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:winui="using:CommunityToolkit.Labs.WinUI"
+    xmlns:ui="using:CommunityToolkit.WinUI.UI"
+    mc:Ignorable="d">
+
+    <winui:SettingsExpander Header="Unsharp" Description="Sharpen or blur the video" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe7b3;}">
+        <winui:SettingsExpander.Items>
+            <winui:SettingsCard Header="Luma Horizontal Size">
+                <NumberBox Minimum="3" Maximum="23" Value="{x:Bind ViewModel.LumaHorizontalSize}" SpinButtonPlacementMode="Inline" />
+            </winui:SettingsCard>
+
+            <winui:SettingsCard Header="Luma Vertical Size">
+                <NumberBox Minimum="3" Maximum="23" Value="{x:Bind ViewModel.LumaVerticalSize}" SpinButtonPlacementMode="Inline" />
+            </winui:SettingsCard>
+
+            <winui:SettingsCard Header="Luma Strength">
+                <NumberBox Minimum="-1.5" Maximum="1.5" Value="{x:Bind ViewModel.LumaStrength}" SpinButtonPlacementMode="Inline" />
+            </winui:SettingsCard>
+        </winui:SettingsExpander.Items>
+    </winui:SettingsExpander>
+</Page>

@@ -26,6 +26,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Controls\SettingsGroup\SettingsGroup.xaml" />
+    <None Remove="Modules\Conversion\Filters\Unsharp\UnsharpFilterPage.xaml" />
     <None Remove="Modules\Conversion\Filters\Views\VolumeFilterPage.xaml" />
     <None Remove="Modules\Conversion\Image\Settings\Ico\IcoMultiResolutionPage.xaml" />
     <None Remove="Modules\Conversion\Image\Views\ImageConversionEditorPage.xaml" />
@@ -100,6 +101,9 @@
     <None Update="com\balshellext.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Modules\Conversion\Filters\Unsharp\UnsharpFilterPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Modules\MediaDownloader\Views\PlaylistOverviewPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

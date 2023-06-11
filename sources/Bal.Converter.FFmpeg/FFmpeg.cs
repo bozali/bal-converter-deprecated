@@ -20,6 +20,7 @@ public class FFmpeg : IFFmpeg
     {
         var arguments = new List<string>
         {
+            "-y",
             $@"-i ""{path}""",
         };
 

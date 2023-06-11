@@ -11,6 +11,7 @@ public class FilterNameConstants
     {
         public const string Rotation = "Rotation";
         public const string Fps = "FPS";
+        public const string Unsharp = "Unsharp";
     }
 
     public class Image

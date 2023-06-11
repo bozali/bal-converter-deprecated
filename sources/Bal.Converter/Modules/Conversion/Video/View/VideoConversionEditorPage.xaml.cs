@@ -1,8 +1,10 @@
-﻿using Bal.Converter.Modules.Conversion.Video.ViewModels;
+﻿using System.Collections.Specialized;
+using Bal.Converter.Modules.Conversion.Video.ViewModels;
 
 using Microsoft.UI.Xaml.Controls;
 using Windows.Media.Core;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 
 namespace Bal.Converter.Modules.Conversion.Video.View
 {
@@ -14,9 +16,29 @@ namespace Bal.Converter.Modules.Conversion.Video.View
         public VideoConversionEditorPage()
         {
             this.ViewModel = App.GetService<VideoConversionEditorViewModel>();
+            this.ViewModel.AvailableFilters.CollectionChanged += (sender, args) =>
+            {
+                // NOTE We need to add the items for the MenuFlyout from codebehind. We need to refactor this if ItemSources are available.
+                if (args.Action == NotifyCollectionChangedAction.Add)
+                {
+                    if (args.NewItems != null)
+                    {
+                        string filter = args.NewItems[0] as string;
+
+                        var item = new MenuFlyoutItem
+                        {
+                            Text = filter,
+                            Command = this.ViewModel.AddFilterCommand,
+                            CommandParameter = filter
+                        };
+
+                        this.Flyout.Items.Add(item);
+                    }
+                }
+            };
 
             this.InitializeComponent();
-            
+
             this.ViewModel.SetMediaPlayerSource = (path) => this.MediaPlayer.Source = MediaSource.CreateFromUri(new Uri(path));
 
             this.MediaPlayer.MediaPlayer.MediaOpened += (s, e) =>
@@ -32,5 +54,10 @@ namespace Bal.Converter.Modules.Conversion.Video.View
         }
 
         public VideoConversionEditorViewModel ViewModel { get; }
+
+        private void FlyoutClearButtonClicked(object sender, RoutedEventArgs e)
+        {
+            this.ClearFlyout.Hide();
+        }
     }
 }
