@@ -23,16 +23,6 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
         this.localSettingsService = localSettingsService;
     }
 
-
-    [RelayCommand]
-    private async Task Save()
-    {
-        await this.localSettingsService.SaveSettingsAsync(ILocalSettingsService.DownloadDirectoryKey, this.DownloadDirectory);
-        await this.localSettingsService.SaveSettingsAsync(ILocalSettingsService.MinimizeAppKey, this.Minimize);
-        await this.localSettingsService.SaveSettingsAsync(ILocalSettingsService.BandwidthKey, !string.IsNullOrEmpty(this.Bandwidth) ? int.Parse(this.Bandwidth) : 0);
-        await this.localSettingsService.SaveSettingsAsync(ILocalSettingsService.BandwidthMinimizedKey, !string.IsNullOrEmpty(this.BandwidthMinimized) ? int.Parse(this.BandwidthMinimized) : 0);
-    }
-
     public void OnNavigatedTo(object parameter)
     {
         this.DownloadDirectory = this.localSettingsService.ReadSettings<string>(ILocalSettingsService.DownloadDirectoryKey);
@@ -65,4 +55,25 @@ public partial class SettingsViewModel : ObservableRecipient, INavigationAware
         var folder = await openPicker.PickSingleFolderAsync();
         return folder?.Path;
     }
+
+    partial void OnDownloadDirectoryChanged(string? value)
+    {
+        this.localSettingsService.SaveSettingsAsync(ILocalSettingsService.DownloadDirectoryKey, value).ConfigureAwait(false);
+    }
+
+    partial void OnMinimizeChanged(bool value)
+    {
+        this.localSettingsService.SaveSettingsAsync(ILocalSettingsService.MinimizeAppKey, value).ConfigureAwait(false);
+    }
+
+    partial void OnBandwidthChanged(string? value)
+    {
+        this.localSettingsService.SaveSettingsAsync(ILocalSettingsService.BandwidthKey, !string.IsNullOrEmpty(value) ? int.Parse(value) : 0).ConfigureAwait(false);
+    }
+
+    partial void OnBandwidthMinimizedChanged(string? value)
+    {
+        this.localSettingsService.SaveSettingsAsync(ILocalSettingsService.BandwidthMinimizedKey, !string.IsNullOrEmpty(value) ? int.Parse(value) : 0).ConfigureAwait(false);
+    }
+
 }

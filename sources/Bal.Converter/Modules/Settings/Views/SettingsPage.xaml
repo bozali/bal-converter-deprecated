@@ -64,8 +64,5 @@
                 <ComboBoxItem Content="16 KB/s" Tag="16384" />
             </ComboBox>
         </winui:SettingsCard>
-
-        <Button MinWidth="100" x:Uid="Save" Command="{x:Bind ViewModel.SaveCommand}" />
-
     </StackPanel>
 </Page>
