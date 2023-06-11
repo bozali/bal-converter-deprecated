@@ -1,8 +1,11 @@
 ﻿using Bal.Converter.Messages;
+using Bal.Converter.Modules.Downloads;
 using Bal.Converter.Modules.Settings.Views;
 using Bal.Converter.Services;
+
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
+
 using Microsoft.UI.Xaml.Navigation;
 
 namespace Bal.Converter.ViewModels;
@@ -10,11 +13,11 @@ namespace Bal.Converter.ViewModels;
 public partial class ShellViewModel : ObservableRecipient
 {
     [ObservableProperty] private bool isInteractionEnabled;
+    [ObservableProperty] private bool isBackEnabled;
+    [ObservableProperty] private object? selected;
+    [ObservableProperty] private int downloadCount;
 
-    private bool isBackEnabled;
-    private object? selected;
-
-    public ShellViewModel(INavigationService navigationService, INavigationViewService navigationViewService)
+    public ShellViewModel(INavigationService navigationService, INavigationViewService navigationViewService, IDownloadsRegistryService downloadsRegistry)
     {
         this.NavigationService = navigationService;
         this.NavigationViewService = navigationViewService;
@@ -22,25 +25,33 @@ public partial class ShellViewModel : ObservableRecipient
         this.NavigationService.Navigated += this.OnNavigated;
 
         this.IsInteractionEnabled = true;
+        this.DownloadCount = downloadsRegistry.AllJobs.Count(x => x.State != DownloadState.Cancelled || x.State != DownloadState.Cancelled);
 
         WeakReferenceMessenger.Default.Register<DisableInteractionChangeMessage>(this, (recipient, message) => this.IsInteractionEnabled = !message.Value);
+        WeakReferenceMessenger.Default.Register<DownloadAddedMessage>(this, (recipient, message) => this.DownloadCount++);
+        WeakReferenceMessenger.Default.Register<DownloadRemovedMessage>(this, (recipient, message) =>
+        {
+            if (--this.DownloadCount <= 0)
+            {
+                this.DownloadCount = 0;
+            }
+        });
+
+        WeakReferenceMessenger.Default.Register<DownloadStateMessage>(this, (recipient, message) =>
+        {
+            switch (message.Value.State)
+            {
+                case DownloadState.Cancelled:
+                case DownloadState.Done:
+                    this.DownloadCount--;
+                    break;
+            }
+        });
     }
 
     public INavigationService NavigationService { get; }
 
     public INavigationViewService NavigationViewService { get; }
-
-    public bool IsBackEnabled
-    {
-        get => isBackEnabled;
-        set => this.SetProperty(ref isBackEnabled, value);
-    }
-
-    public object? Selected
-    {
-        get => selected;
-        set => this.SetProperty(ref selected, value);
-    }
 
     private void OnNavigated(object sender, NavigationEventArgs e)
     {

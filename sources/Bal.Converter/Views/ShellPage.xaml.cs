@@ -16,17 +16,18 @@ public sealed partial class ShellPage : Page
 {
     public ShellPage(ShellViewModel viewModel)
     {
-        ViewModel = viewModel;
-        InitializeComponent();
+        this.ViewModel = viewModel;
 
-        ViewModel.NavigationService.Frame = NavigationFrame;
-        ViewModel.NavigationViewService.Initialize(NavigationViewControl);
+        this.InitializeComponent();
+
+        this.ViewModel.NavigationService.Frame = this.NavigationFrame;
+        this.ViewModel.NavigationViewService.Initialize(this.NavigationViewControl);
 
         // TODO: Set the title bar icon by updating /Assets/WindowIcon.ico.
         // A custom title bar is required for full window theme and Mica support.
         // https://docs.microsoft.com/windows/apps/develop/title-bar?tabs=winui3#full-customization
         App.MainWindow.ExtendsContentIntoTitleBar = true;
-        App.MainWindow.SetTitleBar(AppTitleBar);
+        App.MainWindow.SetTitleBar(this.AppTitleBar);
         App.MainWindow.Activated += this.OnMainWindowActivated;
 
         this.AppTitleBarText.Text = "AppDisplayName".GetLocalized();
@@ -36,10 +37,10 @@ public sealed partial class ShellPage : Page
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        TitleBarHelper.UpdateTitleBar(RequestedTheme);
+        TitleBarHelper.UpdateTitleBar(this.RequestedTheme);
 
-        KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu));
-        KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.GoBack));
+        this.KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.Left, VirtualKeyModifiers.Menu));
+        this.KeyboardAccelerators.Add(BuildKeyboardAccelerator(VirtualKey.GoBack));
     }
 
     private void OnMainWindowActivated(object sender, WindowActivatedEventArgs args)
@@ -50,12 +51,12 @@ public sealed partial class ShellPage : Page
 
     private void OnDisplayModeChanged(NavigationView sender, NavigationViewDisplayModeChangedEventArgs args)
     {
-        AppTitleBar.Margin = new Thickness
+        this.AppTitleBar.Margin = new Thickness
         {
             Left = sender.CompactPaneLength * (sender.DisplayMode == NavigationViewDisplayMode.Minimal ? 2 : 1),
-            Top = AppTitleBar.Margin.Top,
-            Right = AppTitleBar.Margin.Right,
-            Bottom = AppTitleBar.Margin.Bottom
+            Top = this.AppTitleBar.Margin.Top,
+            Right = this.AppTitleBar.Margin.Right,
+            Bottom = this.AppTitleBar.Margin.Bottom
         };
     }
 

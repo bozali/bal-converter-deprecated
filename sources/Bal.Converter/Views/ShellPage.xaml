@@ -50,6 +50,10 @@
                     <NavigationViewItem.Icon>
                         <ImageIcon Source="/Assets/Icons/Download.png" />
                     </NavigationViewItem.Icon>
+
+                    <NavigationViewItem.InfoBadge>
+                        <InfoBadge Value="{x:Bind ViewModel.DownloadCount, Mode=TwoWay}" />
+                    </NavigationViewItem.InfoBadge>
                 </NavigationViewItem>
 
                 <NavigationViewItem x:Uid="ShellConversion" helpers:NavigationHelper.NavigateTo="Bal.Converter.Modules.Conversion.ViewModels.ConversionSelectionViewModel">

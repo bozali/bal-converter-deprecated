@@ -102,6 +102,8 @@ public class DownloadsRegistryService : IDownloadsRegistryService, IDisposable
         job.State = state;
         this.collection.Update(job);
 
+        WeakReferenceMessenger.Default.Send(new DownloadStateMessage(job));
+
         if (state == DownloadState.Downloading)
         {
             this.downloadSemaphore.Release();
@@ -118,7 +120,7 @@ public class DownloadsRegistryService : IDownloadsRegistryService, IDisposable
             this.database.Commit();
 
             this.jobs.Remove(found);
-            WeakReferenceMessenger.Default.Send<DownloadRemovedMessage>(new DownloadRemovedMessage(found.Id));
+            WeakReferenceMessenger.Default.Send(new DownloadRemovedMessage(found.Id));
         }
 
     }
@@ -146,8 +148,9 @@ public class DownloadsRegistryService : IDownloadsRegistryService, IDisposable
                 switch (e.Action)
                 {
                     case NotifyCollectionChangedAction.Add:
+                        WeakReferenceMessenger.Default.Send(new DownloadAddedMessage(item));
                         this.collection.Insert(item);
-                        break;
+            break;
                 }
             }
         }
