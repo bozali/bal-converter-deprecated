@@ -1,9 +1,11 @@
-﻿using System.Diagnostics;
-using Bal.Converter.Extensions;
+﻿using Bal.Converter.Extensions;
+using Bal.Converter.Messages;
 using Bal.Converter.Services;
+
+using CommunityToolkit.Mvvm.Messaging;
+
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 
 namespace Bal.Converter;
 
@@ -20,7 +22,7 @@ public sealed partial class MainWindow : WindowEx
         this.Content = null;
         this.Title = "AppDisplayName".GetLocalized();
 
-        // this.Closed += this.OnWindowClosed;
+        this.Closed += this.OnWindowClosed;
     }
 
     public void RefreshBackdrop()
@@ -33,9 +35,7 @@ public sealed partial class MainWindow : WindowEx
         bool firstTime = this.localSettingsService.ReadSettings<bool>(ILocalSettingsService.FirstTimeKey);
         bool minimize = this.localSettingsService.ReadSettings<bool>(ILocalSettingsService.MinimizeAppKey);
 
-        // var dialog = new WindowCloseDialog();
-
-        if (firstTime)
+        if (firstTime && !App.ForceQuit)
         {
             e.Handled = true;
             this.RefreshBackdrop();
@@ -52,12 +52,22 @@ public sealed partial class MainWindow : WindowEx
 
             var result = await dialog.ShowAsync();
 
-            await localSettingsService.SaveSettingsAsync(ILocalSettingsService.FirstTimeKey, minimize);
+            if (result == ContentDialogResult.None)
+            {
+                return;
+            }
+
+            minimize = result == ContentDialogResult.Primary;
+
+            await this.localSettingsService.SaveSettingsAsync(ILocalSettingsService.FirstTimeKey, false);
         }
+
+        await this.localSettingsService.SaveSettingsAsync(ILocalSettingsService.MinimizeAppKey, minimize);
 
         if (minimize)
         {
-
+            App.MainWindow.Hide();
+            WeakReferenceMessenger.Default.Send(new WindowStateChangedMessage(false));
         }
         else
         {

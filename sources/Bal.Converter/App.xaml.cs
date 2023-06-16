@@ -48,11 +48,15 @@ public partial class App : Application
                              .Build();
 
         this.UnhandledException += this.OnUnhandledException;
+
+        App.ForceQuit = false;
     }
     
     public IHost Host { get; }
 
     public static WindowEx MainWindow { get; private set; }
+
+    public static bool ForceQuit { get; set; }
 
     public static T GetService<T>() where T : class
     {

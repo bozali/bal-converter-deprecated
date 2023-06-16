@@ -7,6 +7,7 @@
     xmlns:helpers="using:Bal.Converter.Helpers"
     xmlns:behaviors="using:Bal.Converter.Behaviors"
     xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:tb="using:H.NotifyIcon"
     Loaded="OnLoaded"
     x:Name="Root">
 
@@ -28,6 +29,7 @@
                        Style="{StaticResource CaptionTextBlockStyle}"
                        Margin="28,0,0,0"/>
         </Grid>
+
         <NavigationView
             x:Name="NavigationViewControl"
             Canvas.ZIndex="0"
@@ -101,5 +103,23 @@
                 </Grid>
             </ScrollViewer>
         </NavigationView>
+
+
+        <tb:TaskbarIcon
+            x:Name="TrayIcon"
+            x:FieldModifier="public"
+            IconSource="/Assets/WindowIcon.ico"
+            ToolTipText="ToolTip"
+            NoLeftClickDelay="True"
+            ContextMenuMode="SecondWindow"
+            DoubleClickCommand="{x:Bind ViewModel.OpenWindowCommand}">
+            <tb:TaskbarIcon.ContextFlyout>
+                <MenuFlyout AreOpenCloseAnimationsEnabled="False">
+                    <MenuFlyoutItem Command="{x:Bind ViewModel.OpenWindowCommand}" Text="Show/Hide Window" />
+                    <MenuFlyoutSeparator />
+                    <MenuFlyoutItem Command="{x:Bind ViewModel.CloseAppCommand}" Text="Exit" />
+                </MenuFlyout>
+            </tb:TaskbarIcon.ContextFlyout>
+        </tb:TaskbarIcon>
     </Grid>
 </Page>
