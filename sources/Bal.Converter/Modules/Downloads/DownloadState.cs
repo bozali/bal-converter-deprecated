@@ -10,7 +10,5 @@ public enum DownloadState
 
     Done,
 
-    Paused,
-
     Cancelled,
 }

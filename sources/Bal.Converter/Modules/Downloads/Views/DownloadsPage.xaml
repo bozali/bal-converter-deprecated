@@ -8,6 +8,7 @@
     xmlns:winui="using:CommunityToolkit.Labs.WinUI"
     xmlns:animatedVisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:vm="using:Bal.Converter.Modules.Downloads.ViewModels"
+    xmlns:downloads="using:Bal.Converter.Modules.Downloads"
     mc:Ignorable="d">
 
 
@@ -51,19 +52,7 @@
                             <Button Style="{StaticResource SubtleButtonStyle}" FontFamily="{ThemeResource SymbolThemeFontFamily}" Content="&#xe712;">
                                 <Button.Flyout>
                                     <MenuFlyout>
-                                        <MenuFlyoutItem Text="Continue">
-                                            <MenuFlyoutItem.Icon>
-                                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xe768;"/>
-                                            </MenuFlyoutItem.Icon>
-                                        </MenuFlyoutItem>
-
-                                        <MenuFlyoutItem Text="Pause">
-                                            <MenuFlyoutItem.Icon>
-                                                <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xe769;"/>
-                                            </MenuFlyoutItem.Icon>
-                                        </MenuFlyoutItem>
-
-                                        <MenuFlyoutItem Text="Cancel">
+                                        <MenuFlyoutItem Text="Cancel" Command="{Binding CancelCommand}">
                                             <MenuFlyoutItem.Icon>
                                                 <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xe71a;"/>
                                             </MenuFlyoutItem.Icon>

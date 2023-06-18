@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 
+using Bal.Converter.Common.Media;
 using Bal.Converter.FFmpeg.Filters.Audio;
 using Bal.Converter.FFmpeg.Filters.Video;
 using Bal.Converter.Modules.Conversion.Filters.Unsharp;
@@ -21,6 +22,7 @@ public class BalMapperProfile : Profile
 
         this.CreateMap<VolumeFilterViewModel, VolumeFilter>().ReverseMap();
         this.CreateMap<UnsharpFilterViewModel, UnsharpFilter>().ReverseMap();
+        this.CreateMap<MediaTagsViewModel, MediaTags>().ReverseMap();
 
         this.CreateMap<PlaylistViewModel, Playlist>()
             .ForMember(x => x.Videos, expression => expression.MapFrom(y => y.Videos));

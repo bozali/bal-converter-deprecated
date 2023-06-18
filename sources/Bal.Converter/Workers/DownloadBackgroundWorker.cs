@@ -90,7 +90,14 @@ public class DownloadBackgroundWorker
 
                     var file = new FileInfo(downloadPath + ".part");
 
-                    if (file.Wait())
+                    if (file.Exists && file.Wait())
+                    {
+                        file.SafeDelete();
+                    }
+
+                    file = new FileInfo(downloadPath);
+
+                    if (file.Exists && file.Wait())
                     {
                         file.SafeDelete();
                     }

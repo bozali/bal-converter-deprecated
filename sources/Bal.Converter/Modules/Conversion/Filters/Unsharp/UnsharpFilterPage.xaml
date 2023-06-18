@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:winui="using:CommunityToolkit.Labs.WinUI"
     xmlns:ui="using:CommunityToolkit.WinUI.UI"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    x:Name="Unsharp">
 
     <winui:SettingsExpander Header="Unsharp" Description="Sharpen or blur the video" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe7b3;}">
         <winui:SettingsExpander.Items>

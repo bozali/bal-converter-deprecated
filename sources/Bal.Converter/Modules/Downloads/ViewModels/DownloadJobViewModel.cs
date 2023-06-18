@@ -1,11 +1,13 @@
 ﻿using Bal.Converter.Events;
-
+using Bal.Converter.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Bal.Converter.Modules.Downloads.ViewModels;
 
 public partial class DownloadJobViewModel : ObservableObject
 {
+    private readonly IDownloadsRegistryService downloadsRegistry;
     private readonly DownloadJob job;
 
     [ObservableProperty] private int id;
@@ -16,8 +18,9 @@ public partial class DownloadJobViewModel : ObservableObject
     [ObservableProperty] private string stateIcon;
     [ObservableProperty] private string progressText;
 
-    public DownloadJobViewModel(DownloadJob job)
+    public DownloadJobViewModel(IDownloadsRegistryService downloadsRegistry, DownloadJob job)
     {
+        this.downloadsRegistry = downloadsRegistry;
         this.job = job;
 
         this.Id = this.job.Id;
@@ -27,6 +30,12 @@ public partial class DownloadJobViewModel : ObservableObject
 
         this.job.StateChanged += this.OnDownloadStateChanged;
         this.job.ProgressChanged += this.OnProgressChanged;
+    }
+
+    [RelayCommand]
+    public void Cancel()
+    {
+        this.downloadsRegistry.UpdateState(this.job, DownloadState.Cancelled);
     }
 
     private void OnDownloadStateChanged(object sender, DownloadStateChangedEventArgs e)
@@ -57,10 +66,6 @@ public partial class DownloadJobViewModel : ObservableObject
                 this.StateIcon = "\xe73e";
                 break;
 
-            case DownloadState.Paused:
-                this.StateIcon = "\xe769";
-                break;
-
             case DownloadState.Cancelled:
                 this.StateIcon = "\xe71a";
                 break;
@@ -70,5 +75,7 @@ public partial class DownloadJobViewModel : ObservableObject
                 this.StateIcon = "\xe81c";
                 break;
         }
+
+
     }
 }

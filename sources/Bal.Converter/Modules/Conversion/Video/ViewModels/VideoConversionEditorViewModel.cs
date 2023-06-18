@@ -6,9 +6,10 @@
 using System.Collections.ObjectModel;
 
 using Windows.Storage.Pickers;
-using ABI.Windows.ApplicationModel.Calls.Background;
+
 using AutoMapper;
 
+using Bal.Converter.Services;
 using Bal.Converter.Common.Conversion;
 using Bal.Converter.Common.Conversion.Audio;
 using Bal.Converter.Common.Conversion.Video;
@@ -26,7 +27,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 using Microsoft.UI.Xaml.Controls;
-using Bal.Converter.Services;
 
 namespace Bal.Converter.Modules.Conversion.Video.ViewModels;
 
@@ -88,6 +88,11 @@ public partial class VideoConversionEditorViewModel : ObservableObject, INavigat
     [RelayCommand]
     private void AddFilter(string filter)
     {
+        if (this.FilterPages.Select(x => x.Name.ToLowerInvariant()).Contains(filter.ToLowerInvariant()))
+        {
+            return;
+        }
+
         switch (filter.ToLowerInvariant())
         {
             case "volume":
