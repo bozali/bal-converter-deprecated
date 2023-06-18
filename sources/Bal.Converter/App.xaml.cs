@@ -116,8 +116,10 @@ public partial class App : Application
         collection.AddSingleton<IDialogPickerService, DialogPickerService>();
         collection.AddSingleton<MainWindow>();
 
-        collection.ConfigureLiteDatabase();
-        collection.ConfigureConversions();
+        collection
+            .ConfigureLiteDatabase()
+            .ConfigureConversions()
+            .ConfigureConversionViews();
 
         collection.AddAutoMapper(x => x.AddProfile<BalMapperProfile>());
 
@@ -133,11 +135,6 @@ public partial class App : Application
             .AddTransient<SettingsViewModel>()
             .AddTransient<ShellViewModel>()
             .AddTransient<PlaylistOverviewViewModel>()
-            .AddTransient<VolumeFilterPage>()
-            .AddTransient<UnsharpFilterPage>()
-            .AddTransient<UnsharpFilterViewModel>()
-            .AddTransient<WatermarkEffectPage>()
-            .AddTransient<IcoMultiResolutionPage>()
 
             .AddTransient<ImageConversionEditorPage>()
             .AddTransient<VideoConversionEditorPage>()
@@ -148,10 +145,7 @@ public partial class App : Application
             .AddTransient<DownloadsPage>()
             .AddTransient<SettingsPage>()
             .AddTransient<MainPage>()
-            .AddTransient<ShellPage>()
-            .AddTransient<VolumeFilterViewModel>()
-            .AddTransient<WatermarkEffectViewModel>()
-            .AddTransient<IcoMultiResolutionViewModel>();
+            .AddTransient<ShellPage>();
 
         // Background services
         collection.AddSingleton<FetchBackgroundWorker>();
