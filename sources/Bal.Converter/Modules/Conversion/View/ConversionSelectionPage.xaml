@@ -40,37 +40,4 @@
 
         <Button IsEnabled="{x:Bind ViewModel.IsFileSelected, Mode=TwoWay}" Command="{x:Bind ViewModel.ContinueCommand}" Content="Convert" MinWidth="100" />
     </StackPanel>
-
-
-    <!--
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-
-
-        <Border Grid.Row="0" Width="{Binding ElementName=Root, Path=ActualWidth}" Height="{Binding ElementName=Root, Path=ActualHeight}"
-                HorizontalAlignment="Center" VerticalAlignment="Center"
-                AllowDrop="True" DragOver="OnDragOver" Drop="OnDrop" Background="Transparent">
-
-            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Spacing="15">
-                <FontIcon FontSize="32" FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xe898;" />
-                <TextBlock Text="Drag and drop e.g MP3, MP4, JPEG, PNG" />
-            </StackPanel>
-        </Border>
-
-        <ItemsRepeater Grid.Row="1" ItemsSource="{x:Bind ViewModel.SupportedFormats, Mode=TwoWay}">
-            <ItemsRepeater.Layout>
-                <UniformGridLayout ItemsJustification="Center" MinColumnSpacing="10" MinRowSpacing="10" Orientation="Horizontal" />
-            </ItemsRepeater.Layout>
-
-            <ItemsRepeater.ItemTemplate>
-                <DataTemplate x:DataType="x:String">
-                    <Button Width="200" Content="{Binding}" Click="OnContinueButtonClicked" Tag="{Binding}" />
-                </DataTemplate>
-            </ItemsRepeater.ItemTemplate>
-        </ItemsRepeater>
-    </Grid>
-        -->
 </Page>

@@ -5,6 +5,8 @@ using Bal.Converter.Common.Services;
 using Bal.Converter.Common.Web;
 using Bal.Converter.Extensions;
 using Bal.Converter.FFmpeg;
+using Bal.Converter.Modules.About.ViewModels;
+using Bal.Converter.Modules.About.Views;
 using Bal.Converter.Modules.Conversion.Filters.Unsharp;
 using Bal.Converter.Modules.Conversion.Filters.Volume;
 using Bal.Converter.Modules.Conversion.Filters.Watermark;
@@ -135,6 +137,7 @@ public partial class App : Application
             .AddTransient<SettingsViewModel>()
             .AddTransient<ShellViewModel>()
             .AddTransient<PlaylistOverviewViewModel>()
+            .AddTransient<AboutViewModel>()
 
             .AddTransient<ImageConversionEditorPage>()
             .AddTransient<VideoConversionEditorPage>()
@@ -145,7 +148,8 @@ public partial class App : Application
             .AddTransient<DownloadsPage>()
             .AddTransient<SettingsPage>()
             .AddTransient<MainPage>()
-            .AddTransient<ShellPage>();
+            .AddTransient<ShellPage>()
+            .AddTransient<AboutView>();
 
         // Background services
         collection.AddSingleton<FetchBackgroundWorker>();

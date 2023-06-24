@@ -52,7 +52,6 @@
                         </AppBarButton.Flyout>
                     </AppBarButton>
 
-
                     <AppBarButton Icon="Clear" Label="Remove All">
                         <AppBarButton.Flyout>
                             <Flyout x:Name="ClearFlyout">

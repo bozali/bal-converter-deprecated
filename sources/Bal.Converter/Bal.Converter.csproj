@@ -26,6 +26,7 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Controls\SettingsGroup\SettingsGroup.xaml" />
+    <None Remove="Modules\About\Views\AboutView.xaml" />
     <None Remove="Modules\Conversion\Filters\Unsharp\UnsharpFilterPage.xaml" />
     <None Remove="Modules\Conversion\Filters\Views\VolumeFilterPage.xaml" />
     <None Remove="Modules\Conversion\Image\Settings\Ico\IcoMultiResolutionPage.xaml" />
@@ -76,6 +77,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Modules\About\ViewModels\" />
     <Folder Include="Modules\Conversion\Filters\Watermark\" />
     <Folder Include="Modules\Conversion\Image\ViewModels\" />
     <Folder Include="Modules\Downloads\ViewModels\" />
@@ -102,6 +104,9 @@
     <None Update="com\balshellext.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Page Update="Modules\About\Views\AboutView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Update="Modules\Conversion\Filters\Unsharp\UnsharpFilterPage.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

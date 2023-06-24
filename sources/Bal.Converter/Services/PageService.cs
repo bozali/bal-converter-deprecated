@@ -1,4 +1,6 @@
-﻿using Bal.Converter.Modules.Conversion.Image.ViewModels;
+﻿using Bal.Converter.Modules.About.ViewModels;
+using Bal.Converter.Modules.About.Views;
+using Bal.Converter.Modules.Conversion.Image.ViewModels;
 using Bal.Converter.Modules.Conversion.Image.Views;
 using Bal.Converter.Modules.Conversion.Video.View;
 using Bal.Converter.Modules.Conversion.Video.ViewModels;
@@ -34,6 +36,7 @@ public class PageService : IPageService
         this.Configure<MainViewModel, MainPage>();
         this.Configure<SettingsViewModel, SettingsPage>();
         this.Configure<PlaylistOverviewViewModel, PlaylistOverviewPage>();
+        this.Configure<AboutViewModel, AboutView>();
     }
 
     public Type GetPageType(string key)
