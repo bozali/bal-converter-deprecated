@@ -15,6 +15,6 @@ public partial class AboutViewModel : ObservableObject
         var versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
 
         this.Copyright = $"\u00a9 {DateTime.Now.Year} Ali Bozna. All rights reserved.";
-        this.AppNameVersion = $"Bal Converter {versionInfo.FileVersion ?? "1.0"}";
+        this.AppNameVersion = $"Bal Converter {versionInfo.FileVersion + " Preview" ?? "1.0"}";
     }
 }
