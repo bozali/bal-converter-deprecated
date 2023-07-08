@@ -10,7 +10,6 @@
     xmlns:quality="using:Bal.Converter.YouTubeDl.Quality"
     xmlns:vm="using:Bal.Converter.Modules.MediaDownloader.ViewModels"
     xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters"
-    xmlns:card="using:Bal.Converter.Controls.Card"
     mc:Ignorable="d" x:Name="Root">
 
     <Page.Resources>
@@ -21,7 +20,7 @@
         <TextBox Header="Download Url" PlaceholderText="https://www.youtube.com" Text="{x:Bind ViewModel.Url, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
         <winui:SettingsCard x:Uid="TargetFormat" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe8ab;}">
-            <ComboBox MinWidth="{StaticResource SettingActionControlMinWidth}" SelectedValue="{x:Bind ViewModel.Format}" MaxDropDownHeight="300">
+            <ComboBox MinWidth="{StaticResource SettingActionControlMinWidth}" SelectedValue="{x:Bind ViewModel.Format, Mode=TwoWay}" MaxDropDownHeight="300">
                 <x:String>MP3</x:String>
                 <x:String>MP4</x:String>
                 <x:String>Wav</x:String>

@@ -1,4 +1,5 @@
-﻿using Bal.Converter.Common.Extensions;
+﻿using System.Diagnostics;
+using Bal.Converter.Common.Extensions;
 using Bal.Converter.Common.Services;
 using Bal.Converter.Events;
 using Bal.Converter.Modules.Downloads;

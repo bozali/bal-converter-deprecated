@@ -12,6 +12,7 @@ using Bal.Converter.Common.Enums;
 using System;
 using Bal.Converter.Common.Extensions;
 using System.IO;
+using System.Reflection;
 
 namespace Bal.Converter.YouTubeDl ;
 
@@ -188,7 +189,11 @@ public class YouTubeDl : IYouTubeDl
 
         if (options.DownloadExtension != MediaFileExtension.MP4)
         {
-            arguments.Add($@"--ffmpeg-location ""{this.ffmpegPath}""");
+            string location =  !Path.IsPathRooted(this.ffmpegPath)
+                ? Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty, this.ffmpegPath)
+                : this.ffmpegPath;
+
+            arguments.Add($@"--ffmpeg-location ""{location}""");
         }
 
         if (options.DownloadBandwidth != 0)
@@ -201,8 +206,6 @@ public class YouTubeDl : IYouTubeDl
 
         void OnOutputDataReceived(object s, DataReceivedEventArgs e)
         {
-            Debug.WriteLine(e.Data);
-
             if (string.IsNullOrEmpty(e.Data) || !e.Data.Contains("[download]") || !e.Data.Contains("ETA"))
             {
                 return;
