@@ -31,8 +31,8 @@
     <None Remove="Modules\Conversion\Filters\Views\VolumeFilterPage.xaml" />
     <None Remove="Modules\Conversion\Image\Settings\Ico\IcoMultiResolutionPage.xaml" />
     <None Remove="Modules\Conversion\Image\Views\ImageConversionEditorPage.xaml" />
-    <None Remove="Modules\Conversion\Video\View\VideoConversionEditorPage.xaml" />
-    <None Remove="Modules\Conversion\View\ConversionSelectionPage.xaml" />
+    <None Remove="Modules\Conversion\Video\Views\VideoConversionEditorPage.xaml" />
+    <None Remove="Modules\Conversion\Views\ConversionSelectionPage.xaml" />
     <None Remove="Modules\Downloads\Views\DownloadsPage.xaml" />
     <None Remove="Modules\MediaDownloader\Views\MediaDownloaderPage.xaml" />
     <None Remove="Modules\MediaDownloader\Views\MediaTagEditorPage.xaml" />
@@ -79,7 +79,6 @@
   <ItemGroup>
     <Folder Include="Modules\About\ViewModels\" />
     <Folder Include="Modules\Conversion\Filters\Watermark\" />
-    <Folder Include="Modules\Conversion\Image\ViewModels\" />
     <Folder Include="Modules\Downloads\ViewModels\" />
     <Folder Include="Messages\" />
     <Folder Include="Events\" />
@@ -91,7 +90,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Bal.Converter.CLI\Bal.Converter.CLI.csproj" />
-    <ProjectReference Include="..\Bal.Converter.Common.Conversion\Bal.Converter.Common.Conversion.csproj" />
+    <ProjectReference Include="..\Bal.Converter.Common.Transformation\Bal.Converter.Common.Transformation.csproj" />
     <ProjectReference Include="..\Bal.Converter.Common\Bal.Converter.Common.csproj" />
     <ProjectReference Include="..\Bal.Converter.FFmpeg\Bal.Converter.FFmpeg.csproj" />
     <ProjectReference Include="..\Bal.Converter.YouTubeDl\Bal.Converter.YouTubeDl.csproj" />

@@ -1,17 +1,18 @@
 ﻿using System.Reflection;
+
 using Bal.Converter.CLI.Verbs;
-using Bal.Converter.Common.Conversion;
-using Bal.Converter.Common.Conversion.Audio;
+using Bal.Converter.Common.Transformation;
+using Bal.Converter.Common.Transformation.Audio;
 
 namespace Bal.Converter.CLI.Executors;
 
 public class ConvertExecutor
 {
-    private readonly IConversionProvider conversionProvider;
+    private readonly ITransformationProvider transformationProvider;
 
-    public ConvertExecutor(IConversionProvider conversionProvider)
+    public ConvertExecutor(ITransformationProvider transformationProvider)
     {
-        this.conversionProvider = conversionProvider;
+        this.transformationProvider = transformationProvider;
     }
 
     public async Task Execute(ConvertVerb verb)
@@ -20,7 +21,7 @@ public class ConvertExecutor
         Console.WriteLine(verb.Path);
         Console.WriteLine(verb.Destination);
 
-        string[] supported = this.conversionProvider.GetSupportedFormats(verb.Path);
+        string[] supported = this.transformationProvider.GetSupportedFormats(verb.Path);
 
         string? targetExtension = Path.GetExtension(verb.Destination)?.Replace(".", string.Empty);
 
@@ -30,13 +31,13 @@ public class ConvertExecutor
             return;
         }
 
-        var conversion = this.conversionProvider.Provide(targetExtension);
+        var conversion = this.transformationProvider.Provide(targetExtension);
 
-        if (conversion.Topology.HasFlag(ConversionTopology.Audio))
+        if (conversion.Topology.HasFlag(TransformationTopology.Audio))
         {
-            ((IAudioConversion)conversion).AudioConversionOptions = new AudioConversionOptions();
+            ((IAudioTransformation)conversion).AudioTransformationOptions = new AudioTransformationOptions();
         }
 
-        await conversion.Convert(verb.Path, verb.Destination);
+        await conversion.Transform(verb.Path, verb.Destination);
     }
 }

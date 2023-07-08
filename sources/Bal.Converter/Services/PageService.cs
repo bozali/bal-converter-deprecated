@@ -1,11 +1,9 @@
 ﻿using Bal.Converter.Modules.About.ViewModels;
 using Bal.Converter.Modules.About.Views;
-using Bal.Converter.Modules.Conversion.Image.ViewModels;
-using Bal.Converter.Modules.Conversion.Image.Views;
-using Bal.Converter.Modules.Conversion.Video.View;
-using Bal.Converter.Modules.Conversion.Video.ViewModels;
-using Bal.Converter.Modules.Conversion.View;
+using Bal.Converter.Modules.Conversion.Image;
+using Bal.Converter.Modules.Conversion.Video;
 using Bal.Converter.Modules.Conversion.ViewModels;
+using Bal.Converter.Modules.Conversion.Views;
 using Bal.Converter.Modules.Downloads.ViewModels;
 using Bal.Converter.Modules.Downloads.Views;
 using Bal.Converter.Modules.MediaDownloader.ViewModels;
@@ -18,6 +16,8 @@ using Bal.Converter.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 using Microsoft.UI.Xaml.Controls;
+using ImageConversionEditorViewModel = Bal.Converter.Modules.Conversion.Image.ImageConversionEditorViewModel;
+using VideoConversionEditorViewModel = Bal.Converter.Modules.Conversion.Video.VideoConversionEditorViewModel;
 
 namespace Bal.Converter.Services;
 

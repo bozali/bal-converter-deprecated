@@ -1,7 +1,7 @@
 ﻿using Bal.Converter.Activation;
-using Bal.Converter.Common.Conversion;
-using Bal.Converter.Common.Conversion.Extensions;
 using Bal.Converter.Common.Services;
+using Bal.Converter.Common.Transformation;
+using Bal.Converter.Common.Transformation.Extensions;
 using Bal.Converter.Common.Web;
 using Bal.Converter.Extensions;
 using Bal.Converter.FFmpeg;
@@ -10,13 +10,11 @@ using Bal.Converter.Modules.About.Views;
 using Bal.Converter.Modules.Conversion.Filters.Unsharp;
 using Bal.Converter.Modules.Conversion.Filters.Volume;
 using Bal.Converter.Modules.Conversion.Filters.Watermark;
+using Bal.Converter.Modules.Conversion.Image;
 using Bal.Converter.Modules.Conversion.Image.Settings.Ico;
-using Bal.Converter.Modules.Conversion.Image.ViewModels;
-using Bal.Converter.Modules.Conversion.Image.Views;
-using Bal.Converter.Modules.Conversion.Video.View;
-using Bal.Converter.Modules.Conversion.Video.ViewModels;
-using Bal.Converter.Modules.Conversion.View;
+using Bal.Converter.Modules.Conversion.Video;
 using Bal.Converter.Modules.Conversion.ViewModels;
+using Bal.Converter.Modules.Conversion.Views;
 using Bal.Converter.Modules.Downloads.ViewModels;
 using Bal.Converter.Modules.Downloads.Views;
 using Bal.Converter.Modules.MediaDownloader.ViewModels;
@@ -34,6 +32,8 @@ using Bal.Converter.YouTubeDl;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Xaml;
+using ImageConversionEditorViewModel = Bal.Converter.Modules.Conversion.Image.ImageConversionEditorViewModel;
+using VideoConversionEditorViewModel = Bal.Converter.Modules.Conversion.Video.VideoConversionEditorViewModel;
 
 namespace Bal.Converter;
 
@@ -114,13 +114,13 @@ public partial class App : Application
         collection.AddSingleton<IFileDownloaderService, FileDownloaderService>();
         collection.AddSingleton<IDownloadsRegistryService, DownloadsRegistryService>();
         collection.AddSingleton<IMediaTagService, MediaTagService>();
-        collection.AddSingleton<IConversionProvider, ConversionProvider>();
+        collection.AddSingleton<ITransformationProvider, TransformationProvider>();
         collection.AddSingleton<IDialogPickerService, DialogPickerService>();
         collection.AddSingleton<MainWindow>();
 
         collection
             .ConfigureLiteDatabase()
-            .ConfigureConversions()
+            .ConfigureTransformation()
             .ConfigureConversionViews();
 
         collection.AddAutoMapper(x => x.AddProfile<BalMapperProfile>());

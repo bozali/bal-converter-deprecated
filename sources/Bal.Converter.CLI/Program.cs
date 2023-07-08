@@ -1,7 +1,7 @@
 ﻿using Bal.Converter.CLI.Executors;
 using Bal.Converter.CLI.Verbs;
-using Bal.Converter.Common.Conversion;
-using Bal.Converter.Common.Conversion.Extensions;
+using Bal.Converter.Common.Transformation;
+using Bal.Converter.Common.Transformation.Extensions;
 using Bal.Converter.FFmpeg;
 using CommandLine;
 
@@ -30,10 +30,10 @@ public class Program
 
     public static void ConfigureServices(HostBuilderContext context, IServiceCollection collection)
     {
-        collection.ConfigureConversions();
+        collection.ConfigureTransformation();
 
         collection
-            .AddSingleton<IConversionProvider, ConversionProvider>()
+            .AddSingleton<ITransformationProvider, TransformationProvider>()
             .AddSingleton<IFFmpeg, FFmpeg.FFmpeg>(provider => new FFmpeg.FFmpeg(@"Tools\ffmpeg.exe"))
             .AddTransient<ConvertExecutor>();
     }

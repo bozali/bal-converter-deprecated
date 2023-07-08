@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bal.Converter", "sources\Ba
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bal.Converter.Common", "sources\Bal.Converter.Common\Bal.Converter.Common.csproj", "{D30CD2CC-E40A-441B-BD07-64F00FF5A416}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bal.Converter.Common.Conversion", "sources\Bal.Converter.Common.Conversion\Bal.Converter.Common.Conversion.csproj", "{8EBBE479-5809-463B-9569-62AA2A8ED4B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bal.Converter.Common.Transformation", "sources\Bal.Converter.Common.Transformation\Bal.Converter.Common.Transformation.csproj", "{8EBBE479-5809-463B-9569-62AA2A8ED4B6}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bal.Converter.FFmpeg", "sources\Bal.Converter.FFmpeg\Bal.Converter.FFmpeg.csproj", "{A5524921-CA4C-4427-876D-6E46A48E30A7}"
 EndProject

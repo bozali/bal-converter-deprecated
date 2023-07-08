@@ -1,15 +1,14 @@
 ﻿using System.Collections.ObjectModel;
 
 using Windows.Storage.Pickers;
-
-using Bal.Converter.Common.Conversion;
+using Bal.Converter.Common.Transformation;
 using Bal.Converter.Domain.Picker;
-using Bal.Converter.Modules.Conversion.Image.ViewModels;
-using Bal.Converter.Modules.Conversion.Video.ViewModels;
 using Bal.Converter.Services;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using ImageConversionEditorViewModel = Bal.Converter.Modules.Conversion.Image.ImageConversionEditorViewModel;
+using VideoConversionEditorViewModel = Bal.Converter.Modules.Conversion.Video.VideoConversionEditorViewModel;
 
 #pragma warning disable CS8618
 
@@ -26,13 +25,13 @@ public partial class ConversionSelectionViewModel : ObservableObject
     
     private readonly INavigationService navigationService;
     private readonly IDialogPickerService dialog;
-    private readonly IConversionProvider conversionProvider;
+    private readonly ITransformationProvider transformationProvider;
 
-    public ConversionSelectionViewModel(INavigationService navigationService, IDialogPickerService dialog, IConversionProvider conversionProvider)
+    public ConversionSelectionViewModel(INavigationService navigationService, IDialogPickerService dialog, ITransformationProvider transformationProvider)
     {
         this.navigationService = navigationService;
         this.dialog = dialog;
-        this.conversionProvider = conversionProvider;
+        this.transformationProvider = transformationProvider;
     }
 
     public bool IsFileSelected
@@ -45,7 +44,7 @@ public partial class ConversionSelectionViewModel : ObservableObject
     public void HandleDrop(string path)
     {
         this.Path = path;
-        this.SupportedFormats = new ObservableCollection<string>(this.conversionProvider.GetSupportedFormats(path));
+        this.SupportedFormats = new ObservableCollection<string>(this.transformationProvider.GetSupportedFormats(path));
         this.SelectedFormat = this.SupportedFormats.FirstOrDefault();
     }
 
@@ -72,7 +71,7 @@ public partial class ConversionSelectionViewModel : ObservableObject
             return;
         }
 
-        var conversion = this.conversionProvider.Provide(this.SelectedFormat);
+        var conversion = this.transformationProvider.Provide(this.SelectedFormat);
         var parameters = new Dictionary<string, object>
         {
             { "Conversion", conversion },
@@ -80,11 +79,11 @@ public partial class ConversionSelectionViewModel : ObservableObject
             { "Target", this.SelectedFormat }
         };
 
-        if (conversion.Topology.HasFlag(ConversionTopology.Video) || conversion.Topology.HasFlag(ConversionTopology.Audio))
+        if (conversion.Topology.HasFlag(TransformationTopology.Video) || conversion.Topology.HasFlag(TransformationTopology.Audio))
         {
             this.navigationService.NavigateTo(typeof(VideoConversionEditorViewModel).FullName!, parameters);
         }
-        else if (conversion.Topology.HasFlag(ConversionTopology.Image))
+        else if (conversion.Topology.HasFlag(TransformationTopology.Image))
         {
             this.navigationService.NavigateTo(typeof(ImageConversionEditorViewModel).FullName!, parameters);
         }
