@@ -141,6 +141,7 @@ public partial class MediaDownloaderViewModel : ObservableObject, INavigationAwa
 
                 var vm = new VideoViewModel
                 {
+                    Url = this.Url,
                     Title = video.Title,
                     ThumbnailPath = thumbnail.DownloadPath,
                     Format = this.Format,

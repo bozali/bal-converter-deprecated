@@ -10,13 +10,13 @@
   IgnorableNamespaces="uap rescap genTemplate">
 
   <Identity
-    Name="F8B17E86-B798-477D-9231-E8462F087FB1"
+    Name="53445Bozali.BalConverter"
     Publisher="CN=bozali"
     Version="1.0.1.0" />
 
   <Properties>
-    <DisplayName>Bal.Converter</DisplayName>
-    <PublisherDisplayName>alibo</PublisherDisplayName>
+    <DisplayName>Bal Converter</DisplayName>
+    <PublisherDisplayName>bozali</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 

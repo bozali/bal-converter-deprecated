@@ -58,7 +58,7 @@ public partial class MediaTagEditorViewModel : ObservableObject, INavigationAwar
             State = DownloadState.Pending,
             Tags = this.mapper.Map<MediaTags>(this.Video.Tags),
             TargetFormat = Enum.Parse<MediaFileExtension>(this.Video.Format),
-            AutomaticQualityOption = option
+            AutomaticQualityOption = option,
         };
 
         this.downloadsRegistry.EnqueueDownload(job);
