@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bal.Converter.Common.Conversion\Bal.Converter.Common.Transformation.csproj" />
     <ProjectReference Include="..\Bal.Converter.Common.Transformation\Bal.Converter.Common.Transformation.csproj" />
   </ItemGroup>
 
