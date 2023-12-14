@@ -23,6 +23,7 @@
     <AppxBundle>Never</AppxBundle>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
 	<ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
+	<WindowsPackageType>None</WindowsPackageType>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Controls\SettingsGroup\SettingsGroup.xaml" />
