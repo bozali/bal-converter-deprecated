@@ -1,7 +1,9 @@
-﻿using Bal.Converter.Activation;
+﻿using System.Runtime.CompilerServices;
+using Bal.Converter.Activation;
 using Bal.Converter.Common.Services;
 using Bal.Converter.Common.Transformation;
 using Bal.Converter.Common.Transformation.Extensions;
+using Bal.Converter.Common.Updater;
 using Bal.Converter.Common.Web;
 using Bal.Converter.Extensions;
 using Bal.Converter.FFmpeg;
@@ -24,6 +26,8 @@ using Bal.Converter.Modules.Settings.ViewModels;
 using Bal.Converter.Modules.Settings.Views;
 using Bal.Converter.Profiles;
 using Bal.Converter.Services;
+using Bal.Converter.UpdateManager.SlimClients;
+using Bal.Converter.UpdateManager.YouTubeDl;
 using Bal.Converter.ViewModels;
 using Bal.Converter.Views;
 using Bal.Converter.Workers;
@@ -31,6 +35,7 @@ using Bal.Converter.YouTubeDl;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 
 using ImageConversionEditorViewModel = Bal.Converter.Modules.Conversion.Image.ImageConversionEditorViewModel;
@@ -103,6 +108,7 @@ public partial class App : Application
 
         // Services
         collection.AddTransient<INavigationViewService, NavigationViewService>();
+        collection.AddTransient<SlimGithubClient>();
 
         collection.AddSingleton<IActivationService, ActivationService>();
         collection.AddSingleton<INavigationService, NavigationService>();
@@ -110,6 +116,10 @@ public partial class App : Application
         collection.AddSingleton<IPageService, PageService>();
         collection.AddSingleton<IYouTubeDl, YouTubeDl.YouTubeDl>(provider => new YouTubeDl.YouTubeDl(@"Tools\yt-dlp.exe", @"Tools\ffmpeg.exe", ILocalSettingsService.TempPath));
         collection.AddSingleton<IFFmpeg, FFmpeg.FFmpeg>(provider => new FFmpeg.FFmpeg(@"Tools\ffmpeg.exe"));
+        collection.AddSingleton<YouTubeDlUpdateManager>(provider => new YouTubeDlUpdateManager(
+            provider.GetService<ILogger<YouTubeDlUpdateManager>>()!,
+            new SlimGithubClient(new HttpClient()),
+            @"Tools\yt-dlp.exe"));
 
         collection.AddSingleton<IFileSystemService, FileSystemService>();
         collection.AddSingleton<IFileDownloaderService, FileDownloaderService>();

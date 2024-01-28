@@ -95,6 +95,7 @@
     <ProjectReference Include="..\Bal.Converter.Common.Transformation\Bal.Converter.Common.Transformation.csproj" />
     <ProjectReference Include="..\Bal.Converter.Common\Bal.Converter.Common.csproj" />
     <ProjectReference Include="..\Bal.Converter.FFmpeg\Bal.Converter.FFmpeg.csproj" />
+    <ProjectReference Include="..\Bal.Converter.UpdateManager\Bal.Converter.UpdateManager.csproj" />
     <ProjectReference Include="..\Bal.Converter.YouTubeDl\Bal.Converter.YouTubeDl.csproj" />
   </ItemGroup>
 
