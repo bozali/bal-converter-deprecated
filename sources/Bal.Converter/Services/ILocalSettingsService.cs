@@ -7,6 +7,7 @@ public interface ILocalSettingsService
     const string MinimizeAppKey = "MinimizeApp";
     const string BandwidthKey = "Bandwidth";
     const string BandwidthMinimizedKey = "BandwidthMinimized";
+    const string ShouldAutoUpdateToolsKey = "ShouldAutoUpdateTools";
 
     static string TempPath
     {

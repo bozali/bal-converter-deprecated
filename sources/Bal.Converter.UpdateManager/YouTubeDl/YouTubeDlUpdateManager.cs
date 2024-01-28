@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Bal.Converter.UpdateManager.YouTubeDl;
 
-public class YouTubeDlUpdateManager
+public class YouTubeDlUpdateManager : IYouTubeDlUpdateManager
 {
     private readonly ILogger<YouTubeDlUpdateManager> logger;
     private readonly SlimGithubClient client;

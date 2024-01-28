@@ -3,7 +3,6 @@ using Bal.Converter.Activation;
 using Bal.Converter.Common.Services;
 using Bal.Converter.Common.Transformation;
 using Bal.Converter.Common.Transformation.Extensions;
-using Bal.Converter.Common.Updater;
 using Bal.Converter.Common.Web;
 using Bal.Converter.Extensions;
 using Bal.Converter.FFmpeg;
@@ -116,7 +115,7 @@ public partial class App : Application
         collection.AddSingleton<IPageService, PageService>();
         collection.AddSingleton<IYouTubeDl, YouTubeDl.YouTubeDl>(provider => new YouTubeDl.YouTubeDl(@"Tools\yt-dlp.exe", @"Tools\ffmpeg.exe", ILocalSettingsService.TempPath));
         collection.AddSingleton<IFFmpeg, FFmpeg.FFmpeg>(provider => new FFmpeg.FFmpeg(@"Tools\ffmpeg.exe"));
-        collection.AddSingleton<YouTubeDlUpdateManager>(provider => new YouTubeDlUpdateManager(
+        collection.AddSingleton<IYouTubeDlUpdateManager, YouTubeDlUpdateManager>(provider => new YouTubeDlUpdateManager(
             provider.GetService<ILogger<YouTubeDlUpdateManager>>()!,
             new SlimGithubClient(new HttpClient()),
             @"Tools\yt-dlp.exe"));
@@ -211,6 +210,13 @@ public partial class App : Application
         if (string.IsNullOrEmpty(bandwidthMinimized) || !int.TryParse(bandwidthMinimized, out int bandwidthMinimizedValue))
         {
             await localSettingsService.SaveSettingsAsync(ILocalSettingsService.BandwidthMinimizedKey, 0);
+        }
+
+        string? shouldAutoUpdateTools = await localSettingsService.ReadSettingsAsync<string>(ILocalSettingsService.ShouldAutoUpdateToolsKey);
+
+        if (string.IsNullOrEmpty(shouldAutoUpdateTools) || !int.TryParse(shouldAutoUpdateTools, out int shouldAutoUpdateToolsValue))
+        {
+            await localSettingsService.SaveSettingsAsync(ILocalSettingsService.ShouldAutoUpdateToolsKey, true);
         }
     }
 }

@@ -6,7 +6,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:winui="using:CommunityToolkit.Labs.WinUI"
+    xmlns:ui="using:CommunityToolkit.WinUI.UI"
+    xmlns:converters="using:Bal.Converter.Converters"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <converters:BooleanToVisibilityConverter x:Name="BooleanToVisibilityConverter" />
+        <converters:BooleanToInvertedVisibilityConverter x:Name="BooleanToInvertedVisibilityConverter" />
+    </Page.Resources>
 
     <StackPanel Spacing="5">
         <winui:SettingsCard x:Uid="DownloadDirectory">
@@ -64,5 +71,17 @@
                 <ComboBoxItem Content="16 KB/s" Tag="16384" />
             </ComboBox>
         </winui:SettingsCard>
+
+        <winui:SettingsExpander Header="Auto Update" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe777;}" IsExpanded="True">
+            <winui:SettingsExpander.Content>
+                <Button Command="{x:Bind ViewModel.SearchForUpdatesCommand}" Visibility="{x:Bind ViewModel.HasNewUpdates, Converter={StaticResource BooleanToInvertedVisibilityConverter}}" MinWidth="{StaticResource SettingActionControlMinWidth}" Content="Search for update" />
+            </winui:SettingsExpander.Content>
+
+            <winui:SettingsExpander.Items>
+                <winui:SettingsCard Header="Search for update" Description="Searching for updates at the start of the application">
+                    <ToggleSwitch IsOn="True" />
+                </winui:SettingsCard>
+            </winui:SettingsExpander.Items>
+        </winui:SettingsExpander>
     </StackPanel>
 </Page>
