@@ -37,5 +37,5 @@ public class Video
     public DateTime UploadDate { get; set; }
 
     [JsonProperty("formats")]
-    public VideoFormat[] Formats { get; set; }
+    public Format[] Formats { get; set; }
 }

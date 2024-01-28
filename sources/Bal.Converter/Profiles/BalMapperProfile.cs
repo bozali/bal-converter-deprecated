@@ -23,6 +23,7 @@ public class BalMapperProfile : Profile
         this.CreateMap<VolumeFilterViewModel, VolumeFilter>().ReverseMap();
         this.CreateMap<UnsharpFilterViewModel, UnsharpFilter>().ReverseMap();
         this.CreateMap<MediaTagsViewModel, MediaTags>().ReverseMap();
+        this.CreateMap<FormatViewModel, Format>().ReverseMap();
 
         this.CreateMap<PlaylistViewModel, Playlist>()
             .ForMember(x => x.Videos, expression => expression.MapFrom(y => y.Videos));

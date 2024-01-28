@@ -139,6 +139,7 @@ public partial class App : Application
             .AddTransient<ShellViewModel>()
             .AddTransient<PlaylistOverviewViewModel>()
             .AddTransient<AboutViewModel>()
+            .AddTransient<MediaFormatSelectionViewModel>()
 
             .AddTransient<ImageConversionEditorPage>()
             .AddTransient<VideoConversionEditorPage>()
@@ -150,7 +151,8 @@ public partial class App : Application
             .AddTransient<SettingsPage>()
             .AddTransient<MainPage>()
             .AddTransient<ShellPage>()
-            .AddTransient<AboutView>();
+            .AddTransient<AboutView>()
+            .AddTransient<MediaFormatSelectionPage>();
 
         // Background services
         collection.AddSingleton<FetchBackgroundWorker>();

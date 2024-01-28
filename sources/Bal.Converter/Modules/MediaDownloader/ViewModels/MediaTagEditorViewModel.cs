@@ -66,6 +66,14 @@ public partial class MediaTagEditorViewModel : ObservableObject, INavigationAwar
     }
 
     [RelayCommand]
+    private void SelectVideoFormat()
+    {
+        var videoFormats = this.Video.Formats.Where(x => x.IsVideoOnly || x.IsVideoAndAudio);
+
+        this.navigationService.NavigateTo(typeof(MediaFormatSelectionViewModel).FullName!);
+    }
+
+    [RelayCommand]
     private void Cancel()
     {
         this.navigationService.GoBack();

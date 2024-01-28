@@ -1,5 +1,4 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.UI.Xaml.Media.Imaging;
 
 namespace Bal.Converter.Modules.MediaDownloader.ViewModels;
 
@@ -11,4 +10,6 @@ public partial class VideoViewModel : ObservableObject
     [ObservableProperty] private string format;
     [ObservableProperty] private bool isSelected;
     [ObservableProperty] private string thumbnailPath;
+
+    [ObservableProperty] private FormatViewModel[] formats;
 }

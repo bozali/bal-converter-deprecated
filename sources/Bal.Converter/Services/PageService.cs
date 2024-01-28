@@ -37,6 +37,7 @@ public class PageService : IPageService
         this.Configure<SettingsViewModel, SettingsPage>();
         this.Configure<PlaylistOverviewViewModel, PlaylistOverviewPage>();
         this.Configure<AboutViewModel, AboutView>();
+        this.Configure<MediaFormatSelectionViewModel, MediaFormatSelectionPage>();
     }
 
     public Type GetPageType(string key)

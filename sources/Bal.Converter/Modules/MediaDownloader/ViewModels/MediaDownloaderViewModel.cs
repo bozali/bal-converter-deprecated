@@ -150,8 +150,22 @@ public partial class MediaDownloaderViewModel : ObservableObject, INavigationAwa
                         Title = video.Title,
                         Artist = video.Channel,
                         Year = video.UploadDate.Year
-                    }
+                    },
                 };
+
+                var formats = new List<FormatViewModel>(video.Formats.Length);
+
+                foreach (var f in video.Formats)
+                {
+                    if (string.Equals(f.FormatNote, "storyboard", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        continue;
+                    }
+
+                    formats.Add(this.mapper.Map<FormatViewModel>(f));
+                }
+
+                vm.Formats = formats.ToArray();
 
                 var parameters = new Dictionary<string, object>
                 {
