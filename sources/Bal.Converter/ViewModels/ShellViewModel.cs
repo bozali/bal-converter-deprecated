@@ -1,4 +1,6 @@
-﻿using Bal.Converter.Messages;
+﻿using Windows.ApplicationModel.Core;
+using Windows.System;
+using Bal.Converter.Messages;
 using Bal.Converter.Modules.Downloads;
 using Bal.Converter.Modules.Settings.Views;
 using Bal.Converter.Services;
@@ -8,11 +10,14 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Navigation;
+using Bal.Converter.Modules.Downloads.ViewModels;
 
 namespace Bal.Converter.ViewModels;
 
 public partial class ShellViewModel : ObservableRecipient
 {
+    private static readonly DispatcherQueue DispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
     private readonly ILocalSettingsService localSettingsService;
 
     [ObservableProperty] private bool isInteractionEnabled;
@@ -35,7 +40,7 @@ public partial class ShellViewModel : ObservableRecipient
         this.DownloadCount = downloadsRegistry.AllJobs.Count(x => x.State != DownloadState.Cancelled || x.State != DownloadState.Cancelled);
 
         WeakReferenceMessenger.Default.Register<DisableInteractionChangeMessage>(this, (recipient, message) => this.IsInteractionEnabled = !message.Value);
-        WeakReferenceMessenger.Default.Register<DownloadAddedMessage>(this, (recipient, message) => this.DownloadCount++);
+        WeakReferenceMessenger.Default.Register<DownloadAddedMessage>(this, this.OnDownloadAdded);
         WeakReferenceMessenger.Default.Register<DownloadRemovedMessage>(this, this.OnDownloadRemoved);
         WeakReferenceMessenger.Default.Register<DownloadStateMessage>(this, this.OnDownloadStateChanged);
     }
@@ -84,6 +89,14 @@ public partial class ShellViewModel : ObservableRecipient
                 this.DownloadCount--;
                 break;
         }
+    }
+
+    private void OnDownloadAdded(object recipient, DownloadAddedMessage message)
+    {
+        App.MainWindow.DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Normal, () =>
+        {
+            this.DownloadCount++;
+        });
     }
 
     private void OnNavigated(object sender, NavigationEventArgs e)

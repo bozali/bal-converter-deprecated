@@ -25,13 +25,13 @@ public partial class ConversionSelectionViewModel : ObservableObject
     
     private readonly INavigationService navigationService;
     private readonly IDialogPickerService dialog;
-    private readonly ITransformationProvider transformationProvider;
+    private readonly ITransformationService transformationService;
 
-    public ConversionSelectionViewModel(INavigationService navigationService, IDialogPickerService dialog, ITransformationProvider transformationProvider)
+    public ConversionSelectionViewModel(INavigationService navigationService, IDialogPickerService dialog, ITransformationService transformationService)
     {
         this.navigationService = navigationService;
         this.dialog = dialog;
-        this.transformationProvider = transformationProvider;
+        this.transformationService = transformationService;
     }
 
     public bool IsFileSelected
@@ -44,7 +44,7 @@ public partial class ConversionSelectionViewModel : ObservableObject
     public void HandleDrop(string path)
     {
         this.Path = path;
-        this.SupportedFormats = new ObservableCollection<string>(this.transformationProvider.GetSupportedFormats(path));
+        this.SupportedFormats = new ObservableCollection<string>(this.transformationService.GetSupportedFormats(path));
         this.SelectedFormat = this.SupportedFormats.FirstOrDefault();
     }
 
@@ -60,6 +60,8 @@ public partial class ConversionSelectionViewModel : ObservableObject
         if (result != null)
         {
             this.Path = result.Path;
+
+            this.HandleDrop(this.Path);
         }
     }
 
@@ -71,7 +73,7 @@ public partial class ConversionSelectionViewModel : ObservableObject
             return;
         }
 
-        var conversion = this.transformationProvider.Provide(this.SelectedFormat);
+        var conversion = this.transformationService.Provide(this.SelectedFormat);
         var parameters = new Dictionary<string, object>
         {
             { "Conversion", conversion },

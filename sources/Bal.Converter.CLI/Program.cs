@@ -33,7 +33,7 @@ public class Program
         collection.ConfigureTransformation();
 
         collection
-            .AddSingleton<ITransformationProvider, TransformationProvider>()
+            .AddSingleton<ITransformationService, TransformationService>()
             .AddSingleton<IFFmpeg, FFmpeg.FFmpeg>(provider => new FFmpeg.FFmpeg(@"Tools\ffmpeg.exe"))
             .AddTransient<ConvertExecutor>();
     }

@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Native", "Native", "{5E777A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bal.Converter.YouTubeDl", "sources\Bal.Converter.YouTubeDl\Bal.Converter.YouTubeDl.csproj", "{3218552D-170F-4EBA-A5AE-A3101B4A0F29}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bal.Converter.UpdateManager", "sources\Bal.Converter.UpdateManager\Bal.Converter.UpdateManager.csproj", "{2FAD8EFC-AC22-4E6B-AE87-4A34ADBA061D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bal.Converter.UpdateManager", "sources\Bal.Converter.UpdateManager\Bal.Converter.UpdateManager.csproj", "{2FAD8EFC-AC22-4E6B-AE87-4A34ADBA061D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,6 @@
 ﻿namespace Bal.Converter.Common.Transformation;
 
-public interface ITransformationProvider
+public interface ITransformationService
 {
     string[] GetSupportedFormats(string path);
 

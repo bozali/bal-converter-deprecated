@@ -1,16 +1,19 @@
 ﻿using System.Collections.ObjectModel;
-
+using Windows.System;
 using Bal.Converter.Messages;
 using Bal.Converter.Services;
 
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using DispatcherQueuePriority = Microsoft.UI.Dispatching.DispatcherQueuePriority;
 
 namespace Bal.Converter.Modules.Downloads.ViewModels;
 
 public partial class DownloadsViewModel : ObservableObject
 {
+    public static readonly DispatcherQueue DispatcherQueue = DispatcherQueue.GetForCurrentThread();
+
     private readonly IDownloadsRegistryService downloadsRegistry;
 
     public DownloadsViewModel(IDownloadsRegistryService downloadsRegistry)
@@ -57,9 +60,13 @@ public partial class DownloadsViewModel : ObservableObject
             this.DownloadJobs.Remove(item);
         }
     }
+    
 
     private void OnDownloadAdded(object recipient, DownloadAddedMessage message)
     {
-        this.DownloadJobs.Add(new DownloadJobViewModel(this.downloadsRegistry, message.Value));
+        App.MainWindow.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Normal, () =>
+        {
+            this.DownloadJobs.Add(new DownloadJobViewModel(this.downloadsRegistry, message.Value));
+        });
     }
 }

@@ -82,24 +82,23 @@
                 <winui:SettingsExpander.Items>
                     <winui:SettingsCard x:Uid="VideoQuality" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe7f4;}">
                         <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Button Command="{x:Bind ViewModel.SelectVideoFormatCommand}" Style="{StaticResource SubtleButtonStyle}" FontFamily="{ThemeResource SymbolThemeFontFamily}" Content="&#xe8da;" />
+                            <!--<Button Command="{x:Bind ViewModel.SelectVideoFormatCommand}" Style="{StaticResource SubtleButtonStyle}" FontFamily="{ThemeResource SymbolThemeFontFamily}" Content="&#xe8da;" />-->
 
                             <ComboBox MinWidth="{StaticResource SettingActionControlMinWidth}" SelectedValue="Best" SelectedValuePath="Tag">
                                 <ComboBoxItem x:Uid="QualityBest" Tag="Best" />
                                 <ComboBoxItem x:Uid="QualityWorst" Tag="Worst" />
-                                <ComboBoxItem x:Uid="QualityCustom" Tag="Custom" IsEnabled="False" />
+                                <!--<ComboBoxItem x:Uid="QualityCustom" Tag="Custom" IsEnabled="False" />-->
                             </ComboBox>
                         </StackPanel>
                     </winui:SettingsCard>
 
                     <winui:SettingsCard x:Uid="AudioQuality" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SymbolThemeFontFamily}, Glyph=&#xe767;}">
                         <StackPanel Orientation="Horizontal" Spacing="6">
-                            <Button Style="{StaticResource SubtleButtonStyle}" FontFamily="{ThemeResource SymbolThemeFontFamily}" Content="&#xe8da;" />
+                            <!--<Button Style="{StaticResource SubtleButtonStyle}" FontFamily="{ThemeResource SymbolThemeFontFamily}" Content="&#xe8da;" />-->
 
                             <ComboBox MinWidth="{StaticResource SettingActionControlMinWidth}" SelectedValue="Best" SelectedValuePath="Tag">
                                 <ComboBoxItem x:Uid="QualityBest" Tag="Best" />
                                 <ComboBoxItem x:Uid="QualityWorst" Tag="Worst" />
-                                <ComboBoxItem x:Uid="QualityCustom" Tag="Custom" IsEnabled="False" />
                             </ComboBox>
                         </StackPanel>
                     </winui:SettingsCard>

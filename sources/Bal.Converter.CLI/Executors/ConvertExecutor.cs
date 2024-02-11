@@ -8,11 +8,11 @@ namespace Bal.Converter.CLI.Executors;
 
 public class ConvertExecutor
 {
-    private readonly ITransformationProvider transformationProvider;
+    private readonly ITransformationService transformationService;
 
-    public ConvertExecutor(ITransformationProvider transformationProvider)
+    public ConvertExecutor(ITransformationService transformationService)
     {
-        this.transformationProvider = transformationProvider;
+        this.transformationService = transformationService;
     }
 
     public async Task Execute(ConvertVerb verb)
@@ -21,7 +21,7 @@ public class ConvertExecutor
         Console.WriteLine(verb.Path);
         Console.WriteLine(verb.Destination);
 
-        string[] supported = this.transformationProvider.GetSupportedFormats(verb.Path);
+        string[] supported = this.transformationService.GetSupportedFormats(verb.Path);
 
         string? targetExtension = Path.GetExtension(verb.Destination)?.Replace(".", string.Empty);
 
@@ -31,7 +31,7 @@ public class ConvertExecutor
             return;
         }
 
-        var conversion = this.transformationProvider.Provide(targetExtension);
+        var conversion = this.transformationService.Provide(targetExtension);
 
         if (conversion.Topology.HasFlag(TransformationTopology.Audio))
         {

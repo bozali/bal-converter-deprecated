@@ -3,11 +3,11 @@ using Bal.Converter.Common.Extensions;
 
 namespace Bal.Converter.Common.Transformation;
 
-public class TransformationProvider : ITransformationProvider
+public class TransformationService : ITransformationService
 {
     private readonly IServiceProvider serviceProvider;
 
-    public TransformationProvider(IServiceProvider serviceProvider)
+    public TransformationService(IServiceProvider serviceProvider)
     {
         this.serviceProvider = serviceProvider;
     }

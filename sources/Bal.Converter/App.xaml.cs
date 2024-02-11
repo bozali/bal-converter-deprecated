@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using Windows.System;
 using Bal.Converter.Activation;
 using Bal.Converter.Common.Services;
 using Bal.Converter.Common.Transformation;
@@ -124,7 +125,7 @@ public partial class App : Application
         collection.AddSingleton<IFileDownloaderService, FileDownloaderService>();
         collection.AddSingleton<IDownloadsRegistryService, DownloadsRegistryService>();
         collection.AddSingleton<IMediaTagService, MediaTagService>();
-        collection.AddSingleton<ITransformationProvider, TransformationProvider>();
+        collection.AddSingleton<ITransformationService, TransformationService>();
         collection.AddSingleton<IDialogPickerService, DialogPickerService>();
         collection.AddSingleton<MainWindow>();
 
